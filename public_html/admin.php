@@ -1209,10 +1209,60 @@ include __DIR__ . '/includes/header.php';
                   <input type="text" id="ws_hero_cta2_url" value="services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
                 </div>
               </div>
+          <!-- 4. Portfolio Projects & Case Studies Configuration -->
+          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">💼</span>
+                <div>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Portfolio Case Studies &amp; Projects Settings</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">Manage project titles, cover pictures, impact metrics, technologies, and client locations displayed on the Portfolio page.</p>
+                </div>
+              </div>
+              <button type="button" onclick="addNewPortfolioProjectRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
+                <span>➕</span> Add New Project
+              </button>
+            </div>
+
+            <!-- Engineering Standards Header Showcase Picture & Copy -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+              <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <span>🛠️</span> Portfolio Engineering Standards Showcase Section
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
+                  <input type="text" id="ws_pf_std_title" value="Built on Rigorous Enterprise Standards" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Showcase Picture URL *</label>
+                  <input type="url" id="ws_pf_std_img" value="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Badge Label</label>
+                  <input type="text" id="ws_pf_std_badge" value="ENGINEERING CULTURE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Overlay Metric Title</label>
+                  <input type="text" id="ws_pf_std_overlay_title" value="100% Principal Engineer Led" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div style="grid-column: span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
+                  <textarea id="ws_pf_std_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Every case study in our portfolio is the direct outcome of disciplined architectural principles, continuous automated verification, and zero-compromise security controls.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Project Cards Container -->
+            <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>📁</span> Individual Case Studies &amp; Project Cards
+            </div>
+            <div id="adminPortfolioProjectsList" style="display:flex;flex-direction:column;gap:16px;">
+              <!-- Loaded via JavaScript -->
             </div>
           </div>
 
-          <!-- 4. Footer & Social Channels -->
+          <!-- 5. Footer & Social Channels -->
           <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
             <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
               <span style="font-size:18px;">🔗</span>
@@ -1876,13 +1926,192 @@ async function loadWebsiteSettingsFromBackend() {
         if (document.getElementById('ws_social_twitter')) document.getElementById('ws_social_twitter').value = s.footer.twitter_url || '';
         if (document.getElementById('ws_social_github')) document.getElementById('ws_social_github').value = s.footer.github_url || '';
       }
+      if (s.portfolio) {
+        if (s.portfolio.standards_showcase) {
+          const std = s.portfolio.standards_showcase;
+          if (document.getElementById('ws_pf_std_title')) document.getElementById('ws_pf_std_title').value = std.title || '';
+          if (document.getElementById('ws_pf_std_img')) document.getElementById('ws_pf_std_img').value = std.image || '';
+          if (document.getElementById('ws_pf_std_badge')) document.getElementById('ws_pf_std_badge').value = std.badge || 'ENGINEERING CULTURE';
+          if (document.getElementById('ws_pf_std_overlay_title')) document.getElementById('ws_pf_std_overlay_title').value = std.overlay_title || '';
+          if (document.getElementById('ws_pf_std_desc')) document.getElementById('ws_pf_std_desc').value = std.description || '';
+        }
+        if (Array.isArray(s.portfolio.projects)) {
+          renderAdminPortfolioProjects(s.portfolio.projects);
+        }
+      }
     }
   } catch (err) {
     console.error('Failed to load site settings:', err);
   }
 }
 
+var ADMIN_PORTFOLIO_PROJECTS = [];
+
+function renderAdminPortfolioProjects(projects) {
+  ADMIN_PORTFOLIO_PROJECTS = projects || [];
+  var container = document.getElementById('adminPortfolioProjectsList');
+  if (!container) return;
+
+  if (ADMIN_PORTFOLIO_PROJECTS.length === 0) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:#64748B;font-size:13px;background:#F8FAFC;border-radius:6px;border:1px dashed #CBD5E1;">No projects added yet. Click "+ Add New Project" above to create one.</div>';
+    return;
+  }
+
+  var html = '';
+  ADMIN_PORTFOLIO_PROJECTS.forEach(function(p, i) {
+    var pId = p.id || ('case-' + (i + 1));
+    var pNum = p.number || ('0' + (i + 1));
+    var stackStr = Array.isArray(p.tech_stack) ? p.tech_stack.join(', ') : (p.tech_stack || '');
+
+    html += '<div id="pf_card_' + i + '" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:18px;position:relative;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;border-bottom:1px solid #E2E8F0;padding-bottom:8px;">' +
+        '<div style="display:flex;align-items:center;gap:8px;">' +
+          '<span style="background:#0F172A;color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:3px;">CASE ' + pNum + '</span>' +
+          '<span style="font-size:13px;font-weight:700;color:#0F172A;">' + (p.title ? p.title.replace(/"/g, '&quot;') : 'New Project #' + (i + 1)) + '</span>' +
+        '</div>' +
+        '<button type="button" onclick="deletePortfolioProjectRow(' + i + ')" style="background:#FEE2E2;border:1px solid #FECACA;color:#DC2626;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;cursor:pointer;">✕ Delete Project</button>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:14px;margin-bottom:12px;">' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Cover Picture</label>' +
+          '<div style="width:120px;height:75px;border-radius:4px;overflow:hidden;background:#0F172A;margin-bottom:4px;">' +
+            '<img id="pf_preview_' + i + '" src="' + (p.image || 'assets/img/hero_img.webp') + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\'assets/img/hero_img.webp\'">' +
+          '</div>' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Project Cover Image URL *</label>' +
+          '<input type="url" id="pf_img_' + i + '" value="' + (p.image || '').replace(/"/g, '&quot;') + '" oninput="document.getElementById(\'pf_preview_' + i + '\').src=this.value" placeholder="https://images.unsplash.com/..." style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:8px 0 4px;">Client Name &amp; Location</label>' +
+          '<input type="text" id="pf_client_loc_' + i + '" value="' + (p.client_location || '').replace(/"/g, '&quot;') + '" placeholder="🏢 Apex Global • UK" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Category / Tag *</label>' +
+          '<input type="text" id="pf_cat_' + i + '" value="' + (p.category || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Fintech &amp; Banking Rails" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:8px 0 4px;">Badge Category</label>' +
+          '<input type="text" id="pf_badge_cat_' + i + '" value="' + (p.badge_category || p.category || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Fintech &amp; Banking" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="margin-bottom:12px;">' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Project Headline / Title *</label>' +
+        '<input type="text" id="pf_title_' + i + '" value="' + (p.title || '').replace(/"/g, '&quot;') + '" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:13px;font-weight:700;outline:none;">' +
+      '</div>' +
+
+      '<div style="margin-bottom:12px;">' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Description / Executive Summary</label>' +
+        '<textarea id="pf_desc_' + i + '" rows="2" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' + (p.description || '') + '</textarea>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#DC2626;margin-bottom:4px;">The Engineering Challenge</label>' +
+          '<textarea id="pf_challenge_' + i + '" rows="2" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' + (p.challenge || '') + '</textarea>' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#16A34A;margin-bottom:4px;">Creed Tech Solution</label>' +
+          '<textarea id="pf_solution_' + i + '" rows="2" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' + (p.solution || '') + '</textarea>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">' +
+        '<div style="background:#EFF6FF;border:1px solid #BFDBFE;padding:8px;border-radius:4px;">' +
+          '<label style="display:block;font-size:10.5px;font-weight:700;color:#1E40AF;">Metric 1 (Value / Label)</label>' +
+          '<div style="display:flex;gap:4px;margin-top:4px;">' +
+            '<input type="text" id="pf_m1_v_' + i + '" value="' + (p.metric1_val || '').replace(/"/g, '&quot;') + '" placeholder="120k TPS" style="width:50%;padding:4px 6px;border:1px solid #93C5FD;border-radius:3px;font-size:11px;font-weight:700;">' +
+            '<input type="text" id="pf_m1_l_' + i + '" value="' + (p.metric1_label || '').replace(/"/g, '&quot;') + '" placeholder="Throughput" style="width:50%;padding:4px 6px;border:1px solid #93C5FD;border-radius:3px;font-size:11px;">' +
+          '</div>' +
+        '</div>' +
+        '<div style="background:#EFF6FF;border:1px solid #BFDBFE;padding:8px;border-radius:4px;">' +
+          '<label style="display:block;font-size:10.5px;font-weight:700;color:#1E40AF;">Metric 2 (Value / Label)</label>' +
+          '<div style="display:flex;gap:4px;margin-top:4px;">' +
+            '<input type="text" id="pf_m2_v_' + i + '" value="' + (p.metric2_val || '').replace(/"/g, '&quot;') + '" placeholder="-85%" style="width:50%;padding:4px 6px;border:1px solid #93C5FD;border-radius:3px;font-size:11px;font-weight:700;">' +
+            '<input type="text" id="pf_m2_l_' + i + '" value="' + (p.metric2_label || '').replace(/"/g, '&quot;') + '" placeholder="Latency Drop" style="width:50%;padding:4px 6px;border:1px solid #93C5FD;border-radius:3px;font-size:11px;">' +
+          '</div>' +
+        '</div>' +
+        '<div style="background:#EFF6FF;border:1px solid #BFDBFE;padding:8px;border-radius:4px;">' +
+          '<label style="display:block;font-size:10.5px;font-weight:700;color:#1E40AF;">Metric 3 (Value / Label)</label>' +
+          '<div style="display:flex;gap:4px;margin-top:4px;">' +
+            '<input type="text" id="pf_m3_v_' + i + '" value="' + (p.metric3_val || '').replace(/"/g, '&quot;') + '" placeholder="99.999%" style="width:50%;padding:4px 6px;border:1px solid #93C5FD;border-radius:3px;font-size:11px;font-weight:700;">' +
+            '<input type="text" id="pf_m3_l_' + i + '" value="' + (p.metric3_label || '').replace(/"/g, '&quot;') + '" placeholder="Uptime SLA" style="width:50%;padding:4px 6px;border:1px solid #93C5FD;border-radius:3px;font-size:11px;">' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div>' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Architectural Tech Stack (Comma separated)</label>' +
+        '<input type="text" id="pf_stack_' + i + '" value="' + stackStr.replace(/"/g, '&quot;') + '" placeholder="e.g. Go, Kubernetes, CockroachDB, Kafka, AWS, Redis" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+      '</div>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function syncCurrentPortfolioInputsIntoMemory() {
+  ADMIN_PORTFOLIO_PROJECTS = ADMIN_PORTFOLIO_PROJECTS.map(function(p, i) {
+    var stackVal = document.getElementById('pf_stack_' + i) ? document.getElementById('pf_stack_' + i).value : '';
+    var stackArr = stackVal.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; });
+
+    return {
+      id: p.id || ('case-' + (i + 1)),
+      number: (i + 1 < 10 ? '0' : '') + (i + 1),
+      title: document.getElementById('pf_title_' + i) ? document.getElementById('pf_title_' + i).value.trim() : (p.title || ''),
+      category: document.getElementById('pf_cat_' + i) ? document.getElementById('pf_cat_' + i).value.trim() : (p.category || ''),
+      badge_category: document.getElementById('pf_badge_cat_' + i) ? document.getElementById('pf_badge_cat_' + i).value.trim() : (p.badge_category || ''),
+      client: p.client || '',
+      client_location: document.getElementById('pf_client_loc_' + i) ? document.getElementById('pf_client_loc_' + i).value.trim() : (p.client_location || ''),
+      image: document.getElementById('pf_img_' + i) ? document.getElementById('pf_img_' + i).value.trim() : (p.image || ''),
+      description: document.getElementById('pf_desc_' + i) ? document.getElementById('pf_desc_' + i).value.trim() : (p.description || ''),
+      challenge: document.getElementById('pf_challenge_' + i) ? document.getElementById('pf_challenge_' + i).value.trim() : (p.challenge || ''),
+      solution: document.getElementById('pf_solution_' + i) ? document.getElementById('pf_solution_' + i).value.trim() : (p.solution || ''),
+      metric1_val: document.getElementById('pf_m1_v_' + i) ? document.getElementById('pf_m1_v_' + i).value.trim() : (p.metric1_val || ''),
+      metric1_label: document.getElementById('pf_m1_l_' + i) ? document.getElementById('pf_m1_l_' + i).value.trim() : (p.metric1_label || ''),
+      metric2_val: document.getElementById('pf_m2_v_' + i) ? document.getElementById('pf_m2_v_' + i).value.trim() : (p.metric2_val || ''),
+      metric2_label: document.getElementById('pf_m2_l_' + i) ? document.getElementById('pf_m2_l_' + i).value.trim() : (p.metric2_label || ''),
+      metric3_val: document.getElementById('pf_m3_v_' + i) ? document.getElementById('pf_m3_v_' + i).value.trim() : (p.metric3_val || ''),
+      metric3_label: document.getElementById('pf_m3_l_' + i) ? document.getElementById('pf_m3_l_' + i).value.trim() : (p.metric3_label || ''),
+      tech_stack: stackArr
+    };
+  });
+}
+
+function addNewPortfolioProjectRow() {
+  syncCurrentPortfolioInputsIntoMemory();
+  var nextIdx = ADMIN_PORTFOLIO_PROJECTS.length + 1;
+  ADMIN_PORTFOLIO_PROJECTS.push({
+    id: 'case-' + nextIdx,
+    number: (nextIdx < 10 ? '0' : '') + nextIdx,
+    title: 'New Enterprise Project Case Study #' + nextIdx,
+    category: 'Enterprise Engineering',
+    badge_category: 'Enterprise',
+    client_location: '🏢 Global Enterprise Client',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&auto=format&fit=crop&q=80',
+    description: 'Engineered high-concurrency cloud platform with automated CI/CD and zero-trust security controls.',
+    challenge: 'Legacy system architecture could not handle peak volume scaling.',
+    solution: 'Designed distributed microservices architecture on Kubernetes.',
+    metric1_val: '10x',
+    metric1_label: 'Velocity Boost',
+    metric2_val: '99.99%',
+    metric2_label: 'Uptime SLA',
+    metric3_val: '0',
+    metric3_label: 'Downtime',
+    tech_stack: ['Go', 'Kubernetes', 'Docker', 'PostgreSQL', 'AWS']
+  });
+  renderAdminPortfolioProjects(ADMIN_PORTFOLIO_PROJECTS);
+}
+
+function deletePortfolioProjectRow(index) {
+  syncCurrentPortfolioInputsIntoMemory();
+  if (confirm('Are you sure you want to remove this project?')) {
+    ADMIN_PORTFOLIO_PROJECTS.splice(index, 1);
+    renderAdminPortfolioProjects(ADMIN_PORTFOLIO_PROJECTS);
+  }
+}
+
 async function saveWebsiteSettings() {
+  syncCurrentPortfolioInputsIntoMemory();
+
   const payload = {
     general: {
       site_name: document.getElementById('ws_site_name') ? document.getElementById('ws_site_name').value.trim() : '',
@@ -1905,6 +2134,19 @@ async function saveWebsiteSettings() {
       cta_primary_url: document.getElementById('ws_hero_cta1_url') ? document.getElementById('ws_hero_cta1_url').value.trim() : '',
       cta_secondary_text: document.getElementById('ws_hero_cta2_text') ? document.getElementById('ws_hero_cta2_text').value.trim() : '',
       cta_secondary_url: document.getElementById('ws_hero_cta2_url') ? document.getElementById('ws_hero_cta2_url').value.trim() : ''
+    },
+    portfolio: {
+      standards_showcase: {
+        title: document.getElementById('ws_pf_std_title') ? document.getElementById('ws_pf_std_title').value.trim() : '',
+        image: document.getElementById('ws_pf_std_img') ? document.getElementById('ws_pf_std_img').value.trim() : '',
+        badge: document.getElementById('ws_pf_std_badge') ? document.getElementById('ws_pf_std_badge').value.trim() : 'ENGINEERING CULTURE',
+        overlay_title: document.getElementById('ws_pf_std_overlay_title') ? document.getElementById('ws_pf_std_overlay_title').value.trim() : '',
+        overlay_subtitle: 'Zero junior outsourcing. Full accountability.',
+        overlay_tag: 'Verified SLA',
+        tagline: 'HOW WE GUARANTEE SUCCESS',
+        description: document.getElementById('ws_pf_std_desc') ? document.getElementById('ws_pf_std_desc').value.trim() : ''
+      },
+      projects: ADMIN_PORTFOLIO_PROJECTS
     },
     footer: {
       copyright_text: document.getElementById('ws_footer_copyright') ? document.getElementById('ws_footer_copyright').value.trim() : '',
