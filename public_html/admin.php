@@ -1969,6 +1969,8 @@ include __DIR__ . '/includes/header.php';
 
 <!-- JAVASCRIPT: Master CMS, Table Drawer & Rich Studio Controller -->
 <script>
+const ADMIN_CSRF_TOKEN = '<?= get_csrf_token() ?>';
+
 function switchAdminTab(tabName, btn) {
   var allPanes = document.querySelectorAll('.admin-tab-pane');
   allPanes.forEach(function(p) { p.style.display = 'none'; });
@@ -2309,7 +2311,8 @@ async function saveWebsiteSettings() {
       pinterest_url: document.getElementById('ws_social_pinterest') ? document.getElementById('ws_social_pinterest').value.trim() : '',
       twitter_url: document.getElementById('ws_social_twitter') ? document.getElementById('ws_social_twitter').value.trim() : '',
       github_url: document.getElementById('ws_social_github') ? document.getElementById('ws_social_github').value.trim() : ''
-    }
+    },
+    csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
   };
 
   try {
@@ -2317,17 +2320,27 @@ async function saveWebsiteSettings() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : '',
         'X-Requested-With': 'XMLHttpRequest'
       },
       body: JSON.stringify(payload)
     });
 
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (pe) {
+      alert('❌ Server returned invalid response: ' + text.substring(0, 150));
+      return;
+    }
+
     if (data.success) {
       alert('✅ ' + (data.message || 'Website & Portfolio settings saved successfully!'));
       loadWebsiteSettingsFromBackend();
     } else {
-      alert('❌ Error: ' + (data.message || 'Failed to save settings.'));
+      alert('❌ ' + (data.message || data.error || 'Failed to save settings.'));
     }
   } catch (err) {
     alert('❌ Error saving settings: ' + err.message);
@@ -3792,9 +3805,12 @@ function switchArticleSubTab(subTabName, btn) {
     p2.style.display = 'block';
     if (typeof loadKnowledgeDraftsTab === 'function') loadKnowledgeDraftsTab();
   }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-  if (typeof loadWebsiteSettingsFromBackend === 'function') loadWebsiteSettingsFromBackend();
-  if (typeof loadPortfolioDataForAdmin === 'function') loadPortfolioDataForAdmin();
+  if (typeof loadWebsiteSettingsFromBackend === 'function') {
+    loadWebsiteSettingsFromBackend();
+  }
 });
 </script>
 

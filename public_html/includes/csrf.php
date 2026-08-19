@@ -41,7 +41,7 @@ function csrf_field() {
  */
 function validate_csrf_token($submittedToken = null) {
     if ($submittedToken === null) {
-        $submittedToken = $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null;
+        $submittedToken = $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? $_SERVER['HTTP_X_XSRF_TOKEN'] ?? null;
         if ($submittedToken === null) {
             $rawInput = @file_get_contents('php://input');
             if (!empty($rawInput)) {
@@ -69,12 +69,11 @@ function require_csrf_token() {
     if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'])) {
         if (!validate_csrf_token()) {
             http_response_code(403);
-            if (!empty($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) {
-                header('Content-Type: application/json; charset=utf-8');
-                echo json_encode(['success' => false, 'error' => 'Forbidden: Invalid or missing CSRF token.']);
-            } else {
-                echo '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body style="font-family:sans-serif;text-align:center;padding:50px;"><h2>403 Forbidden</h2><p>Security validation failed: Invalid or missing CSRF token.</p><a href="login.php">Return to Login</a></body></html>';
-            }
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode([
+                'success' => false,
+                'message' => 'Forbidden: Invalid or missing CSRF security token. Please refresh the page and try again.'
+            ], JSON_UNESCAPED_SLASHES);
             exit;
         }
     }
