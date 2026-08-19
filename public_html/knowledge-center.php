@@ -400,33 +400,37 @@ include __DIR__ . '/includes/header.php';
           </div>
         </div>
 
-        <!-- Right 4 Stacked Stories (Clickable to switch left card) -->
-        <div id="sideNewsContainer" style="display:flex;flex-direction:column;gap:0.85rem;width:100%;">
+        <!-- Right 6 Stacked Stories (Clickable to switch left card) -->
+        <div id="sideNewsContainer" style="display:flex;flex-direction:column;gap:0.75rem;width:100%;">
           <?php 
             $providerBadges = [
-              'apple'     => ['color' => '#0284C7', 'label' => '🍎 APPLE • HARDWARE & SILICON'],
-              'openai'    => ['color' => '#7C3AED', 'label' => '🤖 OPENAI • AI REASONING'],
-              'nvidia'    => ['color' => '#059669', 'label' => '⚡ NVIDIA • ACCELERATED AI'],
-              'anthropic' => ['color' => '#D97706', 'label' => '🧠 ANTHROPIC • SAFETY RESEARCH'],
-              'google'    => ['color' => '#0052FF', 'label' => '🌐 GOOGLE • AI & DEVICES'],
-              'meta'      => ['color' => '#0081FB', 'label' => '♾️ META • OPEN SOURCE AI'],
-              'microsoft' => ['color' => '#00A4EF', 'label' => '🪟 MICROSOFT • CLOUD & COPILOT'],
-              'intel'     => ['color' => '#0071C5', 'label' => '🔷 INTEL • NEXT-GEN SILICON']
+              'apple'        => ['color' => '#0284C7', 'label' => '🍎 APPLE • HARDWARE & SILICON'],
+              'openai'       => ['color' => '#7C3AED', 'label' => '🤖 OPENAI • AI REASONING'],
+              'nvidia'       => ['color' => '#059669', 'label' => '⚡ NVIDIA • ACCELERATED AI'],
+              'anthropic'    => ['color' => '#D97706', 'label' => '🧠 ANTHROPIC • SAFETY RESEARCH'],
+              'google'       => ['color' => '#0052FF', 'label' => '🌐 GOOGLE • AI & DEVICES'],
+              'meta'         => ['color' => '#0081FB', 'label' => '♾️ META • OPEN SOURCE AI'],
+              'microsoft'    => ['color' => '#00A4EF', 'label' => '🪟 MICROSOFT • CLOUD & COPILOT'],
+              'intel'        => ['color' => '#0071C5', 'label' => '🔷 INTEL • NEXT-GEN SILICON'],
+              'dawn'         => ['color' => '#059669', 'label' => '🇵🇰 DAWN • TECH & SCIENCE'],
+              'brecorder'    => ['color' => '#0284C7', 'label' => '🇵🇰 B-RECORDER • FINTECH'],
+              'propakistani' => ['color' => '#D97706', 'label' => '🇵🇰 PROPAKISTANI • DIGITAL ECOSYSTEM'],
+              'tribune'      => ['color' => '#DC2626', 'label' => '🇵🇰 TRIBUNE • AEROSPACE & TECH']
             ];
-            for ($i = 1; $i < min(5, count($breakingNews)); $i++): 
+            for ($i = 1; $i < min(7, count($breakingNews)); $i++): 
               $s = $breakingNews[$i];
-              $pKey = $s['provider'] ?? '';
+              $pKey = strtolower($s['provider'] ?? '');
               $pBadge = $providerBadges[$pKey] ?? ['color' => '#475569', 'label' => strtoupper($pKey)];
           ?>
-          <div onclick="switchMainNews(<?= $i ?>)" style="background:#fff;border:1px solid #E2E8F0;border-radius:0.75rem;padding:0.85rem 1rem;cursor:pointer;transition:border-color 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.05);width:100%;box-sizing:border-box;" onmouseover="this.style.borderColor='#0052FF'" onmouseout="this.style.borderColor='#E2E8F0'">
-            <div style="display:flex;gap:0.85rem;align-items:center;">
-              <div style="width:4.25rem;height:4.25rem;border-radius:8px;overflow:hidden;background:#0B1120;flex-shrink:0;">
+          <div onclick="switchMainNews(<?= $i ?>)" style="background:#fff;border:1px solid #E2E8F0;border-radius:0.65rem;padding:0.75rem 0.9rem;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.04);width:100%;box-sizing:border-box;" onmouseover="this.style.borderColor='#0052FF';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='#E2E8F0';this.style.transform='none'">
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <div style="width:3.75rem;height:3.75rem;border-radius:6px;overflow:hidden;background:#0B1120;flex-shrink:0;">
                 <img src="<?= htmlspecialchars($s['img'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($s['title'] ?? '') ?>" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
               </div>
               <div style="flex:1;min-width:0;">
                 <span style="font-size:9.5px;font-weight:800;color:<?= $pBadge['color'] ?>;text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?= $pBadge['label'] ?></span>
-                <h4 style="font-size:0.875rem;font-weight:700;color:#0F172A;line-height:1.3;margin:0 0 3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;"><?= htmlspecialchars($s['title'] ?? '') ?></h4>
-                <span style="font-size:11px;color:#64748B;"><?= htmlspecialchars($s['date'] ?? '') ?></span>
+                <h4 style="font-size:0.84rem;font-weight:700;color:#0F172A;line-height:1.3;margin:0 0 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;"><?= htmlspecialchars($s['title'] ?? '') ?></h4>
+                <span style="font-size:10.5px;color:#64748B;"><?= htmlspecialchars($s['date'] ?? '') ?></span>
               </div>
             </div>
           </div>
@@ -2135,32 +2139,36 @@ function renderBreakingNewsList(list) {
   if (!sideContainer) return;
 
   var providerBadges = {
-    apple:     { color: '#0284C7', label: '🍎 APPLE • HARDWARE & SILICON' },
-    openai:    { color: '#7C3AED', label: '🤖 OPENAI • AI REASONING' },
-    nvidia:    { color: '#059669', label: '⚡ NVIDIA • ACCELERATED AI' },
-    anthropic: { color: '#D97706', label: '🧠 ANTHROPIC • SAFETY RESEARCH' },
-    google:    { color: '#0052FF', label: '🌐 GOOGLE • AI & DEVICES' },
-    meta:      { color: '#0081FB', label: '♾️ META • OPEN SOURCE AI' },
-    microsoft: { color: '#00A4EF', label: '🪟 MICROSOFT • CLOUD & COPILOT' },
-    intel:     { color: '#0071C5', label: '🔷 INTEL • NEXT-GEN SILICON' }
+    apple:        { color: '#0284C7', label: '🍎 APPLE • HARDWARE & SILICON' },
+    openai:       { color: '#7C3AED', label: '🤖 OPENAI • AI REASONING' },
+    nvidia:       { color: '#059669', label: '⚡ NVIDIA • ACCELERATED AI' },
+    anthropic:    { color: '#D97706', label: '🧠 ANTHROPIC • SAFETY RESEARCH' },
+    google:       { color: '#0052FF', label: '🌐 GOOGLE • AI & DEVICES' },
+    meta:         { color: '#0081FB', label: '♾️ META • OPEN SOURCE AI' },
+    microsoft:    { color: '#00A4EF', label: '🪟 MICROSOFT • CLOUD & COPILOT' },
+    intel:        { color: '#0071C5', label: '🔷 INTEL • NEXT-GEN SILICON' },
+    dawn:         { color: '#059669', label: '🇵🇰 DAWN • TECH & SCIENCE' },
+    brecorder:    { color: '#0284C7', label: '🇵🇰 B-RECORDER • FINTECH' },
+    propakistani: { color: '#D97706', label: '🇵🇰 PROPAKISTANI • DIGITAL ECOSYSTEM' },
+    tribune:      { color: '#DC2626', label: '🇵🇰 TRIBUNE • AEROSPACE & TECH' }
   };
 
   var html = '';
-  for (var i = 1; i < Math.min(5, list.length); i++) {
+  for (var i = 1; i < Math.min(7, list.length); i++) {
     var s = list[i];
-    var pKey = s.provider || '';
+    var pKey = (s.provider || '').toLowerCase();
     var pBadge = providerBadges[pKey] || { color: '#475569', label: pKey.toUpperCase() };
     var img = s.img || s.image || s.image_url || 'assets/img/hero_img.webp';
 
-    html += '<div onclick="switchMainNews(' + i + ')" style="background:#fff;border:1px solid #E2E8F0;border-radius:0.75rem;padding:1rem 1.25rem;cursor:pointer;transition:border-color 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.borderColor=\'#0052FF\'" onmouseout="this.style.borderColor=\'#E2E8F0\'">' +
-      '<div style="display:flex;gap:1rem;align-items:center;">' +
-        '<div style="width:4.75rem;height:4.75rem;border-radius:8px;overflow:hidden;background:#0B1120;flex-shrink:0;">' +
+    html += '<div onclick="switchMainNews(' + i + ')" style="background:#fff;border:1px solid #E2E8F0;border-radius:0.65rem;padding:0.75rem 0.9rem;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.04);width:100%;box-sizing:border-box;" onmouseover="this.style.borderColor=\'#0052FF\';this.style.transform=\'translateY(-1px)\'" onmouseout="this.style.borderColor=\'#E2E8F0\';this.style.transform=\'none\'">' +
+      '<div style="display:flex;gap:0.75rem;align-items:center;">' +
+        '<div style="width:3.75rem;height:3.75rem;border-radius:6px;overflow:hidden;background:#0B1120;flex-shrink:0;">' +
           '<img src="' + img + '" alt="' + (s.title ? s.title.replace(/"/g, '&quot;') : '') + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src=\'assets/img/hero_img.webp\';">' +
         '</div>' +
-        '<div>' +
-          '<span style="font-size:10px;font-weight:800;color:' + pBadge.color + ';text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:2px;">' + pBadge.label + '</span>' +
-          '<h4 style="font-size:0.9rem;font-weight:700;color:#0F172A;line-height:1.3;margin:0 0 3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + (s.title || '') + '</h4>' +
-          '<span style="font-size:11px;color:#64748B;">' + (s.date || '') + '</span>' +
+        '<div style="flex:1;min-width:0;">' +
+          '<span style="font-size:9.5px;font-weight:800;color:' + pBadge.color + ';text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + pBadge.label + '</span>' +
+          '<h4 style="font-size:0.84rem;font-weight:700;color:#0F172A;line-height:1.3;margin:0 0 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + (s.title || '') + '</h4>' +
+          '<span style="font-size:10.5px;color:#64748B;">' + (s.date || '') + '</span>' +
         '</div>' +
       '</div>' +
     '</div>';
