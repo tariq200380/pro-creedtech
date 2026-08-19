@@ -65,6 +65,7 @@ class NewsValidationGate {
         'www.apple.com', 'apple.com',
         'blogs.nvidia.com',
         'cdn.sanity.io',
+        'www-cdn.anthropic.com',
         'images.ctfassets.net',
         'openaicom-cdn.azureedge.net',
         'www.anthropic.com', 'anthropic.com',
@@ -130,14 +131,26 @@ class NewsValidationGate {
             return ['valid' => false, 'error' => 'Missing external_article_id'];
         }
 
-        // 3. Title Check
+        // 3. Title Check & Sanitization
         $title = trim($candidate['title'] ?? '');
+        $title = html_entity_decode($title, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        // Strip trailing provider suffixes like " - Anthropic", " - Source Asia", etc.
+        $title = preg_replace('/\s*[-–—|]\s*(Anthropic|Google The Keyword|Apple Newsroom|Microsoft News Center|Source Asia|NVIDIA Blog|OpenAI|Meta Newsroom|Dawn|Business Recorder|Express Tribune|ProPakistani)\s*$/i', '', $title);
+        $title = trim($title);
+
         if (empty($title) || mb_strlen($title, 'UTF-8') < 5) {
             return ['valid' => false, 'error' => 'Invalid or empty article title'];
         }
         if (preg_match('/^(test|sample|lorem ipsum|mock|demo)/i', $title)) {
             return ['valid' => false, 'error' => 'Generated/mock title detected'];
         }
+
+        // Summary Sanitization
+        $summary = trim($candidate['summary'] ?? '');
+        $summary = html_entity_decode($summary, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $summary = preg_replace('/The post .* appeared first on .*/i', '', $summary);
+        $summary = preg_replace('/\s*[-–—|]\s*(Anthropic|Google|Apple|Microsoft|NVIDIA|OpenAI)\s*$/i', '', $summary);
+        $summary = trim(preg_replace('/\s+/', ' ', $summary));
 
         // 4. Source URL Check
         $sourceUrl = trim($candidate['source_url'] ?? '');
@@ -176,6 +189,7 @@ class NewsValidationGate {
             'provider'      => $provider,
             'ext_id'        => $extId,
             'title'         => $title,
+            'summary'       => $summary,
             'source_url'    => $sourceUrl,
             'pub_timestamp' => $pubTimestamp,
             'published_at'  => gmdate('Y-m-d H:i:s', $pubTimestamp)
@@ -481,7 +495,7 @@ class NewsValidationGate {
             'source_name'               => $candidate['source_name'] ?? self::$approvedProviders[$metaRes['provider']]['name'],
             'source_url'                => $metaRes['source_url'],
             'provider_published_at'     => $metaRes['published_at'],
-            'summary'                   => $candidate['summary'] ?? '',
+            'summary'                   => $metaRes['summary'],
             'category'                  => $candidate['category'] ?? '',
             'brand_badge'               => $candidate['brand_badge'] ?? '',
             'visual_type'               => $visualRes['visual_type'],
