@@ -203,7 +203,7 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
                     
                     $title = $mOgTitle[1] ?? 'How Claude is accelerating protein design and analytical chemistry';
                     $desc  = $mOgDesc[1] ?? 'Anthropic research shares how Claude designs protein binders from scratch and accelerates chemical analysis.';
-                    $img   = $mOgImg[1] ?? 'https://www-cdn.anthropic.com/images/4zrzovbb/website/d75b1cc758dafce8709fb4028df60db220055c92-2048x1672.jpg';
+                    $img   = $mOgImg[1] ?? 'https://cdn.sanity.io/images/4zrzovbb/website/e3758f1bc27af0786f4249cc1ab194fc2c6cce63-3840x2160.png';
                     
                     $candidate = [
                         'provider'              => 'anthropic',
@@ -213,7 +213,7 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
                         'source_name'           => 'Anthropic Research',
                         'source_url'            => $antUrl,
                         'source_image_url'      => $img,
-                        'local_image_path'      => 'uploads/live_news/anthropic_claude_protein_design.jpg',
+                        'local_image_path'      => 'uploads/live_news/anthropic_claude_protein_design.png',
                         'image_hash'            => null,
                         'visual_type'           => VISUAL_SOURCE_IMAGE,
                         'provider_published_at' => date('Y-m-d H:i:s', strtotime('-19 hours')),
