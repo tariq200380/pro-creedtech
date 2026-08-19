@@ -11,14 +11,17 @@ require_once __DIR__ . '/../includes/csrf.php';
 $settingsFile = __DIR__ . '/../data/site_settings.json';
 $portfolioFile = __DIR__ . '/../data/portfolio_projects.json';
 $aboutFile = __DIR__ . '/../data/about_page_settings.json';
+$contactFile = __DIR__ . '/../data/contact_page_settings.json';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $settingsData = file_exists($settingsFile) ? (json_decode(@file_get_contents($settingsFile), true) ?: []) : [];
     $portfolioData = file_exists($portfolioFile) ? (json_decode(@file_get_contents($portfolioFile), true) ?: []) : [];
     $aboutData = file_exists($aboutFile) ? (json_decode(@file_get_contents($aboutFile), true) ?: []) : [];
+    $contactData = file_exists($contactFile) ? (json_decode(@file_get_contents($contactFile), true) ?: []) : [];
     
     $settingsData['portfolio'] = $portfolioData;
     $settingsData['about_page'] = $aboutData;
+    $settingsData['contact_page'] = $contactData;
     echo json_encode(['success' => true, 'settings' => $settingsData]);
     exit;
 }
@@ -69,8 +72,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $current['about_page'] = $payload['about_page'];
     }
 
+    // If contact_page payload is present, save contact_page_settings.json
+    if (isset($payload['contact_page']) && is_array($payload['contact_page'])) {
+        @file_put_contents($contactFile, json_encode($payload['contact_page'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        $current['contact_page'] = $payload['contact_page'];
+    }
+
     if ($savedSettings !== false) {
-        echo json_encode(['success' => true, 'message' => 'Website, Portfolio & About Page settings saved successfully!', 'settings' => $current]);
+        echo json_encode(['success' => true, 'message' => 'Website, Portfolio, About & Contact settings saved successfully!', 'settings' => $current]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to write settings to disk. Please check folder permissions.']);
     }

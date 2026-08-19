@@ -1352,7 +1352,174 @@ include __DIR__ . '/includes/header.php';
             </div>
           </div>
 
-          <!-- 7. Footer & Social Channels -->
+          <!-- 7. Contact Page & Scoping Channels Configuration -->
+          <div id="ws_contact_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">📞</span>
+                <div>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Contact Page &amp; Scoping Channels</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">Manage hero headers, SLA metric badges, direct phone/WhatsApp lines, onboarding stages, and FAQ accordion questions.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Hero & Metrics Section -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+              <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <span>🎯</span> Contact Page Hero &amp; Metrics
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Badge Tag</label>
+                  <input type="text" id="ws_contact_hero_badge" value="DIRECT ARCHITECT ACCESS • 4-HOUR GUARANTEED SLA" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Headline *</label>
+                  <input type="text" id="ws_contact_hero_title" value="Let's Build Something Enduring Together." style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div style="grid-column:span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Description Paragraph</label>
+                  <textarea id="ws_contact_hero_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Connect directly with senior systems architects and technical leaders. Whether you need an end-to-end enterprise platform, sovereign AI pipelines, or dedicated engineering pods—we are ready.</textarea>
+                </div>
+              </div>
+
+              <!-- 3 Metrics -->
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;background:#fff;padding:12px;border:1px solid #E2E8F0;border-radius:6px;">
+                <div>
+                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 1 Label</label>
+                  <input type="text" id="ws_contact_m1_label" value="Average Response" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 1 Value</label>
+                  <input type="text" id="ws_contact_m1_val" value="< 2.4 Hours" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 2 Label</label>
+                  <input type="text" id="ws_contact_m2_label" value="NDA &amp; IP Protection" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 2 Value</label>
+                  <input type="text" id="ws_contact_m2_val" value="Signed Day 1" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 3 Label</label>
+                  <input type="text" id="ws_contact_m3_label" value="Verified Ratings" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 3 Value</label>
+                  <input type="text" id="ws_contact_m3_val" value="5.0 Clutch &amp; Google" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Channels & Instant Call Box -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+              <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <span>💬</span> Direct Communications &amp; Instant Discovery Call
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Badge</label>
+                  <input type="text" id="ws_contact_disc_badge" value="⚡ INSTANT DISCOVERY" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Title</label>
+                  <input type="text" id="ws_contact_disc_title" value="Need a Direct Architectural Call?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div style="grid-column:span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Description</label>
+                  <input type="text" id="ws_contact_disc_desc" value="Skip the form and schedule a 30-minute discovery call directly with one of our Principal Systems Architects." style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Booking Email</label>
+                  <input type="email" id="ws_contact_disc_email" value="contact@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Official Inquiries Email</label>
+                  <input type="email" id="ws_contact_off_email" value="contact@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Global Telemetry Line Phone</label>
+                  <input type="text" id="ws_contact_phone" value="+1 (415) 890-4820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">WhatsApp Number Display</label>
+                  <input type="text" id="ws_contact_wa_num" value="+1 (415) 890-4820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div style="grid-column:span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">WhatsApp Direct Chat Link URL</label>
+                  <input type="text" id="ws_contact_wa_url" value="https://wa.me/14158904820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+              </div>
+            </div>
+
+            <!-- 4-Step Onboarding Process -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+                <div style="font-size:12.5px;font-weight:700;color:#0F172A;display:flex;align-items:center;gap:6px;">
+                  <span>🚀</span> 4-Stage Onboarding Process Steps
+                </div>
+                <button type="button" onclick="addNewContactStepRow()" style="padding:6px 14px;background:#0F172A;color:#fff;font-size:11.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;">
+                  ➕ Add Onboarding Step
+                </button>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Badge Tag</label>
+                  <input type="text" id="ws_contact_steps_badge" value="EXECUTION CERTAINTY" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Section Title</label>
+                  <input type="text" id="ws_contact_steps_title" value="What Happens After You Reach Out?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div style="grid-column:span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Description</label>
+                  <textarea id="ws_contact_steps_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Our deterministic 4-stage onboarding model eliminates ambiguity and ensures rapid engineering ramp-up.</textarea>
+                </div>
+              </div>
+              <div id="adminContactStepsList" style="display:flex;flex-direction:column;gap:12px;">
+                <!-- Loaded via JS -->
+              </div>
+            </div>
+
+            <!-- FAQs Accordion List -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+                <div style="font-size:12.5px;font-weight:700;color:#0F172A;display:flex;align-items:center;gap:6px;">
+                  <span>❓</span> Frequently Asked Questions (FAQs)
+                </div>
+                <button type="button" onclick="addNewContactFaqRow()" style="padding:6px 14px;background:#0052FF;color:#fff;font-size:11.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;">
+                  ➕ Add FAQ
+                </button>
+              </div>
+              <div id="adminContactFaqsList" style="display:flex;flex-direction:column;gap:12px;">
+                <!-- Loaded via JS -->
+              </div>
+            </div>
+
+            <!-- Bottom RFP CTA Banner -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;">
+              <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <span>📢</span> Bottom Enterprise RFP Banner
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div style="grid-column:span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Banner Title</label>
+                  <input type="text" id="ws_contact_cta_title" value="Prefer direct enterprise correspondence?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div style="grid-column:span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Banner Description</label>
+                  <textarea id="ws_contact_cta_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Send your RFP, architecture specs, or tender documents directly to our senior leadership inbox at projects@creed-tech.com.</textarea>
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Button Text</label>
+                  <input type="text" id="ws_contact_cta_btn_text" value="Email RFP / Architecture Docs" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Target Email</label>
+                  <input type="email" id="ws_contact_cta_btn_email" value="projects@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 8. Footer & Social Channels -->
           <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
             <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
               <span style="font-size:18px;">🔗</span>
@@ -2441,6 +2608,157 @@ function deleteLeadershipMemberRow(index) {
 }
 window.deleteLeadershipMemberRow = deleteLeadershipMemberRow;
 
+// ==========================================
+// CONTACT PAGE SETTINGS JS
+// ==========================================
+
+var ADMIN_CONTACT_STEPS = [];
+var ADMIN_CONTACT_FAQS = [];
+
+function syncCurrentContactInputsIntoMemory() {
+  if (!Array.isArray(ADMIN_CONTACT_STEPS)) ADMIN_CONTACT_STEPS = [];
+  ADMIN_CONTACT_STEPS = ADMIN_CONTACT_STEPS.map(function(s, i) {
+    var numEl = document.getElementById('c_step_num_' + i);
+    var titleEl = document.getElementById('c_step_title_' + i);
+    var descEl = document.getElementById('c_step_desc_' + i);
+    var timeEl = document.getElementById('c_step_time_' + i);
+
+    return {
+      number: numEl ? numEl.value.trim() : (s.number || ((i + 1 < 10 ? '0' : '') + (i + 1))),
+      title: titleEl ? titleEl.value.trim() : (s.title || ''),
+      description: descEl ? descEl.value.trim() : (s.description || ''),
+      timeline: timeEl ? timeEl.value.trim() : (s.timeline || '')
+    };
+  });
+
+  if (!Array.isArray(ADMIN_CONTACT_FAQS)) ADMIN_CONTACT_FAQS = [];
+  ADMIN_CONTACT_FAQS = ADMIN_CONTACT_FAQS.map(function(f, i) {
+    var qEl = document.getElementById('c_faq_q_' + i);
+    var aEl = document.getElementById('c_faq_a_' + i);
+
+    return {
+      question: qEl ? qEl.value.trim() : (f.question || ''),
+      answer: aEl ? aEl.value.trim() : (f.answer || '')
+    };
+  });
+}
+
+function renderAdminContactSteps(steps) {
+  ADMIN_CONTACT_STEPS = Array.isArray(steps) ? steps : [];
+  var container = document.getElementById('adminContactStepsList');
+  if (!container) return;
+
+  if (ADMIN_CONTACT_STEPS.length === 0) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:#64748B;font-size:12.5px;background:#fff;border-radius:6px;border:1px dashed #CBD5E1;">No onboarding steps added yet. Click "+ Add Onboarding Step" to add one.</div>';
+    return;
+  }
+
+  var html = '';
+  ADMIN_CONTACT_STEPS.forEach(function(s, i) {
+    html += '<div id="c_step_box_' + i + '" style="background:#fff;border:1px solid #E2E8F0;border-radius:6px;padding:14px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">' +
+        '<span style="font-size:12px;font-weight:700;color:#0F172A;">Stage ' + (s.number || ('0' + (i + 1))) + ': ' + (s.title ? s.title : 'New Onboarding Step') + '</span>' +
+        '<button type="button" onclick="deleteContactStepRow(' + i + ')" style="background:#FEE2E2;border:1px solid #FECACA;color:#DC2626;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;cursor:pointer;">✕ Delete</button>' +
+      '</div>' +
+      '<div style="display:grid;grid-template-columns:80px 1fr 140px;gap:10px;margin-bottom:8px;">' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Number</label>' +
+          '<input type="text" id="c_step_num_' + i + '" value="' + (s.number || ((i + 1 < 10 ? '0' : '') + (i + 1))).replace(/"/g, '&quot;') + '" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Step Headline *</label>' +
+          '<input type="text" id="c_step_title_' + i + '" value="' + (s.title || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Architectural Review" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Timeline SLA</label>' +
+          '<input type="text" id="c_step_time_' + i + '" value="' + (s.timeline || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Within 4 Hours" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+      '</div>' +
+      '<div>' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Step Explanation</label>' +
+        '<textarea id="c_step_desc_' + i + '" rows="2" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' + (s.description || '') + '</textarea>' +
+      '</div>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function addNewContactStepRow() {
+  if (!Array.isArray(ADMIN_CONTACT_STEPS)) ADMIN_CONTACT_STEPS = [];
+  syncCurrentContactInputsIntoMemory();
+  var nextIdx = ADMIN_CONTACT_STEPS.length + 1;
+  ADMIN_CONTACT_STEPS.push({
+    number: (nextIdx < 10 ? '0' : '') + nextIdx,
+    title: 'New Onboarding Phase #' + nextIdx,
+    description: 'Detailed description of this engineering milestone and onboarding deliverable.',
+    timeline: 'Within ' + (nextIdx * 2) + ' Days'
+  });
+  renderAdminContactSteps(ADMIN_CONTACT_STEPS);
+}
+window.addNewContactStepRow = addNewContactStepRow;
+
+function deleteContactStepRow(index) {
+  syncCurrentContactInputsIntoMemory();
+  if (confirm('Are you sure you want to remove this onboarding step?')) {
+    ADMIN_CONTACT_STEPS.splice(index, 1);
+    renderAdminContactSteps(ADMIN_CONTACT_STEPS);
+  }
+}
+window.deleteContactStepRow = deleteContactStepRow;
+
+function renderAdminContactFaqs(faqs) {
+  ADMIN_CONTACT_FAQS = Array.isArray(faqs) ? faqs : [];
+  var container = document.getElementById('adminContactFaqsList');
+  if (!container) return;
+
+  if (ADMIN_CONTACT_FAQS.length === 0) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:#64748B;font-size:12.5px;background:#fff;border-radius:6px;border:1px dashed #CBD5E1;">No FAQs added yet. Click "+ Add FAQ" to add one.</div>';
+    return;
+  }
+
+  var html = '';
+  ADMIN_CONTACT_FAQS.forEach(function(f, i) {
+    html += '<div id="c_faq_box_' + i + '" style="background:#fff;border:1px solid #E2E8F0;border-radius:6px;padding:14px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">' +
+        '<span style="font-size:12px;font-weight:700;color:#0F172A;">FAQ #' + (i + 1) + '</span>' +
+        '<button type="button" onclick="deleteContactFaqRow(' + i + ')" style="background:#FEE2E2;border:1px solid #FECACA;color:#DC2626;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;cursor:pointer;">✕ Delete</button>' +
+      '</div>' +
+      '<div style="margin-bottom:8px;">' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Question *</label>' +
+        '<input type="text" id="c_faq_q_' + i + '" value="' + (f.question || '').replace(/"/g, '&quot;') + '" placeholder="e.g. How quickly can your engineering pods be deployed?" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+      '</div>' +
+      '<div>' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Answer *</label>' +
+        '<textarea id="c_faq_a_' + i + '" rows="2" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' + (f.answer || '') + '</textarea>' +
+      '</div>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function addNewContactFaqRow() {
+  if (!Array.isArray(ADMIN_CONTACT_FAQS)) ADMIN_CONTACT_FAQS = [];
+  syncCurrentContactInputsIntoMemory();
+  var nextIdx = ADMIN_CONTACT_FAQS.length + 1;
+  ADMIN_CONTACT_FAQS.push({
+    question: 'New Question #' + nextIdx + '?',
+    answer: 'Clear, concise explanation and answer for clients and enterprise partners.'
+  });
+  renderAdminContactFaqs(ADMIN_CONTACT_FAQS);
+}
+window.addNewContactFaqRow = addNewContactFaqRow;
+
+function deleteContactFaqRow(index) {
+  syncCurrentContactInputsIntoMemory();
+  if (confirm('Are you sure you want to remove this FAQ item?')) {
+    ADMIN_CONTACT_FAQS.splice(index, 1);
+    renderAdminContactFaqs(ADMIN_CONTACT_FAQS);
+  }
+}
+window.deleteContactFaqRow = deleteContactFaqRow;
+
 async function loadWebsiteSettingsFromBackend() {
   try {
     const res = await fetch('ajax/site_settings_admin.php?t=' + Date.now());
@@ -2519,6 +2837,50 @@ async function loadWebsiteSettingsFromBackend() {
           }
         }
       }
+      if (s.contact_page) {
+        if (s.contact_page.hero_section) {
+          const ch = s.contact_page.hero_section;
+          if (document.getElementById('ws_contact_hero_badge')) document.getElementById('ws_contact_hero_badge').value = ch.badge || 'DIRECT ARCHITECT ACCESS • 4-HOUR GUARANTEED SLA';
+          if (document.getElementById('ws_contact_hero_title')) document.getElementById('ws_contact_hero_title').value = ch.title || "Let's Build Something Enduring Together.";
+          if (document.getElementById('ws_contact_hero_desc')) document.getElementById('ws_contact_hero_desc').value = ch.description || '';
+          if (document.getElementById('ws_contact_m1_label')) document.getElementById('ws_contact_m1_label').value = ch.metric1_label || 'Average Response';
+          if (document.getElementById('ws_contact_m1_val')) document.getElementById('ws_contact_m1_val').value = ch.metric1_val || '< 2.4 Hours';
+          if (document.getElementById('ws_contact_m2_label')) document.getElementById('ws_contact_m2_label').value = ch.metric2_label || 'NDA & IP Protection';
+          if (document.getElementById('ws_contact_m2_val')) document.getElementById('ws_contact_m2_val').value = ch.metric2_val || 'Signed Day 1';
+          if (document.getElementById('ws_contact_m3_label')) document.getElementById('ws_contact_m3_label').value = ch.metric3_label || 'Verified Ratings';
+          if (document.getElementById('ws_contact_m3_val')) document.getElementById('ws_contact_m3_val').value = ch.metric3_val || '5.0 Clutch & Google';
+        }
+        if (s.contact_page.direct_channels) {
+          const cd = s.contact_page.direct_channels;
+          if (document.getElementById('ws_contact_disc_badge')) document.getElementById('ws_contact_disc_badge').value = cd.discovery_badge || '⚡ INSTANT DISCOVERY';
+          if (document.getElementById('ws_contact_disc_title')) document.getElementById('ws_contact_disc_title').value = cd.discovery_title || 'Need a Direct Architectural Call?';
+          if (document.getElementById('ws_contact_disc_desc')) document.getElementById('ws_contact_disc_desc').value = cd.discovery_desc || '';
+          if (document.getElementById('ws_contact_disc_email')) document.getElementById('ws_contact_disc_email').value = cd.discovery_email || 'contact@creed-tech.com';
+          if (document.getElementById('ws_contact_off_email')) document.getElementById('ws_contact_off_email').value = cd.official_email || 'contact@creed-tech.com';
+          if (document.getElementById('ws_contact_phone')) document.getElementById('ws_contact_phone').value = cd.phone_number || '+1 (415) 890-4820';
+          if (document.getElementById('ws_contact_wa_num')) document.getElementById('ws_contact_wa_num').value = cd.whatsapp_number || '+1 (415) 890-4820';
+          if (document.getElementById('ws_contact_wa_url')) document.getElementById('ws_contact_wa_url').value = cd.whatsapp_url || 'https://wa.me/14158904820';
+        }
+        if (s.contact_page.onboarding_steps) {
+          const cSt = s.contact_page.onboarding_steps;
+          if (document.getElementById('ws_contact_steps_badge')) document.getElementById('ws_contact_steps_badge').value = cSt.badge || 'EXECUTION CERTAINTY';
+          if (document.getElementById('ws_contact_steps_title')) document.getElementById('ws_contact_steps_title').value = cSt.title || 'What Happens After You Reach Out?';
+          if (document.getElementById('ws_contact_steps_desc')) document.getElementById('ws_contact_steps_desc').value = cSt.description || '';
+          if (Array.isArray(cSt.steps)) {
+            renderAdminContactSteps(cSt.steps);
+          }
+        }
+        if (Array.isArray(s.contact_page.faqs)) {
+          renderAdminContactFaqs(s.contact_page.faqs);
+        }
+        if (s.contact_page.cta_banner) {
+          const cC = s.contact_page.cta_banner;
+          if (document.getElementById('ws_contact_cta_title')) document.getElementById('ws_contact_cta_title').value = cC.title || 'Prefer direct enterprise correspondence?';
+          if (document.getElementById('ws_contact_cta_desc')) document.getElementById('ws_contact_cta_desc').value = cC.description || '';
+          if (document.getElementById('ws_contact_cta_btn_text')) document.getElementById('ws_contact_cta_btn_text').value = cC.button_text || 'Email RFP / Architecture Docs';
+          if (document.getElementById('ws_contact_cta_btn_email')) document.getElementById('ws_contact_cta_btn_email').value = cC.button_email || 'projects@creed-tech.com';
+        }
+      }
     }
   } catch (err) {
     console.error('Failed to load site settings:', err);
@@ -2530,6 +2892,7 @@ async function saveWebsiteSettings() {
   syncCurrentPortfolioInputsIntoMemory();
   syncCurrentHubsInputsIntoMemory();
   syncCurrentLeadershipInputsIntoMemory();
+  syncCurrentContactInputsIntoMemory();
 
   var stdTitle = (document.getElementById('ws_pf_std_title') ? document.getElementById('ws_pf_std_title').value.trim() : '') ||
                  (document.getElementById('admin_pf_std_title') ? document.getElementById('admin_pf_std_title').value.trim() : '');
@@ -2592,6 +2955,42 @@ async function saveWebsiteSettings() {
         leaders: ADMIN_LEADERSHIP_MEMBERS
       }
     },
+    contact_page: {
+      hero_section: {
+        badge: document.getElementById('ws_contact_hero_badge') ? document.getElementById('ws_contact_hero_badge').value.trim() : 'DIRECT ARCHITECT ACCESS • 4-HOUR GUARANTEED SLA',
+        title: document.getElementById('ws_contact_hero_title') ? document.getElementById('ws_contact_hero_title').value.trim() : "Let's Build Something Enduring Together.",
+        description: document.getElementById('ws_contact_hero_desc') ? document.getElementById('ws_contact_hero_desc').value.trim() : '',
+        metric1_label: document.getElementById('ws_contact_m1_label') ? document.getElementById('ws_contact_m1_label').value.trim() : 'Average Response',
+        metric1_val: document.getElementById('ws_contact_m1_val') ? document.getElementById('ws_contact_m1_val').value.trim() : '< 2.4 Hours',
+        metric2_label: document.getElementById('ws_contact_m2_label') ? document.getElementById('ws_contact_m2_label').value.trim() : 'NDA & IP Protection',
+        metric2_val: document.getElementById('ws_contact_m2_val') ? document.getElementById('ws_contact_m2_val').value.trim() : 'Signed Day 1',
+        metric3_label: document.getElementById('ws_contact_m3_label') ? document.getElementById('ws_contact_m3_label').value.trim() : 'Verified Ratings',
+        metric3_val: document.getElementById('ws_contact_m3_val') ? document.getElementById('ws_contact_m3_val').value.trim() : '5.0 Clutch & Google'
+      },
+      direct_channels: {
+        discovery_badge: document.getElementById('ws_contact_disc_badge') ? document.getElementById('ws_contact_disc_badge').value.trim() : '⚡ INSTANT DISCOVERY',
+        discovery_title: document.getElementById('ws_contact_disc_title') ? document.getElementById('ws_contact_disc_title').value.trim() : 'Need a Direct Architectural Call?',
+        discovery_desc: document.getElementById('ws_contact_disc_desc') ? document.getElementById('ws_contact_disc_desc').value.trim() : '',
+        discovery_email: document.getElementById('ws_contact_disc_email') ? document.getElementById('ws_contact_disc_email').value.trim() : 'contact@creed-tech.com',
+        official_email: document.getElementById('ws_contact_off_email') ? document.getElementById('ws_contact_off_email').value.trim() : 'contact@creed-tech.com',
+        phone_number: document.getElementById('ws_contact_phone') ? document.getElementById('ws_contact_phone').value.trim() : '+1 (415) 890-4820',
+        whatsapp_number: document.getElementById('ws_contact_wa_num') ? document.getElementById('ws_contact_wa_num').value.trim() : '+1 (415) 890-4820',
+        whatsapp_url: document.getElementById('ws_contact_wa_url') ? document.getElementById('ws_contact_wa_url').value.trim() : 'https://wa.me/14158904820'
+      },
+      onboarding_steps: {
+        badge: document.getElementById('ws_contact_steps_badge') ? document.getElementById('ws_contact_steps_badge').value.trim() : 'EXECUTION CERTAINTY',
+        title: document.getElementById('ws_contact_steps_title') ? document.getElementById('ws_contact_steps_title').value.trim() : 'What Happens After You Reach Out?',
+        description: document.getElementById('ws_contact_steps_desc') ? document.getElementById('ws_contact_steps_desc').value.trim() : '',
+        steps: ADMIN_CONTACT_STEPS
+      },
+      faqs: ADMIN_CONTACT_FAQS,
+      cta_banner: {
+        title: document.getElementById('ws_contact_cta_title') ? document.getElementById('ws_contact_cta_title').value.trim() : 'Prefer direct enterprise correspondence?',
+        description: document.getElementById('ws_contact_cta_desc') ? document.getElementById('ws_contact_cta_desc').value.trim() : '',
+        button_text: document.getElementById('ws_contact_cta_btn_text') ? document.getElementById('ws_contact_cta_btn_text').value.trim() : 'Email RFP / Architecture Docs',
+        button_email: document.getElementById('ws_contact_cta_btn_email') ? document.getElementById('ws_contact_cta_btn_email').value.trim() : 'projects@creed-tech.com'
+      }
+    },
     footer: {
       copyright_text: document.getElementById('ws_footer_copyright') ? document.getElementById('ws_footer_copyright').value.trim() : '',
       facebook_url: document.getElementById('ws_social_facebook') ? document.getElementById('ws_social_facebook').value.trim() : '',
@@ -2630,7 +3029,6 @@ async function saveWebsiteSettings() {
       loadWebsiteSettingsFromBackend();
     } else {
       alert('❌ ' + (data.message || data.error || 'Failed to save settings.'));
-    }
   } catch (err) {
     alert('❌ Error saving settings: ' + err.message);
   }

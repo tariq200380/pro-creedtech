@@ -3,6 +3,94 @@ $page_title = "Contact Solutions Architecture & Engineering | Creed Tech";
 $page_description = "Schedule a technical consultation with Creed Tech's principal solutions architects. Direct engineering scoping and zero-obligation NDA protection.";
 $active_page = "contact";
 
+$contactSettingsFile = __DIR__ . '/data/contact_page_settings.json';
+$contactSettingsData = file_exists($contactSettingsFile) ? (json_decode(@file_get_contents($contactSettingsFile), true) ?: []) : [];
+
+$cHero = $contactSettingsData['hero_section'] ?? [
+    'badge' => 'DIRECT ARCHITECT ACCESS • 4-HOUR GUARANTEED SLA',
+    'title' => "Let's Build Something Enduring Together.",
+    'description' => 'Connect directly with senior systems architects and technical leaders. Whether you need an end-to-end enterprise platform, sovereign AI pipelines, or dedicated engineering pods—we are ready.',
+    'metric1_label' => 'Average Response',
+    'metric1_val' => '< 2.4 Hours',
+    'metric2_label' => 'NDA & IP Protection',
+    'metric2_val' => 'Signed Day 1',
+    'metric3_label' => 'Verified Ratings',
+    'metric3_val' => '5.0 Clutch & Google'
+];
+
+$cChannels = $contactSettingsData['direct_channels'] ?? [
+    'discovery_badge' => '⚡ INSTANT DISCOVERY',
+    'discovery_title' => 'Need a Direct Architectural Call?',
+    'discovery_desc' => 'Skip the form and schedule a 30-minute discovery call directly with one of our Principal Systems Architects.',
+    'discovery_email' => 'contact@creed-tech.com',
+    'official_email' => 'contact@creed-tech.com',
+    'phone_number' => '+1 (415) 890-4820',
+    'whatsapp_number' => '+1 (415) 890-4820',
+    'whatsapp_url' => 'https://wa.me/14158904820'
+];
+
+$cSteps = $contactSettingsData['onboarding_steps'] ?? [
+    'badge' => 'EXECUTION CERTAINTY',
+    'title' => 'What Happens After You Reach Out?',
+    'description' => 'Our deterministic 4-stage onboarding model eliminates ambiguity and ensures rapid engineering ramp-up.',
+    'steps' => [
+        [
+            'number' => '01',
+            'title' => 'Architectural Review',
+            'description' => 'Our systems architects evaluate your scope, stack constraints, and timeline feasibility within 4 hours.',
+            'timeline' => 'Within 4 Hours'
+        ],
+        [
+            'number' => '02',
+            'title' => 'NDA & Security Clearance',
+            'description' => 'We sign enterprise bilateral NDAs and establish sovereign data handling protocols to protect your IP.',
+            'timeline' => 'Day 1 Priority'
+        ],
+        [
+            'number' => '03',
+            'title' => 'Technical Discovery Call',
+            'description' => 'A 45-minute deep-dive with your engineering leads to align on API schemas, sprint cadence, and architecture.',
+            'timeline' => 'Day 2 - 3'
+        ],
+        [
+            'number' => '04',
+            'title' => 'Sprint Deployment',
+            'description' => 'Dedicated pods integrate with your Git workflows, Slack/Jira channels, and commence milestone sprints.',
+            'timeline' => 'Ready within 3-7 Days'
+        ]
+    ]
+];
+
+$cFaqs = $contactSettingsData['faqs'] ?? [
+    [
+        'question' => 'How quickly can your senior engineering pods be deployed?',
+        'answer' => 'Following our initial technical scoping session and mutual NDA execution, our specialized pods can integrate with your repository and sprint ceremonies within 3 to 7 business days.'
+    ],
+    [
+        'question' => 'How is our intellectual property (IP) and data privacy protected?',
+        'answer' => 'All intellectual property, proprietary algorithms, and code artifacts belong 100% to your organization from day one. We sign bilateral enterprise NDAs and enforce SOC 2 Type II and GDPR-compliant sovereign sandboxes.'
+    ],
+    [
+        'question' => 'What engagement models do you offer for projects?',
+        'answer' => 'We provide two core engagement models: Dedicated Engineering Pods (integrated full-stack teams with fixed monthly sprints) and Milestone-Based Fixed-Scope Projects with guaranteed deliverables and deterministic timelines.'
+    ],
+    [
+        'question' => 'Which time zones do your global engineering centers support?',
+        'answer' => 'With specialized centers in Germany (Frankfurt), Spain (Madrid), and the USA (San Francisco), we provide 24/7 follow-the-sun coverage with seamless real-time overlap across US East/West, UK, and European business hours.'
+    ],
+    [
+        'question' => 'Can you modernize existing legacy systems or do you only build greenfield apps?',
+        'answer' => 'We specialize in both. Our systems architects frequently perform zero-downtime database migrations, monolith-to-microservices decoupling, and automated CI/CD pipeline modernization alongside new greenfield product builds.'
+    ]
+];
+
+$cCta = $contactSettingsData['cta_banner'] ?? [
+    'title' => 'Prefer direct enterprise correspondence?',
+    'description' => 'Send your RFP, architecture specs, or tender documents directly to our senior leadership inbox at projects@creed-tech.com.',
+    'button_text' => 'Email RFP / Architecture Docs',
+    'button_email' => 'projects@creed-tech.com'
+];
+
 include __DIR__ . '/includes/header.php';
 ?>
 
@@ -279,33 +367,33 @@ include __DIR__ . '/includes/header.php';
       
       <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 14px;background:#fff;border:1px solid rgba(209,213,219,0.8);color:#0052FF;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.05);margin-bottom:1rem;">
         <span style="width:6px;height:6px;background:#FF6B00;border-radius:50%;display:inline-block;"></span>
-        <span>DIRECT ARCHITECT ACCESS • 4-HOUR GUARANTEED SLA</span>
+        <span><?= htmlspecialchars($cHero['badge'] ?? 'DIRECT ARCHITECT ACCESS • 4-HOUR GUARANTEED SLA') ?></span>
       </div>
 
       <h1 class="contact-hero-title">
-        Let's Build Something Enduring Together.
+        <?= htmlspecialchars($cHero['title'] ?? "Let's Build Something Enduring Together.") ?>
       </h1>
 
       <p class="contact-hero-desc">
-        Connect directly with senior systems architects and technical leaders. Whether you need an end-to-end enterprise platform, sovereign AI pipelines, or dedicated engineering pods—we are ready.
+        <?= htmlspecialchars($cHero['description'] ?? 'Connect directly with senior systems architects and technical leaders. Whether you need an end-to-end enterprise platform, sovereign AI pipelines, or dedicated engineering pods—we are ready.') ?>
       </p>
 
       <!-- Metric Badges (3 Balanced Cards) -->
       <div class="contact-metrics-grid">
         
         <div class="contact-metric-badge">
-          <span style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;display:block;">Average Response</span>
-          <span style="font-size:1.35rem;font-weight:700;color:#0052FF;margin-top:4px;display:block;">&lt; 2.4 Hours</span>
+          <span style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;display:block;"><?= htmlspecialchars($cHero['metric1_label'] ?? 'Average Response') ?></span>
+          <span style="font-size:1.35rem;font-weight:700;color:#0052FF;margin-top:4px;display:block;"><?= htmlspecialchars($cHero['metric1_val'] ?? '< 2.4 Hours') ?></span>
         </div>
 
         <div class="contact-metric-badge">
-          <span style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;display:block;">NDA &amp; IP Protection</span>
-          <span style="font-size:1.35rem;font-weight:700;color:#030712;margin-top:4px;display:block;">Signed Day 1</span>
+          <span style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;display:block;"><?= htmlspecialchars($cHero['metric2_label'] ?? 'NDA & IP Protection') ?></span>
+          <span style="font-size:1.35rem;font-weight:700;color:#030712;margin-top:4px;display:block;"><?= htmlspecialchars($cHero['metric2_val'] ?? 'Signed Day 1') ?></span>
         </div>
 
         <div class="contact-metric-badge">
-          <span style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;display:block;">Verified Ratings</span>
-          <span style="font-size:1.35rem;font-weight:700;color:#FF6B00;margin-top:4px;display:block;">5.0 Clutch &amp; Google</span>
+          <span style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;display:block;"><?= htmlspecialchars($cHero['metric3_label'] ?? 'Verified Ratings') ?></span>
+          <span style="font-size:1.35rem;font-weight:700;color:#FF6B00;margin-top:4px;display:block;"><?= htmlspecialchars($cHero['metric3_val'] ?? '5.0 Clutch & Google') ?></span>
         </div>
 
       </div>
@@ -425,15 +513,15 @@ include __DIR__ . '/includes/header.php';
           <!-- Direct Booking Card -->
           <div style="background:linear-gradient(135deg, #030712, #111827);color:#fff;padding:1.75rem;border-radius:1rem;border:1px solid #1F2937;box-shadow:0 4px 10px rgba(0,0,0,0.15);">
             <div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:rgba(255,255,255,0.1);color:#FB923C;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;margin-bottom:0.75rem;">
-              <span>⚡ INSTANT DISCOVERY</span>
+              <span><?= htmlspecialchars($cChannels['discovery_badge'] ?? '⚡ INSTANT DISCOVERY') ?></span>
             </div>
             <h3 style="font-size:1.3rem;font-weight:700;margin:0 0 8px;color:#fff;">
-              Need a Direct Architectural Call?
+              <?= htmlspecialchars($cChannels['discovery_title'] ?? 'Need a Direct Architectural Call?') ?>
             </h3>
             <p style="font-size:13px;color:#D1D5DB;line-height:1.6;font-weight:400;margin:0 0 1.25rem;">
-              Skip the form and schedule a 30-minute discovery call directly with one of our Principal Systems Architects.
+              <?= htmlspecialchars($cChannels['discovery_desc'] ?? 'Skip the form and schedule a 30-minute discovery call directly with one of our Principal Systems Architects.') ?>
             </p>
-            <a href="mailto:contact@creed-tech.com?subject=Schedule%20Discovery%20Call" class="btn-orange" style="width:100%;height:44px;justify-content:center;text-align:center;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;">
+            <a href="mailto:<?= htmlspecialchars($cChannels['discovery_email'] ?? 'contact@creed-tech.com') ?>?subject=Schedule%20Discovery%20Call" class="btn-orange" style="width:100%;height:44px;justify-content:center;text-align:center;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;">
               Schedule Discovery Call
             </a>
           </div>
@@ -452,8 +540,8 @@ include __DIR__ . '/includes/header.php';
                 </div>
                 <div style="min-width:0;">
                   <span style="font-size:10.5px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;">Official Inquiries</span>
-                  <a href="mailto:contact@creed-tech.com" style="font-size:13.5px;font-weight:600;color:#030712;text-decoration:none;word-break:break-all;" onmouseover="this.style.color='#0052FF'" onmouseout="this.style.color='#030712'">
-                    contact@creed-tech.com
+                  <a href="mailto:<?= htmlspecialchars($cChannels['official_email'] ?? 'contact@creed-tech.com') ?>" style="font-size:13.5px;font-weight:600;color:#030712;text-decoration:none;word-break:break-all;" onmouseover="this.style.color='#0052FF'" onmouseout="this.style.color='#030712'">
+                    <?= htmlspecialchars($cChannels['official_email'] ?? 'contact@creed-tech.com') ?>
                   </a>
                 </div>
               </div>
@@ -464,8 +552,8 @@ include __DIR__ . '/includes/header.php';
                 </div>
                 <div style="min-width:0;">
                   <span style="font-size:10.5px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;">Global Telemetry Line</span>
-                  <a href="tel:+14158904820" style="font-size:13.5px;font-weight:600;color:#030712;text-decoration:none;" onmouseover="this.style.color='#0052FF'" onmouseout="this.style.color='#030712'">
-                    +1 (415) 890-4820
+                  <a href="tel:<?= htmlspecialchars(preg_replace('/[^0-9+]/', '', $cChannels['phone_number'] ?? '+14158904820')) ?>" style="font-size:13.5px;font-weight:600;color:#030712;text-decoration:none;" onmouseover="this.style.color='#0052FF'" onmouseout="this.style.color='#030712'">
+                    <?= htmlspecialchars($cChannels['phone_number'] ?? '+1 (415) 890-4820') ?>
                   </a>
                 </div>
               </div>
@@ -476,8 +564,8 @@ include __DIR__ . '/includes/header.php';
                 </div>
                 <div style="min-width:0;">
                   <span style="font-size:10.5px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;">WhatsApp Architect Hotline</span>
-                  <a href="https://wa.me/14158904820" target="_blank" rel="noopener noreferrer" style="font-size:13.5px;font-weight:600;color:#030712;text-decoration:none;" onmouseover="this.style.color='#059669'" onmouseout="this.style.color='#030712'">
-                    +1 (415) 890-4820 (Direct Chat)
+                  <a href="<?= htmlspecialchars($cChannels['whatsapp_url'] ?? 'https://wa.me/14158904820') ?>" target="_blank" rel="noopener noreferrer" style="font-size:13.5px;font-weight:600;color:#030712;text-decoration:none;" onmouseover="this.style.color='#059669'" onmouseout="this.style.color='#030712'">
+                    <?= htmlspecialchars($cChannels['whatsapp_number'] ?? '+1 (415) 890-4820') ?> (Direct Chat)
                   </a>
                 </div>
               </div>
@@ -533,74 +621,33 @@ include __DIR__ . '/includes/header.php';
       
       <div class="contact-steps-header">
         <span style="font-size:11.5px;font-weight:700;color:#FF6B00;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">
-          EXECUTION CERTAINTY
+          <?= htmlspecialchars($cSteps['badge'] ?? 'EXECUTION CERTAINTY') ?>
         </span>
         <h2 class="contact-steps-title">
-          What Happens After You Reach Out?
+          <?= htmlspecialchars($cSteps['title'] ?? 'What Happens After You Reach Out?') ?>
         </h2>
         <p style="font-size:14px;color:#6B7280;font-weight:400;margin:0;">
-          Our deterministic 4-stage onboarding model eliminates ambiguity and ensures rapid engineering ramp-up.
+          <?= htmlspecialchars($cSteps['description'] ?? 'Our deterministic 4-stage onboarding model eliminates ambiguity and ensures rapid engineering ramp-up.') ?>
         </p>
       </div>
 
       <div class="contact-steps-grid">
-        
-        <!-- Step 01 -->
+        <?php foreach (($cSteps['steps'] ?? []) as $step): ?>
         <div class="contact-step-card">
           <div>
-            <span style="font-size:1.5rem;font-weight:700;color:#0052FF;font-family:monospace;display:block;margin-bottom:0.75rem;">01</span>
-            <h3 style="font-size:1.2rem;font-weight:700;color:#030712;margin:0 0 8px;">Architectural Review</h3>
+            <span style="font-size:1.5rem;font-weight:700;color:#0052FF;font-family:monospace;display:block;margin-bottom:0.75rem;"><?= htmlspecialchars($step['number'] ?? '01') ?></span>
+            <h3 style="font-size:1.2rem;font-weight:700;color:#030712;margin:0 0 8px;"><?= htmlspecialchars($step['title'] ?? '') ?></h3>
             <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-              Our systems architects evaluate your scope, stack constraints, and timeline feasibility within 4 hours.
+              <?= htmlspecialchars($step['description'] ?? '') ?>
             </p>
           </div>
+          <?php if (!empty($step['timeline'])): ?>
           <div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #E5E7EB;font-size:12px;font-weight:700;color:#0052FF;">
-            Within 4 Hours
+            <?= htmlspecialchars($step['timeline']) ?>
           </div>
+          <?php endif; ?>
         </div>
-
-        <!-- Step 02 -->
-        <div class="contact-step-card">
-          <div>
-            <span style="font-size:1.5rem;font-weight:700;color:#0052FF;font-family:monospace;display:block;margin-bottom:0.75rem;">02</span>
-            <h3 style="font-size:1.2rem;font-weight:700;color:#030712;margin:0 0 8px;">NDA &amp; Security Clearance</h3>
-            <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-              We sign enterprise bilateral NDAs and establish sovereign data handling protocols to protect your IP.
-            </p>
-          </div>
-          <div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #E5E7EB;font-size:12px;font-weight:700;color:#0052FF;">
-            Day 1 Priority
-          </div>
-        </div>
-
-        <!-- Step 03 -->
-        <div class="contact-step-card">
-          <div>
-            <span style="font-size:1.5rem;font-weight:700;color:#0052FF;font-family:monospace;display:block;margin-bottom:0.75rem;">03</span>
-            <h3 style="font-size:1.2rem;font-weight:700;color:#030712;margin:0 0 8px;">Technical Discovery Call</h3>
-            <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-              A 45-minute deep-dive with your engineering leads to align on API schemas, sprint cadence, and architecture.
-            </p>
-          </div>
-          <div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #E5E7EB;font-size:12px;font-weight:700;color:#0052FF;">
-            Day 2 - 3
-          </div>
-        </div>
-
-        <!-- Step 04 -->
-        <div class="contact-step-card">
-          <div>
-            <span style="font-size:1.5rem;font-weight:700;color:#0052FF;font-family:monospace;display:block;margin-bottom:0.75rem;">04</span>
-            <h3 style="font-size:1.2rem;font-weight:700;color:#030712;margin:0 0 8px;">Sprint Deployment</h3>
-            <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-              Dedicated pods integrate with your Git workflows, Slack/Jira channels, and commence milestone sprints.
-            </p>
-          </div>
-          <div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #E5E7EB;font-size:12px;font-weight:700;color:#0052FF;">
-            Ready within 3-7 Days
-          </div>
-        </div>
-
+        <?php endforeach; ?>
       </div>
 
     </div>
@@ -623,62 +670,17 @@ include __DIR__ . '/includes/header.php';
       </div>
 
       <div style="display:flex;flex-direction:column;gap:12px;text-align:left;">
-        
-        <!-- FAQ 1 -->
+        <?php foreach ($cFaqs as $idx => $faq): ?>
         <div class="faq-accordion-item" style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
           <button type="button" onclick="toggleContactFaq(this)" style="width:100%;padding:1.25rem 1.5rem;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-weight:600;font-size:14px;color:#030712;background:transparent;border:none;cursor:pointer;">
-            <span>How quickly can your senior engineering pods be deployed?</span>
-            <span class="faq-icon" style="font-size:1.25rem;font-family:monospace;color:#9CA3AF;flex-shrink:0;">−</span>
+            <span><?= htmlspecialchars($faq['question'] ?? '') ?></span>
+            <span class="faq-icon" style="font-size:1.25rem;font-family:monospace;color:#9CA3AF;flex-shrink:0;"><?= $idx === 0 ? '−' : '+' ?></span>
           </button>
-          <div class="faq-content" style="display:block;padding:0 1.5rem 1.25rem;font-size:13px;color:#4B5563;line-height:1.65;border-top:1px solid #F3F4F6;">
-            Following our initial technical scoping session and mutual NDA execution, our specialized pods can integrate with your repository and sprint ceremonies within 3 to 7 business days.
+          <div class="faq-content" style="display:<?= $idx === 0 ? 'block' : 'none' ?>;padding:0 1.5rem 1.25rem;font-size:13px;color:#4B5563;line-height:1.65;border-top:1px solid #F3F4F6;">
+            <?= htmlspecialchars($faq['answer'] ?? '') ?>
           </div>
         </div>
-
-        <!-- FAQ 2 -->
-        <div class="faq-accordion-item" style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
-          <button type="button" onclick="toggleContactFaq(this)" style="width:100%;padding:1.25rem 1.5rem;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-weight:600;font-size:14px;color:#030712;background:transparent;border:none;cursor:pointer;">
-            <span>How is our intellectual property (IP) and data privacy protected?</span>
-            <span class="faq-icon" style="font-size:1.25rem;font-family:monospace;color:#9CA3AF;flex-shrink:0;">+</span>
-          </button>
-          <div class="faq-content" style="display:none;padding:0 1.5rem 1.25rem;font-size:13px;color:#4B5563;line-height:1.65;border-top:1px solid #F3F4F6;">
-            All intellectual property, proprietary algorithms, and code artifacts belong 100% to your organization from day one. We sign bilateral enterprise NDAs and enforce SOC 2 Type II and GDPR-compliant sovereign sandboxes.
-          </div>
-        </div>
-
-        <!-- FAQ 3 -->
-        <div class="faq-accordion-item" style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
-          <button type="button" onclick="toggleContactFaq(this)" style="width:100%;padding:1.25rem 1.5rem;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-weight:600;font-size:14px;color:#030712;background:transparent;border:none;cursor:pointer;">
-            <span>What engagement models do you offer for projects?</span>
-            <span class="faq-icon" style="font-size:1.25rem;font-family:monospace;color:#9CA3AF;flex-shrink:0;">+</span>
-          </button>
-          <div class="faq-content" style="display:none;padding:0 1.5rem 1.25rem;font-size:13px;color:#4B5563;line-height:1.65;border-top:1px solid #F3F4F6;">
-            We provide two core engagement models: Dedicated Engineering Pods (integrated full-stack teams with fixed monthly sprints) and Milestone-Based Fixed-Scope Projects with guaranteed deliverables and deterministic timelines.
-          </div>
-        </div>
-
-        <!-- FAQ 4 -->
-        <div class="faq-accordion-item" style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
-          <button type="button" onclick="toggleContactFaq(this)" style="width:100%;padding:1.25rem 1.5rem;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-weight:600;font-size:14px;color:#030712;background:transparent;border:none;cursor:pointer;">
-            <span>Which time zones do your global engineering centers support?</span>
-            <span class="faq-icon" style="font-size:1.25rem;font-family:monospace;color:#9CA3AF;flex-shrink:0;">+</span>
-          </button>
-          <div class="faq-content" style="display:none;padding:0 1.5rem 1.25rem;font-size:13px;color:#4B5563;line-height:1.65;border-top:1px solid #F3F4F6;">
-            With specialized centers in Germany (Frankfurt), Spain (Madrid), and the USA (San Francisco), we provide 24/7 follow-the-sun coverage with seamless real-time overlap across US East/West, UK, and European business hours.
-          </div>
-        </div>
-
-        <!-- FAQ 5 -->
-        <div class="faq-accordion-item" style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
-          <button type="button" onclick="toggleContactFaq(this)" style="width:100%;padding:1.25rem 1.5rem;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-weight:600;font-size:14px;color:#030712;background:transparent;border:none;cursor:pointer;">
-            <span>Can you modernize existing legacy systems or do you only build greenfield apps?</span>
-            <span class="faq-icon" style="font-size:1.25rem;font-family:monospace;color:#9CA3AF;flex-shrink:0;">+</span>
-          </button>
-          <div class="faq-content" style="display:none;padding:0 1.5rem 1.25rem;font-size:13px;color:#4B5563;line-height:1.65;border-top:1px solid #F3F4F6;">
-            We specialize in both. Our systems architects frequently perform zero-downtime database migrations, monolith-to-microservices decoupling, and automated CI/CD pipeline modernization alongside new greenfield product builds.
-          </div>
-        </div>
-
+        <?php endforeach; ?>
       </div>
 
     </div>
@@ -688,15 +690,14 @@ include __DIR__ . '/includes/header.php';
   <section class="contact-cta-section">
     <div class="contact-container" style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
       <h2 class="contact-cta-title">
-        Prefer direct enterprise correspondence?
+        <?= htmlspecialchars($cCta['title'] ?? 'Prefer direct enterprise correspondence?') ?>
       </h2>
       <p style="font-size:14px;color:#DBEAFE;font-weight:400;max-width:42rem;margin:0;line-height:1.65;">
-        Send your RFP, architecture specs, or tender documents directly to our senior leadership inbox at{' '}
-        <a href="mailto:projects@creed-tech.com" style="font-weight:700;color:#fff;text-decoration:underline;">projects@creed-tech.com</a>.
+        <?= htmlspecialchars($cCta['description'] ?? 'Send your RFP, architecture specs, or tender documents directly to our senior leadership inbox at projects@creed-tech.com.') ?>
       </p>
       <div style="padding-top:0.5rem;">
-        <a href="mailto:projects@creed-tech.com" style="display:inline-block;padding:12px 26px;background:#fff;color:#0052FF;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;text-decoration:none;border-radius:4px;box-shadow:0 4px 10px rgba(0,0,0,0.15);transition:background 0.2s;" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='#fff'">
-          Email RFP / Architecture Docs
+        <a href="mailto:<?= htmlspecialchars($cCta['button_email'] ?? 'projects@creed-tech.com') ?>" style="display:inline-block;padding:12px 26px;background:#fff;color:#0052FF;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;text-decoration:none;border-radius:4px;box-shadow:0 4px 10px rgba(0,0,0,0.15);transition:background 0.2s;" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='#fff'">
+          <?= htmlspecialchars($cCta['button_text'] ?? 'Email RFP / Architecture Docs') ?>
         </a>
       </div>
     </div>
