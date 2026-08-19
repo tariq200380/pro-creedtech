@@ -2689,13 +2689,27 @@ function addNewContactStepRow() {
   if (!Array.isArray(ADMIN_CONTACT_STEPS)) ADMIN_CONTACT_STEPS = [];
   syncCurrentContactInputsIntoMemory();
   var nextIdx = ADMIN_CONTACT_STEPS.length + 1;
+  var formattedNum = (nextIdx < 10 ? '0' : '') + nextIdx;
   ADMIN_CONTACT_STEPS.push({
-    number: (nextIdx < 10 ? '0' : '') + nextIdx,
+    number: formattedNum,
     title: 'New Onboarding Phase #' + nextIdx,
     description: 'Detailed description of this engineering milestone and onboarding deliverable.',
     timeline: 'Within ' + (nextIdx * 2) + ' Days'
   });
   renderAdminContactSteps(ADMIN_CONTACT_STEPS);
+
+  setTimeout(function() {
+    var newIdx = ADMIN_CONTACT_STEPS.length - 1;
+    var newBox = document.getElementById('c_step_box_' + newIdx);
+    if (newBox) {
+      newBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var titleInput = document.getElementById('c_step_title_' + newIdx);
+      if (titleInput) {
+        titleInput.focus();
+        titleInput.select();
+      }
+    }
+  }, 100);
 }
 window.addNewContactStepRow = addNewContactStepRow;
 
@@ -2703,6 +2717,10 @@ function deleteContactStepRow(index) {
   syncCurrentContactInputsIntoMemory();
   if (confirm('Are you sure you want to remove this onboarding step?')) {
     ADMIN_CONTACT_STEPS.splice(index, 1);
+    // Re-number remaining steps sequentially
+    ADMIN_CONTACT_STEPS.forEach(function(st, idx) {
+      st.number = (idx + 1 < 10 ? '0' : '') + (idx + 1);
+    });
     renderAdminContactSteps(ADMIN_CONTACT_STEPS);
   }
 }
@@ -2748,6 +2766,19 @@ function addNewContactFaqRow() {
     answer: 'Clear, concise explanation and answer for clients and enterprise partners.'
   });
   renderAdminContactFaqs(ADMIN_CONTACT_FAQS);
+
+  setTimeout(function() {
+    var newIdx = ADMIN_CONTACT_FAQS.length - 1;
+    var newBox = document.getElementById('c_faq_box_' + newIdx);
+    if (newBox) {
+      newBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var qInput = document.getElementById('c_faq_q_' + newIdx);
+      if (qInput) {
+        qInput.focus();
+        qInput.select();
+      }
+    }
+  }, 100);
 }
 window.addNewContactFaqRow = addNewContactFaqRow;
 
