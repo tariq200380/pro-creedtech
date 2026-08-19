@@ -3,22 +3,6 @@ $page_title = "Enterprise Case Studies & Delivered Systems | Creed Tech";
 $page_description = "Explore real-world software architecture deployments, high-concurrency systems, and digital transformations delivered by Creed Tech.";
 $active_page = "portfolio";
 
-$portfolioFile = __DIR__ . '/data/portfolio_projects.json';
-$portfolioData = file_exists($portfolioFile) ? (json_decode(file_get_contents($portfolioFile), true) ?: []) : [];
-
-$standards = $portfolioData['standards_showcase'] ?? [
-    'image' => 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80',
-    'badge' => 'ENGINEERING CULTURE',
-    'overlay_title' => '100% Principal Engineer Led',
-    'overlay_subtitle' => 'Zero junior outsourcing. Full accountability.',
-    'overlay_tag' => 'Verified SLA',
-    'tagline' => 'HOW WE GUARANTEE SUCCESS',
-    'title' => 'Built on Rigorous Enterprise Standards',
-    'description' => 'Every case study in our portfolio is the direct outcome of disciplined architectural principles, continuous automated verification, and zero-compromise security controls.'
-];
-
-$projectsList = $portfolioData['projects'] ?? [];
-
 include __DIR__ . '/includes/header.php';
 ?>
 
@@ -260,13 +244,13 @@ include __DIR__ . '/includes/header.php';
         <!-- Left: High-Tech Engineering & DevOps Picture -->
         <div style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 15px 25px -5px rgba(0,0,0,0.08);border:1px solid #E5E7EB;width:100%;">
           <div style="width:100%;height:320px;position:relative;background:#0F172A;" class="sm:h-[380px] lg:h-[440px]">
-            <img src="<?= htmlspecialchars($standards['image'] ?? 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80') ?>" alt="Creed Tech Senior Engineering Team" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80" alt="Creed Tech Senior Engineering Team" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3) 50%, transparent);pointer-events:none;"></div>
             
             <!-- Top Badge -->
             <div style="position:absolute;top:1rem;left:1rem;">
               <span style="padding:4px 10px;background:#0052FF;color:#fff;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2);">
-                <?= htmlspecialchars($standards['badge'] ?? 'ENGINEERING CULTURE') ?>
+                ENGINEERING CULTURE
               </span>
             </div>
 
@@ -274,11 +258,11 @@ include __DIR__ . '/includes/header.php';
             <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);padding:1rem 1.25rem;border-radius:10px;border:1px solid #E5E7EB;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);text-align:left;">
               <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
                 <div>
-                  <span style="font-size:13px;font-weight:700;color:#030712;display:block;"><?= htmlspecialchars($standards['overlay_title'] ?? '100% Principal Engineer Led') ?></span>
-                  <span style="font-size:11px;color:#6B7280;font-weight:500;"><?= htmlspecialchars($standards['overlay_subtitle'] ?? 'Zero junior outsourcing. Full accountability.') ?></span>
+                  <span style="font-size:13px;font-weight:700;color:#030712;display:block;">100% Principal Engineer Led</span>
+                  <span style="font-size:11px;color:#6B7280;font-weight:500;">Zero junior outsourcing. Full accountability.</span>
                 </div>
                 <span style="padding:4px 10px;background:#DCFCE7;color:#166534;font-size:11px;font-weight:700;border-radius:2px;">
-                  <?= htmlspecialchars($standards['overlay_tag'] ?? 'Verified SLA') ?>
+                  Verified SLA
                 </span>
               </div>
             </div>
@@ -291,15 +275,15 @@ include __DIR__ . '/includes/header.php';
           <div>
             <div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:#fff;border:1px solid #D1D5DB;color:#0052FF;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;border-radius:2px;">
               <span style="width:5px;height:5px;background:#0052FF;display:inline-block;border-radius:50%;"></span>
-              <?= htmlspecialchars($standards['tagline'] ?? 'HOW WE GUARANTEE SUCCESS') ?>
+              HOW WE GUARANTEE SUCCESS
             </div>
 
-            <h2 style="font-size:clamp(1.6rem, 3vw, 2.35rem);font-weight:700;color:#030712;letter-spacing:-0.02em;line-height:1.25;margin:0 0 0.6rem;">
-              <?= htmlspecialchars($standards['title'] ?? 'Built on Rigorous Enterprise Standards') ?>
+            <h2 style="font-size:clamp(1.6rem, 3vw, 2.35rem);font-weight:700;color:#030712;letter-spacing:-0.03em;line-height:1.25;margin:0 0 0.6rem;">
+              Built on Rigorous Enterprise Standards
             </h2>
 
             <p style="font-size:14px;color:#4B5563;line-height:1.65;margin:0;">
-              <?= htmlspecialchars($standards['description'] ?? 'Every case study in our portfolio is the direct outcome of disciplined architectural principles, continuous automated verification, and zero-compromise security controls.') ?>
+              Every case study in our portfolio is the direct outcome of disciplined architectural principles, continuous automated verification, and zero-compromise security controls.
             </p>
           </div>
 
@@ -356,95 +340,301 @@ include __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 3. DYNAMIC CASE STUDIES SHOWCASE SECTION -->
+  <!-- 3. ALTERNATING 4 CASE STUDIES SECTION -->
   <section class="pf-cases-section">
     <div class="portfolio-container pf-cases-container" style="display:flex;flex-direction:column;gap:5rem;">
       
-      <?php if (empty($projectsList)): ?>
-        <div style="text-align:center;padding:4rem 1rem;color:#64748B;">
-          <p style="font-size:1.1rem;margin:0;">No portfolio case studies published yet.</p>
-        </div>
-      <?php else: ?>
-        <?php foreach ($projectsList as $idx => $proj): 
-          $pId = $proj['id'] ?? ('case-' . ($idx + 1));
-          $pNum = $proj['number'] ?? sprintf('%02d', $idx + 1);
-          $dotColor = ($idx % 3 === 0) ? '#0052FF' : (($idx % 3 === 1) ? '#FF6B00' : '#10B981');
-        ?>
-        <div class="pf-case-grid">
-          
-          <!-- Text Detail Column (Always Left / First) -->
-          <div style="text-align:left;display:flex;flex-direction:column;gap:1.25rem;width:100%;">
-            <div style="display:flex;align-items:center;gap:6px;">
-              <span style="width:6px;height:6px;background:<?= $dotColor ?>;display:inline-block;border-radius:50%;"></span>
-              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#6B7280;"><?= htmlspecialchars($proj['category'] ?? 'Enterprise Systems') ?></span>
-            </div>
+      <!-- CASE 1: Apex Global Settlement Rail (UK) [Text Left, Image Right] -->
+      <div class="pf-case-grid">
+        
+        <!-- Text Detail Column (Always Left / First) -->
+        <div style="text-align:left;display:flex;flex-direction:column;gap:1.25rem;width:100%;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;background:#0052FF;display:inline-block;border-radius:50%;"></span>
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#6B7280;">Fintech &amp; Banking Rails</span>
+          </div>
 
-            <h3 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;color:#030712;letter-spacing:-0.02em;line-height:1.3;margin:0;">
-              <?= htmlspecialchars($proj['title'] ?? '') ?>
-            </h3>
+          <h3 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;color:#030712;letter-spacing:-0.02em;line-height:1.3;margin:0;">
+            Next-Gen Multi-Region High-Frequency Payment Processing Engine
+          </h3>
 
-            <p style="font-size:14px;color:#374151;line-height:1.65;margin:0;">
-              <?= htmlspecialchars($proj['description'] ?? '') ?>
-            </p>
+          <p style="font-size:14px;color:#374151;line-height:1.65;margin:0;">
+            Engineered an ultra-low latency transaction clearing engine capable of processing 120,000 TPS with sub-10ms latency and zero transactional data loss.
+          </p>
 
-            <!-- 3 Impact Metrics Row -->
-            <div class="pf-metrics-strip" style="padding:1rem 1.25rem;background:#F2F8FD;border-radius:10px;border:1px solid #BFDBFE;">
-              <div>
-                <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;"><?= htmlspecialchars($proj['metric1_val'] ?? '100%') ?></span>
-                <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;"><?= htmlspecialchars($proj['metric1_label'] ?? 'Impact') ?></span>
-              </div>
-              <div>
-                <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;"><?= htmlspecialchars($proj['metric2_val'] ?? '99.9%') ?></span>
-                <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;"><?= htmlspecialchars($proj['metric2_label'] ?? 'Efficiency') ?></span>
-              </div>
-              <div>
-                <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;"><?= htmlspecialchars($proj['metric3_val'] ?? '0 Defect') ?></span>
-                <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;"><?= htmlspecialchars($proj['metric3_label'] ?? 'Uptime SLA') ?></span>
-              </div>
-            </div>
-
-            <!-- Tech Stack Chips -->
+          <!-- 3 Impact Metrics Row -->
+          <div class="pf-metrics-strip" style="padding:1rem 1.25rem;background:#F2F8FD;border-radius:10px;border:1px solid #BFDBFE;">
             <div>
-              <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Architectural Stack:</span>
-              <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-                <?php 
-                  $stack = is_array($proj['tech_stack'] ?? null) ? $proj['tech_stack'] : explode(',', $proj['tech_stack'] ?? '');
-                  foreach ($stack as $tech):
-                    $tech = trim($tech);
-                    if (empty($tech)) continue;
-                ?>
-                  <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;"><?= htmlspecialchars($tech) ?></span>
-                <?php endforeach; ?>
-              </div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">120k TPS</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Throughput Speed</span>
             </div>
-
-            <div style="padding-top:0.25rem;">
-              <button onclick="openCaseModal('<?= htmlspecialchars($pId) ?>')" class="btn-dark" style="padding:10px 22px;font-size:12.5px;text-transform:uppercase;letter-spacing:0.05em;border-radius:3px;">
-                <span>Explore Case Study Deep-Dive</span>
-              </button>
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">-85%</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Latency Drop</span>
+            </div>
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">99.999%</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Uptime SLA</span>
             </div>
           </div>
 
-          <!-- Image Column (Always Right / Second) -->
-          <div onclick="openCaseModal('<?= htmlspecialchars($pId) ?>')" style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 10px 15px -3px rgba(0,0,0,0.08);border:1px solid #E5E7EB;background:#030712;cursor:pointer;width:100%;">
-            <div style="width:100%;height:260px;position:relative;" class="sm:h-[340px] lg:h-[400px]">
-              <img src="<?= htmlspecialchars($proj['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($proj['title'] ?? 'Case Study') ?>" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-              <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2) 50%, transparent);pointer-events:none;"></div>
-              
-              <div style="position:absolute;top:1rem;left:1rem;display:flex;align-items:center;gap:6px;">
-                <span style="width:1.85rem;height:1.85rem;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:11.5px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.2);border-radius:2px;"><?= htmlspecialchars($pNum) ?></span>
-                <span style="padding:4px 12px;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);color:#111827;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.1);"><?= htmlspecialchars($proj['badge_category'] ?? $proj['category'] ?? 'Case Study') ?></span>
-              </div>
-
-              <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;color:rgba(255,255,255,0.95);font-size:12.5px;font-weight:600;backdrop-filter:blur(8px);background:rgba(0,0,0,0.6);padding:8px 14px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                <?= htmlspecialchars($proj['client_location'] ?? ('🏢 ' . ($proj['client'] ?? 'Global Client'))) ?>
-              </div>
+          <!-- Tech Stack Chips -->
+          <div>
+            <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Architectural Stack:</span>
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Go</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Kubernetes</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">CockroachDB</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Kafka</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">AWS GovCloud</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Redis</span>
             </div>
           </div>
 
+          <div style="padding-top:0.25rem;">
+            <button onclick="openCaseModal('case-1')" class="btn-dark" style="padding:10px 22px;font-size:12.5px;text-transform:uppercase;letter-spacing:0.05em;border-radius:3px;">
+              <span>Explore Case Study Deep-Dive</span>
+            </button>
+          </div>
         </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
+
+        <!-- Image Column (Always Right / Second) -->
+        <div onclick="openCaseModal('case-1')" style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 10px 15px -3px rgba(0,0,0,0.08);border:1px solid #E5E7EB;background:#030712;cursor:pointer;width:100%;">
+          <div style="width:100%;height:260px;position:relative;" class="sm:h-[340px] lg:h-[400px]">
+            <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=1200&auto=format&fit=crop&q=80" alt="Apex Global Settlement Rail" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2) 50%, transparent);pointer-events:none;"></div>
+            
+            <div style="position:absolute;top:1rem;left:1rem;display:flex;align-items:center;gap:6px;">
+              <span style="width:1.85rem;height:1.85rem;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:11.5px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.2);border-radius:2px;">01</span>
+              <span style="padding:4px 12px;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);color:#111827;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.1);">Fintech &amp; Banking</span>
+            </div>
+
+            <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;color:rgba(255,255,255,0.95);font-size:12.5px;font-weight:600;backdrop-filter:blur(8px);background:rgba(0,0,0,0.6);padding:8px 14px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+              🏢 Apex Global Settlement Rail • United Kingdom
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CASE 2: Cognitive Health Analytics (US) [Text Left, Image Right] -->
+      <div class="pf-case-grid">
+        
+        <!-- Text Detail Column (Always Left / First) -->
+        <div style="text-align:left;display:flex;flex-direction:column;gap:1.25rem;width:100%;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;background:#FF6B00;display:inline-block;border-radius:50%;"></span>
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#6B7280;">Private LLM Orchestration</span>
+          </div>
+
+          <h3 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;color:#030712;letter-spacing:-0.02em;line-height:1.3;margin:0;">
+            Enterprise Neural Copilot &amp; Multi-Agent Document Intelligence
+          </h3>
+
+          <p style="font-size:14px;color:#374151;line-height:1.65;margin:0;">
+            Deployed private on-premise LLMs and dense vector search to automate compliance extraction across 15M+ medical unstructured diagnostic records.
+          </p>
+
+          <!-- 3 Impact Metrics Row -->
+          <div class="pf-metrics-strip" style="padding:1rem 1.25rem;background:#F2F8FD;border-radius:10px;border:1px solid #BFDBFE;">
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">88%</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Audit Time Saved</span>
+            </div>
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">99.4%</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Extraction Accuracy</span>
+            </div>
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">100% On-Prem</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Zero Data Leakage</span>
+            </div>
+          </div>
+
+          <!-- Tech Stack Chips -->
+          <div>
+            <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Architectural Stack:</span>
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Python</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">PyTorch</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Pinecone</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">LangChain</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">FastAPI</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Docker</span>
+            </div>
+          </div>
+
+          <div style="padding-top:0.25rem;">
+            <button onclick="openCaseModal('case-2')" class="btn-dark" style="padding:10px 22px;font-size:12.5px;text-transform:uppercase;letter-spacing:0.05em;border-radius:3px;">
+              <span>Explore Case Study Deep-Dive</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Image Column (Always Right / Second) -->
+        <div onclick="openCaseModal('case-2')" style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 10px 15px -3px rgba(0,0,0,0.08);border:1px solid #E5E7EB;background:#030712;cursor:pointer;width:100%;">
+          <div style="width:100%;height:260px;position:relative;" class="sm:h-[340px] lg:h-[400px]">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80" alt="Cognitive Health Analytics" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2) 50%, transparent);pointer-events:none;"></div>
+            
+            <div style="position:absolute;top:1rem;left:1rem;display:flex;align-items:center;gap:6px;">
+              <span style="width:1.85rem;height:1.85rem;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:11.5px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.2);border-radius:2px;">02</span>
+              <span style="padding:4px 12px;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);color:#111827;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.1);">AI &amp; Machine Learning</span>
+            </div>
+
+            <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;color:rgba(255,255,255,0.95);font-size:12.5px;font-weight:600;backdrop-filter:blur(8px);background:rgba(0,0,0,0.6);padding:8px 14px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+              🏢 Cognitive Health Analytics • United States
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CASE 3: Nexus Global Logistics (Germany) [Text Left, Image Right] -->
+      <div class="pf-case-grid">
+        
+        <!-- Text Detail Column (Always Left / First) -->
+        <div style="text-align:left;display:flex;flex-direction:column;gap:1.25rem;width:100%;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;background:#00A3FF;display:inline-block;border-radius:50%;"></span>
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#6B7280;">Cloud Infrastructure &amp; DevOps</span>
+          </div>
+
+          <h3 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;color:#030712;letter-spacing:-0.02em;line-height:1.3;margin:0;">
+            Zero-Trust Multi-Cloud Kubernetes Infrastructure &amp; GitOps Mesh
+          </h3>
+
+          <p style="font-size:14px;color:#374151;line-height:1.65;margin:0;">
+            Modernized 80+ legacy monolithic applications into a unified, self-healing cloud-native service mesh deployed across hybrid AWS &amp; Azure VPCs.
+          </p>
+
+          <!-- 3 Impact Metrics Row -->
+          <div class="pf-metrics-strip" style="padding:1rem 1.25rem;background:#F2F8FD;border-radius:10px;border:1px solid #BFDBFE;">
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">14x Daily</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Deploy Frequency</span>
+            </div>
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">-42%</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Compute Cost</span>
+            </div>
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">&lt; 2 Mins</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Recovery Time</span>
+            </div>
+          </div>
+
+          <!-- Tech Stack Chips -->
+          <div>
+            <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Architectural Stack:</span>
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Terraform</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Kubernetes</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Istio</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">ArgoCD</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Azure</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Prometheus</span>
+            </div>
+          </div>
+
+          <div style="padding-top:0.25rem;">
+            <button onclick="openCaseModal('case-3')" class="btn-dark" style="padding:10px 22px;font-size:12.5px;text-transform:uppercase;letter-spacing:0.05em;border-radius:3px;">
+              <span>Explore Case Study Deep-Dive</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Image Column (Always Right / Second) -->
+        <div onclick="openCaseModal('case-3')" style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 10px 15px -3px rgba(0,0,0,0.08);border:1px solid #E5E7EB;background:#030712;cursor:pointer;width:100%;">
+          <div style="width:100%;height:260px;position:relative;" class="sm:h-[340px] lg:h-[400px]">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=80" alt="Nexus Global Logistics" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2) 50%, transparent);pointer-events:none;"></div>
+            
+            <div style="position:absolute;top:1rem;left:1rem;display:flex;align-items:center;gap:6px;">
+              <span style="width:1.85rem;height:1.85rem;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:11.5px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.2);border-radius:2px;">03</span>
+              <span style="padding:4px 12px;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);color:#111827;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.1);">Cloud &amp; DevOps</span>
+            </div>
+
+            <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;color:rgba(255,255,255,0.95);font-size:12.5px;font-weight:600;backdrop-filter:blur(8px);background:rgba(0,0,0,0.6);padding:8px 14px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+              🏢 Nexus Global Logistics • Germany
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CASE 4: VaultSafe InsurTech (Switzerland) [Text Left, Image Right] -->
+      <div class="pf-case-grid">
+        
+        <!-- Text Detail Column (Always Left / First) -->
+        <div style="text-align:left;display:flex;flex-direction:column;gap:1.25rem;width:100%;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;background:#10B981;display:inline-block;border-radius:50%;"></span>
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#6B7280;">Cybersecurity &amp; Governance</span>
+          </div>
+
+          <h3 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;color:#030712;letter-spacing:-0.02em;line-height:1.3;margin:0;">
+            Automated SOC 2 Compliance Logging &amp; Cryptographic Shield
+          </h3>
+
+          <p style="font-size:14px;color:#374151;line-height:1.65;margin:0;">
+            Built continuous security telemetry and automated cryptographic vulnerability mitigation meeting strict ISO 27001 and SOC 2 Type II controls.
+          </p>
+
+          <!-- 3 Impact Metrics Row -->
+          <div class="pf-metrics-strip" style="padding:1rem 1.25rem;background:#F2F8FD;border-radius:10px;border:1px solid #BFDBFE;">
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">100% Pass</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Security Audit</span>
+            </div>
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">&lt; 30 Sec</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Threat Response</span>
+            </div>
+            <div>
+              <span style="font-size:1.3rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">50M+</span>
+              <span style="font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:2px;">Encrypted Records</span>
+            </div>
+          </div>
+
+          <!-- Tech Stack Chips -->
+          <div>
+            <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Architectural Stack:</span>
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">HashiCorp Vault</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">eBPF</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Wazuh</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">Go</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">GCP</span>
+              <span style="padding:4px 10px;background:#F3F4F6;color:#1F2937;font-size:11px;font-family:monospace;border-radius:3px;border:1px solid #E5E7EB;">PostgreSQL</span>
+            </div>
+          </div>
+
+          <div style="padding-top:0.25rem;">
+            <button onclick="openCaseModal('case-4')" class="btn-dark" style="padding:10px 22px;font-size:12.5px;text-transform:uppercase;letter-spacing:0.05em;border-radius:3px;">
+              <span>Explore Case Study Deep-Dive</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Image Column (Always Right / Second) -->
+        <div onclick="openCaseModal('case-4')" style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 10px 15px -3px rgba(0,0,0,0.08);border:1px solid #E5E7EB;background:#030712;cursor:pointer;width:100%;">
+          <div style="width:100%;height:260px;position:relative;" class="sm:h-[340px] lg:h-[400px]">
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&auto=format&fit=crop&q=80" alt="VaultSafe InsurTech" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2) 50%, transparent);pointer-events:none;"></div>
+            
+            <div style="position:absolute;top:1rem;left:1rem;display:flex;align-items:center;gap:6px;">
+              <span style="width:1.85rem;height:1.85rem;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:11.5px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.2);border-radius:2px;">04</span>
+              <span style="padding:4px 12px;background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);color:#111827;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.1);">Cybersecurity</span>
+            </div>
+
+            <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;color:rgba(255,255,255,0.95);font-size:12.5px;font-weight:600;backdrop-filter:blur(8px);background:rgba(0,0,0,0.6);padding:8px 14px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+              🏢 VaultSafe InsurTech • Switzerland
+            </div>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   </section>
@@ -504,38 +694,86 @@ include __DIR__ . '/includes/header.php';
 
 </div>
 
-<!-- JAVASCRIPT: Dynamic Modal Controller -->
+<!-- JAVASCRIPT: Modal Controller -->
 <script>
-var CASE_STUDIES = <?= json_encode(!empty($projectsList) ? array_combine(array_column($projectsList, 'id'), $projectsList) : new stdClass(), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+var CASE_STUDIES = {
+  'case-1': {
+    number: '01',
+    title: 'Next-Gen Multi-Region High-Frequency Payment Processing Engine',
+    categoryTag: 'Fintech & Banking',
+    client: 'Apex Global Settlement Rail',
+    challenge: 'Legacy core banking bottlenecks caused transaction spikes to queue for up to 4 minutes during peak market volatility, leading to severe settlement latency.',
+    solution: 'Architected distributed event-driven microservices on Kubernetes with CockroachDB active-active multi-region replication and Redis in-memory caches.',
+    impactMetrics: [
+      { label: 'Throughput Speed', value: '120k TPS' },
+      { label: 'Latency Drop', value: '-85%' },
+      { label: 'Uptime SLA', value: '99.999%' }
+    ],
+    techStack: ['Go', 'Kubernetes', 'CockroachDB', 'Kafka', 'AWS GovCloud', 'Redis']
+  },
+  'case-2': {
+    number: '02',
+    title: 'Enterprise Neural Copilot & Multi-Agent Document Intelligence',
+    categoryTag: 'AI & Machine Learning',
+    client: 'Cognitive Health Analytics',
+    challenge: 'Manual audits of unstructured diagnostic records required 4,000+ clinician hours per quarter with a 6% human error rate.',
+    solution: 'Implemented hybrid RAG pipelines with private VPC embeddings, domain-fine-tuned Llama 3 models, and cryptographic source citation verifiers.',
+    impactMetrics: [
+      { label: 'Audit Time Saved', value: '88%' },
+      { label: 'Extraction Accuracy', value: '99.4%' },
+      { label: 'Zero Data Leakage', value: '100% On-Prem' }
+    ],
+    techStack: ['Python', 'PyTorch', 'Pinecone', 'LangChain', 'FastAPI', 'Docker']
+  },
+  'case-3': {
+    number: '03',
+    title: 'Zero-Trust Multi-Cloud Kubernetes Infrastructure & GitOps Mesh',
+    categoryTag: 'Cloud & DevOps',
+    client: 'Nexus Global Logistics',
+    challenge: 'Siloed data centers caused recurring deployment failures and required manual rolling updates spanning 18 hours per release.',
+    solution: 'Designed declarative Terraform IaC and ArgoCD GitOps pipelines with Istio service mesh and automated zero-trust mutual TLS encryption.',
+    impactMetrics: [
+      { label: 'Deploy Frequency', value: '14x Daily' },
+      { label: 'Compute Cost', value: '-42%' },
+      { label: 'Recovery Time', value: '< 2 Mins' }
+    ],
+    techStack: ['Terraform', 'Kubernetes', 'Istio', 'ArgoCD', 'Azure', 'Prometheus']
+  },
+  'case-4': {
+    number: '04',
+    title: 'Automated SOC 2 Compliance Logging & Cryptographic Shield',
+    categoryTag: 'Cybersecurity',
+    client: 'VaultSafe InsurTech',
+    challenge: 'Complex multi-jurisdiction data privacy laws required real-time cryptographic verification of data-at-rest and in-transit.',
+    solution: 'Deployed automated eBPF runtime network monitoring with HashiCorp Vault key rotation and cryptographic immutable tamper logs.',
+    impactMetrics: [
+      { label: 'Security Audit', value: '100% Pass' },
+      { label: 'Threat Response', value: '< 30 Sec' },
+      { label: 'Encrypted Records', value: '50M+' }
+    ],
+    techStack: ['HashiCorp Vault', 'eBPF', 'Wazuh', 'Go', 'GCP', 'PostgreSQL']
+  }
+};
 
 function openCaseModal(caseId) {
   var study = CASE_STUDIES[caseId];
   if (!study) return;
 
-  var categoryTag = study.badge_category || study.category || 'Case Study';
-  var client = study.client_location || study.client || 'Enterprise Partner';
-  var num = study.number || '01';
+  document.getElementById('modalCategoryTag').textContent = 'CASE ' + study.number + ' • ' + study.categoryTag + ' (' + study.client + ')';
+  document.getElementById('modalTitle').textContent = study.title;
+  document.getElementById('modalChallenge').textContent = study.challenge;
+  document.getElementById('modalSolution').textContent = study.solution;
 
-  document.getElementById('modalCategoryTag').textContent = 'CASE ' + num + ' • ' + categoryTag + ' (' + client.replace(/^[^\w\s]+/, '').trim() + ')';
-  document.getElementById('modalTitle').textContent = study.title || '';
-  document.getElementById('modalChallenge').textContent = study.challenge || study.description || '';
-  document.getElementById('modalSolution').textContent = study.solution || study.description || '';
-
-  var metricsHtml = '';
-  if (study.metric1_val) {
-    metricsHtml += '<div><span style="font-size:1.2rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">' + study.metric1_val + '</span><span style="font-size:9.5px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">' + (study.metric1_label || 'Impact') + '</span></div>';
-  }
-  if (study.metric2_val) {
-    metricsHtml += '<div><span style="font-size:1.2rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">' + study.metric2_val + '</span><span style="font-size:9.5px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">' + (study.metric2_label || 'Efficiency') + '</span></div>';
-  }
-  if (study.metric3_val) {
-    metricsHtml += '<div><span style="font-size:1.2rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">' + study.metric3_val + '</span><span style="font-size:9.5px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">' + (study.metric3_label || 'Uptime SLA') + '</span></div>';
-  }
+  var metricsHtml = study.impactMetrics.map(function(m) {
+    return '<div>' +
+      '<span style="font-size:1.2rem;font-weight:700;color:#0052FF;display:block;line-height:1.1;">' + m.value + '</span>' +
+      '<span style="font-size:9.5px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">' + m.label + '</span>' +
+    '</div>';
+  }).join('');
   document.getElementById('modalMetricsBox').innerHTML = metricsHtml;
 
-  var stack = Array.isArray(study.tech_stack) ? study.tech_stack : (study.tech_stack ? study.tech_stack.split(',') : []);
-  var techHtml = stack.map(function(t) {
-    return '<span style="padding:3px 8px;background:#F3F4F6;color:#1F2937;font-size:10.5px;font-family:monospace;border-radius:2px;border:1px solid #E5E7EB;">' + t.trim() + '</span>';
+  var techHtml = study.techStack.map(function(t) {
+    return '<span style="padding:3px 8px;background:#F3F4F6;color:#1F2937;font-size:10.5px;font-family:monospace;border-radius:2px;border:1px solid #E5E7EB;">' + t + '</span>';
   }).join('');
   document.getElementById('modalTechChips').innerHTML = techHtml;
 
