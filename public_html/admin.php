@@ -188,6 +188,10 @@ include __DIR__ . '/includes/header.php';
         <span>📧</span> <span>Newsletter Leads</span>
       </button>
 
+      <button type="button" onclick="switchAdminTab('website_settings', this)" class="admin-tab-btn">
+        <span>🌐</span> <span>Website Settings</span>
+      </button>
+
       <button type="button" onclick="switchAdminTab('settings', this)" class="admin-tab-btn">
         <span>⚙️</span> <span>System &amp; Security</span>
       </button>
@@ -1075,7 +1079,187 @@ include __DIR__ . '/includes/header.php';
         </div>
       </div>
 
-      <!-- ================= 10. TAB: SYSTEM SETTINGS ================= -->
+      <!-- ================= 10. TAB: WEBSITE SETTINGS ================= -->
+      <div id="tab_website_settings" class="admin-tab-pane" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:16px;">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;padding:3px 10px;border-radius:20px;margin-bottom:6px;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#0052FF;"></span>
+              <span style="font-size:10.5px;font-weight:700;color:#1E40AF;text-transform:uppercase;letter-spacing:0.06em;">FRONTEND CONFIGURATION ENGINE</span>
+            </div>
+            <h1 style="font-size:22px;font-weight:700;color:#0F172A;margin:0 0 4px;">Website &amp; Frontend Settings</h1>
+            <p style="font-size:13px;color:#64748B;margin:0;">Control public website content, announcement bars, branding, contact coordinates, and footer details.</p>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button type="button" onclick="loadWebsiteSettingsFromBackend()" style="padding:9px 18px;background:#F1F5F9;border:1px solid #CBD5E1;color:#334155;font-size:12.5px;font-weight:700;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+              <span>🔄</span> Reload
+            </button>
+            <button type="button" onclick="saveWebsiteSettings()" style="padding:9px 22px;background:#0052FF;color:#fff;font-size:12.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 6px -1px rgba(0,82,255,0.3);">
+              <span>💾</span> Save All Settings
+            </button>
+          </div>
+        </div>
+
+        <form id="websiteSettingsForm" onsubmit="event.preventDefault(); saveWebsiteSettings();" style="display:flex;flex-direction:column;gap:24px;">
+          
+          <!-- 1. General Brand & Company Info -->
+          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+              <span style="font-size:18px;">🏢</span>
+              <div>
+                <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">General Site Information &amp; Branding</h3>
+                <p style="font-size:12px;color:#64748B;margin:0;">Core company details and primary identity displayed across headers and contact forms.</p>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Website / Brand Name *</label>
+                <input type="text" id="ws_site_name" value="Creed Tech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Company Tagline / Slogan</label>
+                <input type="text" id="ws_site_tagline" value="Enterprise Systems &amp; AI Solutions" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary Support / Contact Email</label>
+                <input type="email" id="ws_contact_email" value="info@creedtech.co" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Contact Phone Number</label>
+                <input type="text" id="ws_contact_phone" value="+92 300 1234567" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div style="grid-column: span 2;">
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary Office Address</label>
+                <input type="text" id="ws_office_address" value="Islamabad / Lahore, Pakistan &amp; Global Pods" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Live Top Announcement Bar -->
+          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">📢</span>
+                <div>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Top Live Announcement Bar</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">The top header ribbon displayed above navigation on all pages.</p>
+                </div>
+              </div>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" id="ws_bar_enabled" checked style="width:18px;height:18px;cursor:pointer;">
+                <span style="font-size:12px;font-weight:700;color:#0F172A;">Show Announcement Bar</span>
+              </label>
+            </div>
+
+            <div style="display:grid;grid-template-columns:140px 1fr 140px 180px;gap:14px;">
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Badge Label</label>
+                <input type="text" id="ws_bar_badge" value="LIVE" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:700;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Announcement Message Text *</label>
+                <input type="text" id="ws_bar_message" value="Creed Tech recognized as Leading Enterprise Systems &amp; Cloud Modernization Provider." style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Action Link Text</label>
+                <input type="text" id="ws_bar_link_text" value="Explore →" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Action Link URL</label>
+                <input type="text" id="ws_bar_link_url" value="services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Homepage Hero Banner -->
+          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+              <span style="font-size:18px;">🚀</span>
+              <div>
+                <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Homepage Hero Content &amp; Call To Actions</h3>
+                <p style="font-size:12px;color:#64748B;margin:0;">Customize main landing page headlines and primary conversion buttons.</p>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Hero Headline *</label>
+                <input type="text" id="ws_hero_headline" value="Engineering Scalable Enterprise Systems &amp; High-Velocity AI Products" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:14px;font-weight:700;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Hero Subheadline / Description</label>
+                <textarea id="ws_hero_subheadline" rows="2" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;line-height:1.5;outline:none;">We design, architect, and deploy production-grade software solutions, high-throughput cloud platforms, and frontier AI systems for ambitious enterprises globally.</textarea>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;">
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary CTA Text</label>
+                  <input type="text" id="ws_hero_cta1_text" value="Get Started" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary CTA URL</label>
+                  <input type="text" id="ws_hero_cta1_url" value="get-started" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Secondary CTA Text</label>
+                  <input type="text" id="ws_hero_cta2_text" value="Explore Services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Secondary CTA URL</label>
+                  <input type="text" id="ws_hero_cta2_url" value="services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Footer & Social Channels -->
+          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+              <span style="font-size:18px;">🔗</span>
+              <div>
+                <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Footer Information &amp; Social Links</h3>
+                <p style="font-size:12px;color:#64748B;margin:0;">Copyright notice and official corporate social media profiles.</p>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+              <div style="grid-column:span 2;">
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Copyright Notice Text</label>
+                <input type="text" id="ws_footer_copyright" value="© 2026 Creed Tech. All rights reserved." style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">LinkedIn Profile URL</label>
+                <input type="url" id="ws_social_linkedin" value="https://linkedin.com/company/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Twitter / X URL</label>
+                <input type="url" id="ws_social_twitter" value="https://twitter.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">GitHub Organization URL</label>
+                <input type="url" id="ws_social_github" value="https://github.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Facebook / Meta URL</label>
+                <input type="url" id="ws_social_facebook" value="https://facebook.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Floating Save Bar -->
+          <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:16px 0;">
+            <button type="button" onclick="loadWebsiteSettingsFromBackend()" style="padding:10px 20px;background:#F1F5F9;border:1px solid #CBD5E1;color:#334155;font-size:13px;font-weight:700;border-radius:4px;cursor:pointer;">
+              Reset to Saved
+            </button>
+            <button type="submit" style="padding:10px 28px;background:#0052FF;color:#fff;font-size:13px;font-weight:700;border:none;border-radius:4px;cursor:pointer;box-shadow:0 4px 6px -1px rgba(0,82,255,0.3);">
+              💾 Save All Website Settings
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- ================= 11. TAB: SYSTEM SETTINGS ================= -->
       <div id="tab_settings" class="admin-tab-pane" style="display:none;">
         <div style="margin-bottom:20px;">
           <h1 style="font-size:22px;font-weight:700;color:#0F172A;margin:0 0 4px;">System Governance &amp; Security Controls</h1>
@@ -1102,6 +1286,7 @@ include __DIR__ . '/includes/header.php';
             </label>
           </div>
 
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;">
             <div>
               <h4 style="font-size:14px;font-weight:700;color:#0F172A;margin:0 0 2px;">Download Database Backup (SQL Dump)</h4>
               <p style="font-size:12px;color:#64748B;margin:0;">Download complete snapshot of schema and tables.</p>
@@ -1639,6 +1824,105 @@ function switchAdminTab(tabName, btn) {
   }
   if (tabName === 'articles' && typeof loadKnowledgeDraftsTab === 'function') {
     loadKnowledgeDraftsTab();
+  }
+  if (tabName === 'website_settings' && typeof loadWebsiteSettingsFromBackend === 'function') {
+    loadWebsiteSettingsFromBackend();
+  }
+}
+
+async function loadWebsiteSettingsFromBackend() {
+  try {
+    const res = await fetch('ajax/site_settings_admin.php?t=' + Date.now());
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.success && data.settings) {
+      const s = data.settings;
+      if (s.general) {
+        if (document.getElementById('ws_site_name')) document.getElementById('ws_site_name').value = s.general.site_name || '';
+        if (document.getElementById('ws_site_tagline')) document.getElementById('ws_site_tagline').value = s.general.site_tagline || '';
+        if (document.getElementById('ws_contact_email')) document.getElementById('ws_contact_email').value = s.general.contact_email || '';
+        if (document.getElementById('ws_contact_phone')) document.getElementById('ws_contact_phone').value = s.general.contact_phone || '';
+        if (document.getElementById('ws_office_address')) document.getElementById('ws_office_address').value = s.general.office_address || '';
+      }
+      if (s.announcement_bar) {
+        if (document.getElementById('ws_bar_enabled')) document.getElementById('ws_bar_enabled').checked = !!s.announcement_bar.enabled;
+        if (document.getElementById('ws_bar_badge')) document.getElementById('ws_bar_badge').value = s.announcement_bar.badge_text || 'LIVE';
+        if (document.getElementById('ws_bar_message')) document.getElementById('ws_bar_message').value = s.announcement_bar.message || '';
+        if (document.getElementById('ws_bar_link_text')) document.getElementById('ws_bar_link_text').value = s.announcement_bar.link_text || 'Explore →';
+        if (document.getElementById('ws_bar_link_url')) document.getElementById('ws_bar_link_url').value = s.announcement_bar.link_url || 'services';
+      }
+      if (s.hero_section) {
+        if (document.getElementById('ws_hero_headline')) document.getElementById('ws_hero_headline').value = s.hero_section.headline || '';
+        if (document.getElementById('ws_hero_subheadline')) document.getElementById('ws_hero_subheadline').value = s.hero_section.subheadline || '';
+        if (document.getElementById('ws_hero_cta1_text')) document.getElementById('ws_hero_cta1_text').value = s.hero_section.cta_primary_text || '';
+        if (document.getElementById('ws_hero_cta1_url')) document.getElementById('ws_hero_cta1_url').value = s.hero_section.cta_primary_url || '';
+        if (document.getElementById('ws_hero_cta2_text')) document.getElementById('ws_hero_cta2_text').value = s.hero_section.cta_secondary_text || '';
+        if (document.getElementById('ws_hero_cta2_url')) document.getElementById('ws_hero_cta2_url').value = s.hero_section.cta_secondary_url || '';
+      }
+      if (s.footer) {
+        if (document.getElementById('ws_footer_copyright')) document.getElementById('ws_footer_copyright').value = s.footer.copyright_text || '';
+        if (document.getElementById('ws_social_linkedin')) document.getElementById('ws_social_linkedin').value = s.footer.linkedin_url || '';
+        if (document.getElementById('ws_social_twitter')) document.getElementById('ws_social_twitter').value = s.footer.twitter_url || '';
+        if (document.getElementById('ws_social_github')) document.getElementById('ws_social_github').value = s.footer.github_url || '';
+        if (document.getElementById('ws_social_facebook')) document.getElementById('ws_social_facebook').value = s.footer.facebook_url || '';
+      }
+    }
+  } catch (err) {
+    console.error('Failed to load site settings:', err);
+  }
+}
+
+async function saveWebsiteSettings() {
+  const payload = {
+    general: {
+      site_name: document.getElementById('ws_site_name') ? document.getElementById('ws_site_name').value.trim() : '',
+      site_tagline: document.getElementById('ws_site_tagline') ? document.getElementById('ws_site_tagline').value.trim() : '',
+      contact_email: document.getElementById('ws_contact_email') ? document.getElementById('ws_contact_email').value.trim() : '',
+      contact_phone: document.getElementById('ws_contact_phone') ? document.getElementById('ws_contact_phone').value.trim() : '',
+      office_address: document.getElementById('ws_office_address') ? document.getElementById('ws_office_address').value.trim() : ''
+    },
+    announcement_bar: {
+      enabled: document.getElementById('ws_bar_enabled') ? document.getElementById('ws_bar_enabled').checked : true,
+      badge_text: document.getElementById('ws_bar_badge') ? document.getElementById('ws_bar_badge').value.trim() : 'LIVE',
+      message: document.getElementById('ws_bar_message') ? document.getElementById('ws_bar_message').value.trim() : '',
+      link_text: document.getElementById('ws_bar_link_text') ? document.getElementById('ws_bar_link_text').value.trim() : 'Explore →',
+      link_url: document.getElementById('ws_bar_link_url') ? document.getElementById('ws_bar_link_url').value.trim() : 'services'
+    },
+    hero_section: {
+      headline: document.getElementById('ws_hero_headline') ? document.getElementById('ws_hero_headline').value.trim() : '',
+      subheadline: document.getElementById('ws_hero_subheadline') ? document.getElementById('ws_hero_subheadline').value.trim() : '',
+      cta_primary_text: document.getElementById('ws_hero_cta1_text') ? document.getElementById('ws_hero_cta1_text').value.trim() : '',
+      cta_primary_url: document.getElementById('ws_hero_cta1_url') ? document.getElementById('ws_hero_cta1_url').value.trim() : '',
+      cta_secondary_text: document.getElementById('ws_hero_cta2_text') ? document.getElementById('ws_hero_cta2_text').value.trim() : '',
+      cta_secondary_url: document.getElementById('ws_hero_cta2_url') ? document.getElementById('ws_hero_cta2_url').value.trim() : ''
+    },
+    footer: {
+      copyright_text: document.getElementById('ws_footer_copyright') ? document.getElementById('ws_footer_copyright').value.trim() : '',
+      linkedin_url: document.getElementById('ws_social_linkedin') ? document.getElementById('ws_social_linkedin').value.trim() : '',
+      twitter_url: document.getElementById('ws_social_twitter') ? document.getElementById('ws_social_twitter').value.trim() : '',
+      github_url: document.getElementById('ws_social_github') ? document.getElementById('ws_social_github').value.trim() : '',
+      facebook_url: document.getElementById('ws_social_facebook') ? document.getElementById('ws_social_facebook').value.trim() : ''
+    }
+  };
+
+  try {
+    const res = await fetch('ajax/site_settings_admin.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      alert('✓ ' + (data.message || 'Website settings saved successfully!'));
+    } else {
+      alert('Error: ' + (data.message || 'Failed to save settings.'));
+    }
+  } catch (err) {
+    alert('Error saving settings: ' + err.message);
   }
 }
 
