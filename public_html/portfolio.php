@@ -15,38 +15,38 @@ include __DIR__ . '/includes/header.php';
     <div style="position:absolute;inset:0;opacity:0.15;pointer-events:none;background-image:linear-gradient(to right, rgba(0, 150, 255, 0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 150, 255, 0.2) 1px, transparent 1px);background-size:40px 40px;"></div>
 
     <div style="max-width:80rem;margin:0 auto;padding:0 3rem;position:relative;z-index:10;">
-      <div style="max-width:48rem;text-align:left;">
+      <div style="max-width:54rem;margin:0 auto;text-align:center;">
         
         <!-- Pulse Badge -->
-        <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);color:#FF6B00;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem;border-radius:2px;">
+        <div style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:4px 14px;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);color:#FF6B00;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem;border-radius:2px;">
           <span style="width:6px;height:6px;background:#FF6B00;border-radius:50%;display:inline-block;"></span>
           FLAGSHIP CASE STUDIES &amp; PROVEN ARCHITECTURES
         </div>
 
-        <h1 style="font-size:clamp(2rem,4vw,3.25rem);font-weight:600;letter-spacing:-0.03em;color:#fff;margin:0 0 1rem;line-height:1.15;">
+        <h1 style="font-size:clamp(2rem,4vw,3.25rem);font-weight:600;letter-spacing:-0.03em;color:#fff;margin:0 auto 1rem;line-height:1.15;text-align:center;">
           Architectural Mastery. <br />
           <span style="color:#00A3FF;">Proven Business Impact.</span>
         </h1>
 
-        <p style="font-size:clamp(0.875rem,1.5vw,1rem);color:#D1D5DB;line-height:1.7;font-weight:400;margin:0 0 2rem;max-width:42rem;">
+        <p style="font-size:clamp(0.875rem,1.5vw,1rem);color:#D1D5DB;line-height:1.7;font-weight:400;margin:0 auto 2rem;max-width:46rem;text-align:center;">
           Deep architectural case studies documenting how Creed Tech engineers mission-critical infrastructure, multi-region database replication, private LLMs, and enterprise security platforms.
         </p>
 
-        <!-- Quick Hero Metrics Bar -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:1rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.1);">
-          <div>
+        <!-- Quick Hero Metrics Bar (Center Aligned) -->
+        <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.1);text-align:center;max-width:52rem;margin:0 auto;">
+          <div style="text-align:center;">
             <span style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;color:#fff;display:block;line-height:1.1;">120+</span>
             <span style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;display:block;margin-top:4px;">Enterprise Projects</span>
           </div>
-          <div>
+          <div style="text-align:center;">
             <span style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;color:#00A3FF;display:block;line-height:1.1;">$450M+</span>
             <span style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;display:block;margin-top:4px;">Transactions Secured</span>
           </div>
-          <div>
+          <div style="text-align:center;">
             <span style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;color:#FF6B00;display:block;line-height:1.1;">99.99%</span>
             <span style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;display:block;margin-top:4px;">Historical Uptime</span>
           </div>
-          <div>
+          <div style="text-align:center;">
             <span style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;color:#fff;display:block;line-height:1.1;">0 Defect</span>
             <span style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;display:block;margin-top:4px;">SLA Guarantee</span>
           </div>
