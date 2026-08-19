@@ -10,12 +10,15 @@ require_once __DIR__ . '/../includes/csrf.php';
 
 $settingsFile = __DIR__ . '/../data/site_settings.json';
 $portfolioFile = __DIR__ . '/../data/portfolio_projects.json';
+$aboutFile = __DIR__ . '/../data/about_page_settings.json';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $settingsData = file_exists($settingsFile) ? (json_decode(@file_get_contents($settingsFile), true) ?: []) : [];
     $portfolioData = file_exists($portfolioFile) ? (json_decode(@file_get_contents($portfolioFile), true) ?: []) : [];
+    $aboutData = file_exists($aboutFile) ? (json_decode(@file_get_contents($aboutFile), true) ?: []) : [];
     
     $settingsData['portfolio'] = $portfolioData;
+    $settingsData['about_page'] = $aboutData;
     echo json_encode(['success' => true, 'settings' => $settingsData]);
     exit;
 }
@@ -60,8 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $current['portfolio'] = $payload['portfolio'];
     }
 
+    // If about_page payload is present, save about_page_settings.json
+    if (isset($payload['about_page']) && is_array($payload['about_page'])) {
+        @file_put_contents($aboutFile, json_encode($payload['about_page'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        $current['about_page'] = $payload['about_page'];
+    }
+
     if ($savedSettings !== false) {
-        echo json_encode(['success' => true, 'message' => 'Website & Portfolio settings saved successfully!', 'settings' => $current]);
+        echo json_encode(['success' => true, 'message' => 'Website, Portfolio & About Page settings saved successfully!', 'settings' => $current]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to write settings to disk. Please check folder permissions.']);
     }

@@ -1266,10 +1266,93 @@ include __DIR__ . '/includes/header.php';
             </div>
             <div id="adminPortfolioProjectsList" style="display:flex;flex-direction:column;gap:16px;">
               <!-- Loaded via JavaScript -->
+          </div>
+
+          <!-- 5. Global Engineering Centers / Hubs Configuration -->
+          <div id="ws_hubs_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">🌍</span>
+                <div>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Global Engineering Centers &amp; Hubs</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">Manage international hub cities, countries, core specializations, addresses, and cover photos shown on the About page.</p>
+                </div>
+              </div>
+              <button type="button" onclick="addNewEngineeringHubRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
+                <span>➕</span> Add Engineering Center
+              </button>
+            </div>
+
+            <!-- Hubs Header Settings -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Badge Tag</label>
+                  <input type="text" id="ws_hubs_badge" value="GLOBAL REACH &amp; CONTINUOUS COVERAGE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
+                  <input type="text" id="ws_hubs_title" value="Three Specialized Global Engineering Centers" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div style="grid-column: span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
+                  <textarea id="ws_hubs_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Operating across multiple time zones to deliver seamless 24/7 technical continuity and deep regional domain expertise.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Hub Cards Container -->
+            <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>🏢</span> Regional Engineering Hub Cards
+            </div>
+            <div id="adminEngineeringHubsList" style="display:flex;flex-direction:column;gap:16px;">
+              <!-- Loaded via JavaScript -->
             </div>
           </div>
 
-          <!-- 5. Footer & Social Channels -->
+          <!-- 6. Executive Leadership & Custodians Configuration -->
+          <div id="ws_leadership_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">👥</span>
+                <div>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Executive Leadership &amp; Technical Custodians</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">Manage team names, executive titles, portrait pictures, specializations, biographies, quotes, and connect links.</p>
+                </div>
+              </div>
+              <button type="button" onclick="addNewLeadershipMemberRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
+                <span>➕</span> Add Team Member
+              </button>
+            </div>
+
+            <!-- Leadership Header Settings -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Badge Tag</label>
+                  <input type="text" id="ws_leader_badge" value="THE PEOPLE BEHIND THE CODE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
+                  <input type="text" id="ws_leader_title" value="Executive Leadership &amp; Technical Custodians" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div style="grid-column: span 2;">
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
+                  <textarea id="ws_leader_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Meet the founders and principal architects who guide our engineering vision and mentor our senior pods across 3 global centers.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Leader Cards Container -->
+            <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>👤</span> Individual Leadership Profiles
+            </div>
+            <div id="adminLeadershipMembersList" style="display:flex;flex-direction:column;gap:16px;">
+              <!-- Loaded via JavaScript -->
+            </div>
+          </div>
+
+          <!-- 7. Footer & Social Channels -->
           <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
             <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
               <span style="font-size:18px;">🔗</span>
@@ -2102,6 +2185,262 @@ window.deletePortfolioProject = deletePortfolioProjectRow;
 window.deletePortfolioCaseStudy = deletePortfolioProjectRow;
 window.deletePortfolioProjectRow = deletePortfolioProjectRow;
 
+// ==========================================
+// ABOUT PAGE: GLOBAL HUBS & LEADERSHIP JS
+// ==========================================
+
+var ADMIN_ENGINEERING_HUBS = [];
+
+function syncCurrentHubsInputsIntoMemory() {
+  if (!Array.isArray(ADMIN_ENGINEERING_HUBS)) ADMIN_ENGINEERING_HUBS = [];
+  ADMIN_ENGINEERING_HUBS = ADMIN_ENGINEERING_HUBS.map(function(h, i) {
+    var cityEl = document.getElementById('hub_city_' + i);
+    var countryEl = document.getElementById('hub_country_' + i);
+    var imgEl = document.getElementById('hub_img_' + i);
+    var specEl = document.getElementById('hub_spec_' + i);
+    var addrEl = document.getElementById('hub_addr_' + i);
+    var statusEl = document.getElementById('hub_status_' + i);
+
+    return {
+      id: h.id || ('hub-' + (i + 1)),
+      city: cityEl ? cityEl.value.trim() : (h.city || ''),
+      country: countryEl ? countryEl.value.trim() : (h.country || ''),
+      image: imgEl ? imgEl.value.trim() : (h.image || ''),
+      specialization: specEl ? specEl.value.trim() : (h.specialization || ''),
+      address: addrEl ? addrEl.value.trim() : (h.address || ''),
+      status: statusEl ? statusEl.value.trim() : (h.status || 'Active Regional Engineering Pod')
+    };
+  });
+}
+
+function renderAdminEngineeringHubs(hubs) {
+  ADMIN_ENGINEERING_HUBS = Array.isArray(hubs) ? hubs : [];
+  var container = document.getElementById('adminEngineeringHubsList');
+  if (!container) return;
+
+  if (ADMIN_ENGINEERING_HUBS.length === 0) {
+    container.innerHTML = '<div style="padding:24px;text-align:center;color:#64748B;font-size:13px;background:#F8FAFC;border-radius:6px;border:1px dashed #CBD5E1;">No engineering hubs added yet. Click "+ Add Engineering Center" above to create one.</div>';
+    return;
+  }
+
+  var html = '';
+  ADMIN_ENGINEERING_HUBS.forEach(function(h, i) {
+    html += '<div id="hub_box_' + i + '" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:18px;position:relative;margin-bottom:14px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid #E2E8F0;padding-bottom:10px;">' +
+        '<div style="display:flex;align-items:center;gap:10px;">' +
+          '<span style="background:#0052FF;color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:3px;letter-spacing:0.04em;">HUB ' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span>' +
+          '<span style="font-size:13.5px;font-weight:700;color:#0F172A;">' + (h.city ? (h.city + (h.country ? ' (' + h.country + ')' : '')) : 'New Engineering Hub #' + (i + 1)) + '</span>' +
+        '</div>' +
+        '<button type="button" onclick="deleteEngineeringHubRow(' + i + ')" style="background:#FEE2E2;border:1px solid #FECACA;color:#DC2626;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:4px;cursor:pointer;">✕ Delete Hub</button>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:130px 1fr 1fr;gap:14px;margin-bottom:12px;">' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Cover Picture</label>' +
+          '<div style="width:130px;height:80px;border-radius:4px;overflow:hidden;background:#0F172A;border:1px solid #CBD5E1;margin-bottom:4px;">' +
+            '<img id="hub_prev_img_' + i + '" src="' + (h.image || 'assets/img/hero_img.webp') + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\'assets/img/hero_img.webp\'">' +
+          '</div>' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">City / Hub Name *</label>' +
+          '<input type="text" id="hub_city_' + i + '" value="' + (h.city || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Frankfurt" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin:8px 0 4px;">Country Name *</label>' +
+          '<input type="text" id="hub_country_' + i + '" value="' + (h.country || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Germany" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Cover Image URL *</label>' +
+          '<input type="url" id="hub_img_' + i + '" value="' + (h.image || '').replace(/"/g, '&quot;') + '" oninput="var el=document.getElementById(\'hub_prev_img_' + i + '\'); if(el) el.src=this.value;" placeholder="https://images.unsplash.com/..." style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin:8px 0 4px;">Status Tag Label</label>' +
+          '<input type="text" id="hub_status_' + i + '" value="' + (h.status || 'Active Regional Engineering Pod').replace(/"/g, '&quot;') + '" placeholder="Active Regional Engineering Pod" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+        '<div>' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Core Specialization Subtitle *</label>' +
+          '<input type="text" id="hub_spec_' + i + '" value="' + (h.specialization || '').replace(/"/g, '&quot;') + '" placeholder="e.g. European Cloud Infrastructure &amp; Cyber Defense" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Office Address Details</label>' +
+          '<input type="text" id="hub_addr_' + i + '" value="' + (h.address || '').replace(/"/g, '&quot;') + '" placeholder="📍 Taunusanlage 8, Financial Centre, Frankfurt" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function addNewEngineeringHubRow() {
+  if (!Array.isArray(ADMIN_ENGINEERING_HUBS)) ADMIN_ENGINEERING_HUBS = [];
+  syncCurrentHubsInputsIntoMemory();
+  var nextIdx = ADMIN_ENGINEERING_HUBS.length + 1;
+  ADMIN_ENGINEERING_HUBS.push({
+    id: 'hub-' + nextIdx,
+    city: 'New Tech Hub #' + nextIdx,
+    country: 'International Pod',
+    image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&auto=format&fit=crop&q=80',
+    specialization: 'Enterprise Cloud Systems & Innovation Lab',
+    address: '📍 Tech Square Hub, Financial District',
+    status: 'Active Regional Engineering Pod'
+  });
+  renderAdminEngineeringHubs(ADMIN_ENGINEERING_HUBS);
+
+  setTimeout(function() {
+    var newIdx = ADMIN_ENGINEERING_HUBS.length - 1;
+    var newBox = document.getElementById('hub_box_' + newIdx);
+    if (newBox) {
+      newBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var cityInput = document.getElementById('hub_city_' + newIdx);
+      if (cityInput) cityInput.focus();
+    }
+  }, 100);
+}
+window.addNewEngineeringHubRow = addNewEngineeringHubRow;
+
+function deleteEngineeringHubRow(index) {
+  syncCurrentHubsInputsIntoMemory();
+  if (confirm('Are you sure you want to remove this engineering center?')) {
+    ADMIN_ENGINEERING_HUBS.splice(index, 1);
+    renderAdminEngineeringHubs(ADMIN_ENGINEERING_HUBS);
+  }
+}
+window.deleteEngineeringHubRow = deleteEngineeringHubRow;
+
+var ADMIN_LEADERSHIP_MEMBERS = [];
+
+function syncCurrentLeadershipInputsIntoMemory() {
+  if (!Array.isArray(ADMIN_LEADERSHIP_MEMBERS)) ADMIN_LEADERSHIP_MEMBERS = [];
+  ADMIN_LEADERSHIP_MEMBERS = ADMIN_LEADERSHIP_MEMBERS.map(function(l, i) {
+    var nameEl = document.getElementById('ldr_name_' + i);
+    var roleEl = document.getElementById('ldr_role_' + i);
+    var badgeEl = document.getElementById('ldr_badge_' + i);
+    var imgEl = document.getElementById('ldr_img_' + i);
+    var bioEl = document.getElementById('ldr_bio_' + i);
+    var quoteEl = document.getElementById('ldr_quote_' + i);
+    var linkTxtEl = document.getElementById('ldr_link_txt_' + i);
+    var linkUrlEl = document.getElementById('ldr_link_url_' + i);
+
+    return {
+      id: l.id || ('leader-' + (i + 1)),
+      name: nameEl ? nameEl.value.trim() : (l.name || ''),
+      role: roleEl ? roleEl.value.trim() : (l.role || ''),
+      badge: badgeEl ? badgeEl.value.trim() : (l.badge || ''),
+      image: imgEl ? imgEl.value.trim() : (l.image || ''),
+      bio: bioEl ? bioEl.value.trim() : (l.bio || ''),
+      quote: quoteEl ? quoteEl.value.trim() : (l.quote || ''),
+      link_text: linkTxtEl ? linkTxtEl.value.trim() : (l.link_text || 'Connect →'),
+      link_url: linkUrlEl ? linkUrlEl.value.trim() : (l.link_url || 'contact')
+    };
+  });
+}
+
+function renderAdminLeadershipMembers(leaders) {
+  ADMIN_LEADERSHIP_MEMBERS = Array.isArray(leaders) ? leaders : [];
+  var container = document.getElementById('adminLeadershipMembersList');
+  if (!container) return;
+
+  if (ADMIN_LEADERSHIP_MEMBERS.length === 0) {
+    container.innerHTML = '<div style="padding:24px;text-align:center;color:#64748B;font-size:13px;background:#F8FAFC;border-radius:6px;border:1px dashed #CBD5E1;">No leadership profiles added yet. Click "+ Add Team Member" above to create one.</div>';
+    return;
+  }
+
+  var html = '';
+  ADMIN_LEADERSHIP_MEMBERS.forEach(function(l, i) {
+    html += '<div id="leader_box_' + i + '" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:18px;position:relative;margin-bottom:14px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid #E2E8F0;padding-bottom:10px;">' +
+        '<div style="display:flex;align-items:center;gap:10px;">' +
+          '<span style="background:#0F172A;color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:3px;letter-spacing:0.04em;">MEMBER ' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span>' +
+          '<span style="font-size:13.5px;font-weight:700;color:#0F172A;">' + (l.name ? (l.name + (l.role ? ' — ' + l.role : '')) : 'New Leader #' + (i + 1)) + '</span>' +
+        '</div>' +
+        '<button type="button" onclick="deleteLeadershipMemberRow(' + i + ')" style="background:#FEE2E2;border:1px solid #FECACA;color:#DC2626;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:4px;cursor:pointer;">✕ Delete Member</button>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:130px 1fr 1fr;gap:14px;margin-bottom:12px;">' +
+        '<div>' +
+          '<label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Portrait Photo</label>' +
+          '<div style="width:130px;height:95px;border-radius:4px;overflow:hidden;background:#0F172A;border:1px solid #CBD5E1;margin-bottom:4px;">' +
+            '<img id="ldr_prev_img_' + i + '" src="' + (l.image || 'assets/img/hero_img.webp') + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\'assets/img/hero_img.webp\'">' +
+          '</div>' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Full Name *</label>' +
+          '<input type="text" id="ldr_name_' + i + '" value="' + (l.name || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Alexander Wright" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin:8px 0 4px;">Executive Designation / Role *</label>' +
+          '<input type="text" id="ldr_role_' + i + '" value="' + (l.role || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Founder &amp; Chief Executive Officer" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Portrait Image URL *</label>' +
+          '<input type="url" id="ldr_img_' + i + '" value="' + (l.image || '').replace(/"/g, '&quot;') + '" oninput="var el=document.getElementById(\'ldr_prev_img_' + i + '\'); if(el) el.src=this.value;" placeholder="https://images.unsplash.com/..." style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin:8px 0 4px;">Photo Badge / Specialty Tag</label>' +
+          '<input type="text" id="ldr_badge_' + i + '" value="' + (l.badge || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Senior Systems Architect" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="margin-bottom:12px;">' +
+        '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Biography / Background Paragraph</label>' +
+        '<textarea id="ldr_bio_' + i + '" rows="2" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' + (l.bio || '') + '</textarea>' +
+      '</div>' +
+
+      '<div style="margin-bottom:12px;">' +
+        '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Executive Quote / Philosophy Statement</label>' +
+        '<textarea id="ldr_quote_' + i + '" rows="2" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;font-style:italic;outline:none;">' + (l.quote || '') + '</textarea>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+        '<div>' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Connect CTA Link Text</label>' +
+          '<input type="text" id="ldr_link_txt_' + i + '" value="' + (l.link_text || 'Connect with ' + (l.name ? l.name.split(' ')[0] : 'Leader') + ' →').replace(/"/g, '&quot;') + '" placeholder="Connect with Alexander →" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-size:11.5px;font-weight:700;color:#475569;margin-bottom:4px;">Connect CTA Destination URL</label>' +
+          '<input type="text" id="ldr_link_url_' + i + '" value="' + (l.link_url || 'contact').replace(/"/g, '&quot;') + '" placeholder="contact" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function addNewLeadershipMemberRow() {
+  if (!Array.isArray(ADMIN_LEADERSHIP_MEMBERS)) ADMIN_LEADERSHIP_MEMBERS = [];
+  syncCurrentLeadershipInputsIntoMemory();
+  var nextIdx = ADMIN_LEADERSHIP_MEMBERS.length + 1;
+  ADMIN_LEADERSHIP_MEMBERS.push({
+    id: 'leader-' + nextIdx,
+    name: 'New Principal Architect #' + nextIdx,
+    role: 'Principal Systems Engineer',
+    badge: 'Enterprise Engineering Lead',
+    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80',
+    bio: 'Leads distributed systems engineering, high-throughput cloud platforms, and enterprise modernization pods.',
+    quote: 'Disciplined engineering practices and zero-defect architecture are the bedrock of long-term business scale.',
+    link_text: 'Connect with Leader →',
+    link_url: 'contact'
+  });
+  renderAdminLeadershipMembers(ADMIN_LEADERSHIP_MEMBERS);
+
+  setTimeout(function() {
+    var newIdx = ADMIN_LEADERSHIP_MEMBERS.length - 1;
+    var newBox = document.getElementById('leader_box_' + newIdx);
+    if (newBox) {
+      newBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var nameInput = document.getElementById('ldr_name_' + newIdx);
+      if (nameInput) nameInput.focus();
+    }
+  }, 100);
+}
+window.addNewLeadershipMemberRow = addNewLeadershipMemberRow;
+
+function deleteLeadershipMemberRow(index) {
+  syncCurrentLeadershipInputsIntoMemory();
+  if (confirm('Are you sure you want to remove this team member?')) {
+    ADMIN_LEADERSHIP_MEMBERS.splice(index, 1);
+    renderAdminLeadershipMembers(ADMIN_LEADERSHIP_MEMBERS);
+  }
+}
+window.deleteLeadershipMemberRow = deleteLeadershipMemberRow;
+
 async function loadWebsiteSettingsFromBackend() {
   try {
     const res = await fetch('ajax/site_settings_admin.php?t=' + Date.now());
@@ -2160,6 +2499,26 @@ async function loadWebsiteSettingsFromBackend() {
           renderAdminPortfolioProjects(s.portfolio.projects);
         }
       }
+      if (s.about_page) {
+        if (s.about_page.hubs_section) {
+          const hSec = s.about_page.hubs_section;
+          if (document.getElementById('ws_hubs_badge')) document.getElementById('ws_hubs_badge').value = hSec.badge || 'GLOBAL REACH & CONTINUOUS COVERAGE';
+          if (document.getElementById('ws_hubs_title')) document.getElementById('ws_hubs_title').value = hSec.title || 'Three Specialized Global Engineering Centers';
+          if (document.getElementById('ws_hubs_desc')) document.getElementById('ws_hubs_desc').value = hSec.description || '';
+          if (Array.isArray(hSec.hubs)) {
+            renderAdminEngineeringHubs(hSec.hubs);
+          }
+        }
+        if (s.about_page.leadership_section) {
+          const lSec = s.about_page.leadership_section;
+          if (document.getElementById('ws_leader_badge')) document.getElementById('ws_leader_badge').value = lSec.badge || 'THE PEOPLE BEHIND THE CODE';
+          if (document.getElementById('ws_leader_title')) document.getElementById('ws_leader_title').value = lSec.title || 'Executive Leadership & Technical Custodians';
+          if (document.getElementById('ws_leader_desc')) document.getElementById('ws_leader_desc').value = lSec.description || '';
+          if (Array.isArray(lSec.leaders)) {
+            renderAdminLeadershipMembers(lSec.leaders);
+          }
+        }
+      }
     }
   } catch (err) {
     console.error('Failed to load site settings:', err);
@@ -2169,6 +2528,8 @@ window.loadPortfolioDataForAdmin = loadWebsiteSettingsFromBackend;
 
 async function saveWebsiteSettings() {
   syncCurrentPortfolioInputsIntoMemory();
+  syncCurrentHubsInputsIntoMemory();
+  syncCurrentLeadershipInputsIntoMemory();
 
   var stdTitle = (document.getElementById('ws_pf_std_title') ? document.getElementById('ws_pf_std_title').value.trim() : '') ||
                  (document.getElementById('admin_pf_std_title') ? document.getElementById('admin_pf_std_title').value.trim() : '');
@@ -2216,6 +2577,20 @@ async function saveWebsiteSettings() {
         description: stdDesc
       },
       projects: ADMIN_PORTFOLIO_PROJECTS
+    },
+    about_page: {
+      hubs_section: {
+        badge: document.getElementById('ws_hubs_badge') ? document.getElementById('ws_hubs_badge').value.trim() : 'GLOBAL REACH & CONTINUOUS COVERAGE',
+        title: document.getElementById('ws_hubs_title') ? document.getElementById('ws_hubs_title').value.trim() : 'Three Specialized Global Engineering Centers',
+        description: document.getElementById('ws_hubs_desc') ? document.getElementById('ws_hubs_desc').value.trim() : '',
+        hubs: ADMIN_ENGINEERING_HUBS
+      },
+      leadership_section: {
+        badge: document.getElementById('ws_leader_badge') ? document.getElementById('ws_leader_badge').value.trim() : 'THE PEOPLE BEHIND THE CODE',
+        title: document.getElementById('ws_leader_title') ? document.getElementById('ws_leader_title').value.trim() : 'Executive Leadership & Technical Custodians',
+        description: document.getElementById('ws_leader_desc') ? document.getElementById('ws_leader_desc').value.trim() : '',
+        leaders: ADMIN_LEADERSHIP_MEMBERS
+      }
     },
     footer: {
       copyright_text: document.getElementById('ws_footer_copyright') ? document.getElementById('ws_footer_copyright').value.trim() : '',
