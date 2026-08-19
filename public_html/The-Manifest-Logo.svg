@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="552"
+   height="297"
+   viewBox="0 0 552 297"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg16"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs20" />
+  <title
+     id="title">The Manifest logo</title>
+  <desc
+     id="desc">Two offset burgundy square outlines with THE MANIFEST wordmark on a transparent background.</desc>
+  <!-- Intentionally no background rectangle: the SVG canvas is transparent. -->
+  <g
+     fill="none"
+     stroke="#951a41"
+     stroke-width="6"
+     stroke-linecap="square"
+     stroke-linejoin="miter"
+     id="g8">
+    <path
+       d="M 27,251 V 23 h 226 v 110 m 0,66 v 52 H 27"
+       id="path4" />
+    <path
+       d="M 59,281 V 52 h 225 v 81 m 0,66 v 82 H 59"
+       id="path6" />
+  </g>
+  <g
+     font-family="'Nimbus Sans', Arial, Helvetica, sans-serif"
+     dominant-baseline="alphabetic"
+     id="g14">
+    <g
+       aria-label="THE"
+       id="text10"
+       style="font-size:55px;letter-spacing:4.2;fill:#951a41">
+      <path
+         d="m 133.47,151.415 h 13.145 v -4.51 h -31.46 v 4.51 h 13.2 V 187 h 5.115 z"
+         id="path22" />
+      <path
+         d="M 181.34001,168.74 V 187 h 5.115 v -40.095 h -5.115 v 17.325 h -20.625 v -17.325 h -5.115 V 187 h 5.115 v -18.26 z"
+         id="path24" />
+      <path
+         d="m 205.01001,168.74 h 21.835 v -4.51 h -21.835 v -12.815 h 22.66 v -4.51 h -27.775 V 187 h 28.765 v -4.51 h -23.65 z"
+         id="path26" />
+    </g>
+    <g
+       aria-label="MANIFEST"
+       id="text12"
+       style="font-weight:700;font-size:55px;letter-spacing:1.4;fill:#282828">
+      <path
+         d="m 258.88,155.76 7.205,31.24 h 8.25 l 7.095,-31.24 V 187 h 8.25 v -40.095 h -12.43 l -7.04,31.9 -7.26,-31.9 H 250.63 V 187 h 8.25 z"
+         id="path29" />
+      <path
+         d="m 321.55003,178.915 2.64,8.085 h 8.47 l -13.86,-40.095 h -9.13 L 295.42503,187 h 8.415 l 2.695,-8.085 z m -2.255,-6.875 h -10.45 l 5.225,-15.675 z"
+         id="path31" />
+      <path
+         d="m 363.21003,187 h 8.25 v -40.095 h -8.25 v 27.28 l -15.895,-27.28 h -8.47 V 187 h 8.25 v -27.72 z"
+         id="path33" />
+      <path
+         d="m 387.93004,146.905 h -8.25 V 187 h 8.25 z"
+         id="path35" />
+      <path
+         d="m 405.22503,169.73 h 17.545 v -6.875 h -17.545 v -9.075 h 19.91 v -6.875 h -28.16 V 187 h 8.25 z"
+         id="path37" />
+      <path
+         d="m 440.50503,169.73 h 19.195 v -6.875 h -19.195 v -9.075 h 20.735 v -6.875 h -28.985 V 187 h 29.975 v -6.875 h -21.725 z"
+         id="path39" />
+      <path
+         d="m 498.83001,159.115 c -0.055,-8.305 -5.61,-12.87 -15.73,-12.87 -9.625,0 -15.18,4.51 -15.18,12.32 0,6.215 3.135,9.24 11.275,10.78 l 5.61,1.1 c 5.5,1.045 7.535,2.585 7.535,5.83 0,3.355 -3.08,5.39 -8.085,5.39 -5.61,0 -8.745,-2.365 -9.02,-6.655 h -8.03 c 0.495,8.58 6.38,13.255 16.61,13.255 10.34,0 16.445,-4.785 16.445,-12.98 0,-6.325 -3.19,-9.625 -10.615,-11.055 l -6.27,-1.21 c -5.885,-1.155 -7.59,-2.31 -7.59,-5.225 0,-3.025 2.64,-4.95 6.93,-4.95 5.225,0 8.14,2.2 8.415,6.27 z"
+         id="path41" />
+      <path
+         d="m 524.26503,153.78 h 11.715 v -6.875 h -32.12 v 6.875 h 12.155 V 187 h 8.25 z"
+         id="path43" />
+    </g>
+  </g>
+</svg>

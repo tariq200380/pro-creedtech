@@ -1,0 +1,26 @@
+# Creed Tech - Production Web Server Security Hardening
+Options -Indexes -MultiViews
+
+# Disable Execution of Scripts in Sensitive Directories
+<FilesMatch "(?i)\.(env|json|sql|log|bak|tmp|lock|ps1|sh|yml|yaml|ini|md|git.*)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block access to hidden files (.git, .env, etc.)
+RewriteEngine On
+RewriteRule (^|/)\. - [F]
+
+# Block directory listing and private paths
+RewriteRule ^data/ - [F,L]
+RewriteRule ^logs/ - [F,L]
+RewriteRule ^backups/ - [F,L]
+RewriteRule ^scripts/ - [F,L]
+RewriteRule ^tests/ - [F,L]
+RewriteRule ^cron/ - [F,L]
+
+# Clean URL Routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L,QSA]

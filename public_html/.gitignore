@@ -1,0 +1,6 @@
+# Ignore OS and build files
+.DS_Store
+Thumbs.db
+node_modules/
+.next/
+*.log

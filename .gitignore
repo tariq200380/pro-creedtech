@@ -1,0 +1,27 @@
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Local data and logs
+data/
+*.log
+logs/
+data/*.log
+data/*.json
+
+# Node & Build artifacts
+node_modules/
+.next/
+dist/
+build/
+
+# Backups & Temporary files
+backups/
+scratch/
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db

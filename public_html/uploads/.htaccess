@@ -1,0 +1,9 @@
+# Disable Script Execution in Uploads Directory
+<FilesMatch "(?i)\.(php|phtml|php3|php4|php5|php7|php8|phar|shtml|shtm|pl|py|cgi|sh|bash|exe)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+Options -Indexes -ExecCGI
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
