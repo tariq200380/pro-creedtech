@@ -1228,20 +1228,28 @@ include __DIR__ . '/includes/header.php';
                 <input type="text" id="ws_footer_copyright" value="© 2026 Creed Tech. All rights reserved." style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
               </div>
               <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">LinkedIn Profile URL</label>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Facebook Profile / Page URL</label>
+                <input type="url" id="ws_social_facebook" value="https://facebook.com/creedtechnology" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Instagram Profile URL</label>
+                <input type="url" id="ws_social_instagram" value="https://instagram.com/creed.technologiess" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">LinkedIn Company URL</label>
                 <input type="url" id="ws_social_linkedin" value="https://linkedin.com/company/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
               </div>
               <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Twitter / X URL</label>
-                <input type="url" id="ws_social_twitter" value="https://twitter.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Pinterest Profile URL</label>
+                <input type="url" id="ws_social_pinterest" value="https://pinterest.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Twitter / X Profile URL</label>
+                <input type="url" id="ws_social_twitter" value="https://x.com/Creedtech3" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
               </div>
               <div>
                 <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">GitHub Organization URL</label>
-                <input type="url" id="ws_social_github" value="https://github.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Facebook / Meta URL</label>
-                <input type="url" id="ws_social_facebook" value="https://facebook.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                <input type="url" id="ws_social_github" value="https://github.com/creed-tech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
               </div>
             </div>
           </div>
@@ -1861,10 +1869,12 @@ async function loadWebsiteSettingsFromBackend() {
       }
       if (s.footer) {
         if (document.getElementById('ws_footer_copyright')) document.getElementById('ws_footer_copyright').value = s.footer.copyright_text || '';
+        if (document.getElementById('ws_social_facebook')) document.getElementById('ws_social_facebook').value = s.footer.facebook_url || '';
+        if (document.getElementById('ws_social_instagram')) document.getElementById('ws_social_instagram').value = s.footer.instagram_url || '';
         if (document.getElementById('ws_social_linkedin')) document.getElementById('ws_social_linkedin').value = s.footer.linkedin_url || '';
+        if (document.getElementById('ws_social_pinterest')) document.getElementById('ws_social_pinterest').value = s.footer.pinterest_url || '';
         if (document.getElementById('ws_social_twitter')) document.getElementById('ws_social_twitter').value = s.footer.twitter_url || '';
         if (document.getElementById('ws_social_github')) document.getElementById('ws_social_github').value = s.footer.github_url || '';
-        if (document.getElementById('ws_social_facebook')) document.getElementById('ws_social_facebook').value = s.footer.facebook_url || '';
       }
     }
   } catch (err) {
@@ -1898,10 +1908,12 @@ async function saveWebsiteSettings() {
     },
     footer: {
       copyright_text: document.getElementById('ws_footer_copyright') ? document.getElementById('ws_footer_copyright').value.trim() : '',
+      facebook_url: document.getElementById('ws_social_facebook') ? document.getElementById('ws_social_facebook').value.trim() : '',
+      instagram_url: document.getElementById('ws_social_instagram') ? document.getElementById('ws_social_instagram').value.trim() : '',
       linkedin_url: document.getElementById('ws_social_linkedin') ? document.getElementById('ws_social_linkedin').value.trim() : '',
+      pinterest_url: document.getElementById('ws_social_pinterest') ? document.getElementById('ws_social_pinterest').value.trim() : '',
       twitter_url: document.getElementById('ws_social_twitter') ? document.getElementById('ws_social_twitter').value.trim() : '',
-      github_url: document.getElementById('ws_social_github') ? document.getElementById('ws_social_github').value.trim() : '',
-      facebook_url: document.getElementById('ws_social_facebook') ? document.getElementById('ws_social_facebook').value.trim() : ''
+      github_url: document.getElementById('ws_social_github') ? document.getElementById('ws_social_github').value.trim() : ''
     }
   };
 

@@ -1,7 +1,18 @@
 <?php
 /**
- * Creed Tech - Global Footer with Standardized Buttons
+ * Creed Tech - Global Footer with Dynamic Settings Integration
  */
+$settingsPath = __DIR__ . '/../data/site_settings.json';
+$siteSettings = file_exists($settingsPath) ? (json_decode(file_get_contents($settingsPath), true) ?: []) : [];
+$footerConfig = $siteSettings['footer'] ?? [];
+
+$fbUrl   = !empty($footerConfig['facebook_url']) ? $footerConfig['facebook_url'] : 'https://facebook.com/creedtechnology';
+$instaUrl = !empty($footerConfig['instagram_url']) ? $footerConfig['instagram_url'] : 'https://instagram.com/creed.technologiess';
+$liUrl   = !empty($footerConfig['linkedin_url']) ? $footerConfig['linkedin_url'] : 'https://linkedin.com/company/creedtech';
+$pinUrl  = !empty($footerConfig['pinterest_url']) ? $footerConfig['pinterest_url'] : 'https://pinterest.com/creedtech';
+$xUrl    = !empty($footerConfig['twitter_url']) ? $footerConfig['twitter_url'] : 'https://x.com/Creedtech3';
+$ghUrl   = !empty($footerConfig['github_url']) ? $footerConfig['github_url'] : 'https://github.com/creed-tech';
+$copyrightText = !empty($footerConfig['copyright_text']) ? $footerConfig['copyright_text'] : '© 2026 Creed Tech. All rights reserved.';
 ?>
   <!-- ======= NEWSLETTER STRIP (newsletter-strip/index.tsx) ======= -->
   <section class="w-full bg-[#F4F6F8]">
@@ -125,24 +136,24 @@
               </div>
               
               <div class="grid grid-cols-2 gap-x-3 gap-y-3.5 max-w-[180px]">
-                <a href="https://facebook.com/creedtechnology" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
+                <a href="<?= htmlspecialchars($fbUrl) ?>" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
                   Facebook
                 </a>
-                <a href="https://instagram.com/creed.technologiess" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
+                <a href="<?= htmlspecialchars($instaUrl) ?>" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
                   Instagram
                 </a>
-                <a href="https://linkedin.com/company/creedtech" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
+                <a href="<?= htmlspecialchars($liUrl) ?>" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
                   LinkedIn
                 </a>
-                <a href="https://pinterest.com/creedtech" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
+                <a href="<?= htmlspecialchars($pinUrl) ?>" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
                   Pinterest
                 </a>
-                <a href="https://x.com/Creedtech3" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200" title="X" aria-label="X">
+                <a href="<?= htmlspecialchars($xUrl) ?>" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200" title="X" aria-label="X">
                   <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
                 </a>
-                <a href="https://github.com/creed-tech" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
+                <a href="<?= htmlspecialchars($ghUrl) ?>" target="_blank" rel="noopener noreferrer" class="h-6 flex items-center hover:text-[#FF6B00] transition-colors duration-200">
                   GitHub
                 </a>
               </div>
