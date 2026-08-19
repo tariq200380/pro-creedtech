@@ -1266,6 +1266,7 @@ include __DIR__ . '/includes/header.php';
             </div>
             <div id="adminPortfolioProjectsList" style="display:flex;flex-direction:column;gap:16px;">
               <!-- Loaded via JavaScript -->
+            </div>
           </div>
 
           <!-- 5. Global Engineering Centers / Hubs Configuration -->
@@ -3029,6 +3030,7 @@ async function saveWebsiteSettings() {
       loadWebsiteSettingsFromBackend();
     } else {
       alert('❌ ' + (data.message || data.error || 'Failed to save settings.'));
+    }
   } catch (err) {
     alert('❌ Error saving settings: ' + err.message);
   }

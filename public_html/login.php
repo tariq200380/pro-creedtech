@@ -30,19 +30,19 @@ require_once __DIR__ . '/includes/admin_auth.php';
 
 // If already authenticated, redirect to destination
 if (!empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header('Location: edit_panel.php');
+    header('Location: admin.php');
     exit;
 }
 
 $error = "";
 $submittedEmail = "";
-$redirect = $_GET['redirect'] ?? 'edit_panel.php';
+$redirect = $_GET['redirect'] ?? 'admin.php';
 
 // Sanitize redirect target to prevent open redirect vulnerabilities
 if (preg_match('/^[a-zA-Z0-9_\-\.\/]+$/', $redirect) && !str_contains($redirect, '://') && !str_starts_with($redirect, '//')) {
     $safeRedirect = $redirect;
 } else {
-    $safeRedirect = 'edit_panel.php';
+    $safeRedirect = 'admin.php';
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['login_user'])) {

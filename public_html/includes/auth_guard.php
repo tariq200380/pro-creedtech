@@ -84,7 +84,7 @@ if (!$isAuthenticated) {
         ], JSON_PRETTY_PRINT);
         exit;
     } else {
-        $requestedUrl = $_SERVER['REQUEST_URI'] ?? 'edit_panel.php';
+        $requestedUrl = $_SERVER['REQUEST_URI'] ?? 'admin.php';
         $cleanPath = parse_url($requestedUrl, PHP_URL_PATH) ?? '';
         $base = basename($cleanPath);
         $redirectParam = ($base !== 'login' && $base !== 'login.php' && !empty($requestedUrl)) ? '?redirect=' . urlencode($requestedUrl) : '';
