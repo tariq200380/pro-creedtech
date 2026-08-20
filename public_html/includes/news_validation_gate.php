@@ -61,21 +61,18 @@ class NewsValidationGate {
 
     // Approved Image CDN Domains
     public static $approvedImageDomains = [
-        'storage.googleapis.com',
+        'storage.googleapis.com', 'lh3.googleusercontent.com', 'blog.google',
         'www.apple.com', 'apple.com',
-        'blogs.nvidia.com',
-        'cdn.sanity.io',
-        'www-cdn.anthropic.com',
-        'images.ctfassets.net',
-        'openaicom-cdn.azureedge.net',
-        'www.anthropic.com', 'anthropic.com',
-        'about.fb.com', 'about.meta.com', 'scontent.xx.fbcdn.net',
-        'blogs.microsoft.com', 'news.microsoft.com',
+        'blogs.nvidia.com', 'images.nvidia.com',
+        'cdn.sanity.io', 'www-cdn.anthropic.com', 'www.anthropic.com', 'anthropic.com',
+        'images.ctfassets.net', 'openaicom-cdn.azureedge.net', 'openai.com', 'www.openai.com',
+        'about.fb.com', 'about.meta.com', 'scontent.xx.fbcdn.net', 'facebook.com',
+        'blogs.microsoft.com', 'news.microsoft.com', 'devblogs.microsoft.com', 'www.microsoft.com', 'microsoft.com',
         'newsroom.intel.com', 'www.intel.com', 'intel.com',
-        'i.dawn.com',
-        'i.brecorder.com',
-        'propakistani.pk',
-        'i.tribune.com.pk', 'tribune.com.pk'
+        'i.dawn.com', 'www.dawn.com', 'dawn.com',
+        'i.brecorder.com', 'www.brecorder.com', 'brecorder.com',
+        'propakistani.pk', 'www.propakistani.pk',
+        'i.tribune.com.pk', 'tribune.com.pk', 'www.tribune.com.pk'
     ];
 
     /**
@@ -237,23 +234,25 @@ class NewsValidationGate {
         // ==========================================
         // TYPE 1: Verified Original Source Image
         // ==========================================
-        $sourceImageUrl = trim($candidate['source_image_url'] ?? $candidate['image_url'] ?? '');
+        $sourceImageUrl = trim(html_entity_decode($candidate['source_image_url'] ?? $candidate['image_url'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         $existingLocal  = trim($candidate['local_image_path'] ?? '');
 
-        // If local file exists and matches hash, verify disk state
-        if (!empty($existingLocal) && file_exists(__DIR__ . '/../' . $existingLocal)) {
-            $diskContent = file_get_contents(__DIR__ . '/../' . $existingLocal);
-            if (!empty($diskContent)) {
-                $actualHash = hash('sha256', $diskContent);
-                $expectedHash = $candidate['image_hash'] ?? '';
-                if (empty($expectedHash) || $actualHash === $expectedHash) {
+        // If local file exists and is a genuine source image, verify disk state and retain
+        if (!empty($existingLocal) && strpos($existingLocal, '_headline_') === false) {
+            $fullPath = __DIR__ . '/../' . $existingLocal;
+            if (file_exists($fullPath) && filesize($fullPath) > 0) {
+                $diskContent = @file_get_contents($fullPath);
+                if (!empty($diskContent)) {
+                    $actualHash = hash('sha256', $diskContent);
+                    $finfo = new finfo(FILEINFO_MIME_TYPE);
+                    $detectedMime = $finfo->buffer($diskContent);
                     return [
                         'valid'           => true,
                         'visual_type'     => VISUAL_SOURCE_IMAGE,
                         'local_path'      => $existingLocal,
                         'image_hash'      => $actualHash,
-                        'source_image_url'=> $sourceImageUrl,
-                        'mime_type'       => 'image/verified',
+                        'source_image_url'=> !empty($sourceImageUrl) ? $sourceImageUrl : ($candidate['source_image_url'] ?? null),
+                        'mime_type'       => $detectedMime ?: 'image/jpeg',
                         'status'          => 'VERIFIED_SOURCE_IMAGE'
                     ];
                 }

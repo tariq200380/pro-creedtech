@@ -14,23 +14,28 @@ if (!defined('DB_NAME')) define('DB_NAME', creed_env('DB_NAME', 'creed_tech'));
 // Suppress raw error display for visitors, log instead
 mysqli_report(MYSQLI_REPORT_OFF);
 
-// Fast non-blocking socket reachability probe to prevent Windows TCP SYN timeout stalling (fails in < 30ms if MySQL daemon is stopped)
-$connect = false;
-$probe = @stream_socket_client('tcp://' . DB_HOST . ':' . DB_PORT, $errno, $errstr, 0.03, STREAM_CLIENT_CONNECT);
-if ($probe) {
-    fclose($probe);
-    $connect = mysqli_init();
-    if ($connect) {
-        mysqli_options($connect, MYSQLI_OPT_CONNECT_TIMEOUT, 1);
-        $connSuccess = @mysqli_real_connect($connect, DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
-        if (!$connSuccess) {
-            $connect = false;
-            error_log("Database connection error: " . mysqli_connect_error());
-        } else {
-            mysqli_set_charset($connect, "utf8mb4");
+// Safe connection reuse to prevent multiple socket probes and redundant connections per request
+global $connect, $conn;
+
+if (!isset($connect) || !$connect instanceof mysqli || !@mysqli_ping($connect)) {
+    $connect = false;
+    $probe = @stream_socket_client('tcp://' . DB_HOST . ':' . DB_PORT, $errno, $errstr, 0.03, STREAM_CLIENT_CONNECT);
+    if ($probe) {
+        fclose($probe);
+        $connect = mysqli_init();
+        if ($connect) {
+            mysqli_options($connect, MYSQLI_OPT_CONNECT_TIMEOUT, 1);
+            $connSuccess = @mysqli_real_connect($connect, DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+            if (!$connSuccess) {
+                $connect = false;
+                error_log("Database connection error: " . mysqli_connect_error());
+            } else {
+                mysqli_set_charset($connect, "utf8mb4");
+            }
         }
     }
 }
+$conn = &$connect;
 
 /**
  * Helper to safely fetch rows with prepared statements

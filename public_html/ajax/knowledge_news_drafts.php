@@ -233,6 +233,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // 1. REFRESH TECH WIRE FEEDS (Authenticated Admin + CSRF Protected)
+    if ($action === 'refresh_tech_wire_feeds') {
+        require_once __DIR__ . '/live_tech_news.php';
+
+        try {
+            $syncResult = sync_all_verified_feeds(true);
+            if (empty($syncResult) || !is_array($syncResult)) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Feed synchronization returned empty or invalid response.'
+                ]);
+                exit;
+            }
+
+            creed_audit_log('NEWS_FEEDS_REFRESHED', 'TECH_WIRE', null, 'SUCCESS', [
+                'pakistani_articles'     => $syncResult['counts']['pakistani_articles'] ?? 0,
+                'international_articles' => $syncResult['counts']['international_articles'] ?? 0
+            ]);
+
+            echo json_encode([
+                'success'           => true,
+                'message'           => 'Feed refreshed successfully',
+                'timestamp'         => $syncResult['timestamp'] ?? gmdate('Y-m-d\TH:i:s\Z'),
+                'counts'            => $syncResult['counts'] ?? [],
+                'provider_statuses' => $syncResult['provider_statuses'] ?? []
+            ]);
+        } catch (Throwable $e) {
+            creed_audit_log('NEWS_FEEDS_REFRESH_FAILED', 'TECH_WIRE', null, 'FAILURE', [
+                'error' => $e->getMessage()
+            ]);
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to refresh feeds: ' . $e->getMessage()
+            ]);
+        }
+        exit;
+    }
+
     // 2. CREATE OR OPEN DRAFT FROM LIVE NEWS REFERENCE
     if ($action === 'create_or_open_draft') {
         $provider = strtolower(trim((string)($_POST['provider'] ?? $jsonData['provider'] ?? '')));

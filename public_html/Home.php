@@ -33,10 +33,14 @@ include __DIR__ . '/includes/header.php';
     <div class="w-full lg:w-[48%] flex justify-end">
       <div class="relative w-full max-w-[620px] flex items-center justify-center">
         <img 
-          src="hero-3d-white.png" 
+          src="hero-3d-white.webp" 
           alt="Creed Tech Cloud, AI, and Software Architecture Solutions" 
           class="w-full h-auto object-contain block transition-transform duration-700 hover:scale-105 select-none"
-          onerror="this.src='hero-3d-transparent.png'"
+          onerror="this.src='hero-3d-transparent.webp'"
+          width="620"
+          height="520"
+          decoding="async"
+          fetchpriority="high"
         />
       </div>
     </div>
@@ -60,76 +64,76 @@ include __DIR__ . '/includes/header.php';
       <!-- Set 1 -->
       <div class="flex items-center gap-14 sm:gap-20 shrink-0">
         <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/clutch.png" alt="Clutch" class="h-9 w-auto object-contain" onerror="this.src='clutch-logo.png'">
+          <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" onerror="this.src='google-ar21.svg'">
+          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
         </a>
         <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" onerror="this.src='The-Manifest-Logo.svg'">
+          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
         </a>
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/shopify.png" alt="Shopify" class="h-9 w-auto object-contain" onerror="this.src='shopify-ar21.svg'">
+          <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
         </a>
         <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/trustpilot.png" alt="Trustpilot" class="h-9 w-auto object-contain" onerror="this.src='trustpilot-seeklogo.png'">
+          <img src="partners/trustpilot.webp" alt="Trustpilot" class="h-9 w-auto object-contain" width="130" height="36" loading="lazy" decoding="async" onerror="this.src='trustpilot-seeklogo.png'">
         </a>
       </div>
 
       <!-- Set 2 -->
       <div class="flex items-center gap-14 sm:gap-20 shrink-0">
         <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/clutch.png" alt="Clutch" class="h-9 w-auto object-contain" onerror="this.src='clutch-logo.png'">
+          <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" onerror="this.src='google-ar21.svg'">
+          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
         </a>
         <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" onerror="this.src='The-Manifest-Logo.svg'">
+          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
         </a>
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/shopify.png" alt="Shopify" class="h-9 w-auto object-contain" onerror="this.src='shopify-ar21.svg'">
+          <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
         </a>
         <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/trustpilot.png" alt="Trustpilot" class="h-9 w-auto object-contain" onerror="this.src='trustpilot-seeklogo.png'">
+          <img src="partners/trustpilot.webp" alt="Trustpilot" class="h-9 w-auto object-contain" width="130" height="36" loading="lazy" decoding="async" onerror="this.src='trustpilot-seeklogo.png'">
         </a>
       </div>
 
       <!-- Set 3 -->
       <div class="flex items-center gap-14 sm:gap-20 shrink-0">
         <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/clutch.png" alt="Clutch" class="h-9 w-auto object-contain" onerror="this.src='clutch-logo.png'">
+          <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" onerror="this.src='google-ar21.svg'">
+          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
         </a>
         <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" onerror="this.src='The-Manifest-Logo.svg'">
+          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
         </a>
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/shopify.png" alt="Shopify" class="h-9 w-auto object-contain" onerror="this.src='shopify-ar21.svg'">
+          <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
         </a>
         <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/trustpilot.png" alt="Trustpilot" class="h-9 w-auto object-contain" onerror="this.src='trustpilot-seeklogo.png'">
+          <img src="partners/trustpilot.webp" alt="Trustpilot" class="h-9 w-auto object-contain" width="130" height="36" loading="lazy" decoding="async" onerror="this.src='trustpilot-seeklogo.png'">
         </a>
       </div>
 
       <!-- Set 4 -->
       <div class="flex items-center gap-14 sm:gap-20 shrink-0">
         <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/clutch.png" alt="Clutch" class="h-9 w-auto object-contain" onerror="this.src='clutch-logo.png'">
+          <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" onerror="this.src='google-ar21.svg'">
+          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
         </a>
         <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" onerror="this.src='The-Manifest-Logo.svg'">
+          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
         </a>
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/shopify.png" alt="Shopify" class="h-9 w-auto object-contain" onerror="this.src='shopify-ar21.svg'">
+          <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
         </a>
         <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/trustpilot.png" alt="Trustpilot" class="h-9 w-auto object-contain" onerror="this.src='trustpilot-seeklogo.png'">
+          <img src="partners/trustpilot.webp" alt="Trustpilot" class="h-9 w-auto object-contain" width="130" height="36" loading="lazy" decoding="async" onerror="this.src='trustpilot-seeklogo.png'">
         </a>
       </div>
 

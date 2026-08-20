@@ -8,12 +8,12 @@ require_once __DIR__ . '/includes/db.php';
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>CreedTech - Video Dashboard</title>
-  <link href="assets/img/mono.png" rel="icon">
+  <link href="assets/img/mono.webp" rel="icon">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/css/style.css" rel="stylesheet">
-  <link href="assets/css/insert-style.css" rel="stylesheet">
-  <link href="assets/css/dashboard.css" rel="stylesheet">
+  <link href="assets/css/style.min.css" rel="stylesheet">
+  <link href="assets/css/insert-style.min.css" rel="stylesheet">
+  <link href="assets/css/dashboard.min.css" rel="stylesheet">
 </head>
 <body>
   <header id="header" class="fixed-top">

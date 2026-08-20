@@ -88,7 +88,7 @@ include __DIR__ . '/includes/header.php';
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 2rem;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
 }
 
@@ -121,20 +121,21 @@ include __DIR__ . '/includes/header.php';
   width: 100%;
 }
 
-/* Image Box Containers with True 16:9 Proportions (Zero Cut-offs / Zero Squishing) */
+/* Image Box Containers with True 16:9 Landscape Proportions (Zero Padding / Full Cover Fit) */
 .kc-main-news-visual {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  min-height: 260px;
+  border-radius: 12px;
   background: #0B1120;
   overflow: hidden;
 }
 .kc-wire-visual {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   min-height: 260px;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   background: #0F172A;
@@ -142,20 +143,30 @@ include __DIR__ . '/includes/header.php';
 .kc-reg-visual {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   min-height: 260px;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   background: #064E3B;
 }
 .kc-main-news-visual img,
 .kc-wire-visual img,
-.kc-reg-visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
+.kc-reg-visual img,
+#wireImg,
+#regImg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 12px !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .kc-reader-main {
@@ -488,7 +499,7 @@ include __DIR__ . '/includes/header.php';
 
       <?php $gw = $brandWires['google'] ?? []; ?>
       <!-- Selected Brand Story Showcase Card -->
-      <div class="kc-wire-card-grid" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:1rem;padding:1.5rem sm:padding:2rem;">
+      <div class="kc-wire-card-grid" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:1rem;padding:1.5rem;">
         <div id="wireVisualContainer" class="kc-wire-visual">
           <img id="wireImg" src="<?= htmlspecialchars($gw['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="<?= htmlspecialchars(!empty($gw['title']) ? $gw['title'] : 'Global Tech Wire Story') ?>" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
           <div style="position:absolute;top:12px;right:12px;z-index:3;">
@@ -541,7 +552,7 @@ include __DIR__ . '/includes/header.php';
 
       <?php $dw = $regionalWires['dawn'] ?? []; ?>
       <!-- Selected Regional Story Card -->
-      <div class="kc-wire-card-grid" style="background:#fff;border:1px solid #E2E8F0;border-radius:1rem;padding:1.5rem sm:padding:2rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
+      <div class="kc-wire-card-grid" style="background:#fff;border:1px solid #E2E8F0;border-radius:1rem;padding:1.5rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
         <div id="regVisualContainer" class="kc-reg-visual">
           <img id="regImg" src="<?= htmlspecialchars($dw['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars(!empty($dw['title']) ? $dw['title'] : 'Regional Tech Wire Story') ?>" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
           <div style="position:absolute;top:12px;right:12px;z-index:3;">
@@ -2063,6 +2074,11 @@ function selectWireBrand(brand) {
     var rawImg = b ? (b.img || b.image || b.image_url || b.local_image_path || 'assets/img/hero_img.webp') : 'assets/img/hero_img.webp';
     imgEl.src = rawImg;
     imgEl.alt = b ? (b.title || 'News Story Photo') : 'No verified item available';
+    imgEl.style.width = '100%';
+    imgEl.style.height = '100%';
+    imgEl.style.objectFit = 'cover';
+    imgEl.style.objectPosition = 'center';
+    imgEl.style.display = 'block';
     imgEl.onerror = function() {
       this.onerror = null;
       this.src = 'assets/img/hero_img.webp';
@@ -2194,6 +2210,11 @@ function selectRegionalTab(tab) {
     var rawImg = r ? (r.image || r.img || r.image_url || r.local_image_path || 'assets/img/hero_img.webp') : 'assets/img/hero_img.webp';
     imgEl.src = rawImg;
     imgEl.alt = r ? (r.title || 'Regional Story Photo') : 'No verified item available';
+    imgEl.style.width = '100%';
+    imgEl.style.height = '100%';
+    imgEl.style.objectFit = 'cover';
+    imgEl.style.objectPosition = 'center';
+    imgEl.style.display = 'block';
     imgEl.onerror = function() {
       this.onerror = null;
       this.src = 'assets/img/hero_img.webp';

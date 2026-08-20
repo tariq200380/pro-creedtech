@@ -218,6 +218,74 @@ function returnToTechWire() {
   }
 }
 
+async function refreshTechWireFeed(btn) {
+  var button = btn || document.getElementById('btnRefreshTechWire');
+  var origHtml = button ? button.innerHTML : 'Refresh Feed 🔄';
+
+  if (button) {
+    button.disabled = true;
+    button.innerHTML = 'Refreshing... ⏳';
+    button.style.opacity = '0.7';
+    button.style.cursor = 'not-allowed';
+  }
+
+  var csrfToken = (document.getElementById('draftCsrfToken') ? document.getElementById('draftCsrfToken').value : (typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''));
+
+  try {
+    var res = await fetch('ajax/knowledge_news_drafts.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        action: 'refresh_tech_wire_feeds',
+        csrf_token: csrfToken
+      })
+    });
+
+    var data = null;
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = null;
+    }
+
+    if (res.ok && data && data.success === true) {
+      // Reload and update the feed list
+      await loadTechWireNewsTab();
+
+      if (button) {
+        button.innerHTML = 'Refreshed! ✅';
+        setTimeout(function() {
+          if (button) {
+            button.disabled = false;
+            button.innerHTML = origHtml;
+            button.style.opacity = '1';
+            button.style.cursor = 'pointer';
+          }
+        }, 1500);
+      }
+    } else {
+      var errMsg = (data && (data.message || data.error)) ? (data.message || data.error) : ('Request failed (HTTP ' + res.status + ')');
+      alert('Error refreshing feed: ' + errMsg);
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = origHtml;
+        button.style.opacity = '1';
+        button.style.cursor = 'pointer';
+      }
+    }
+  } catch (err) {
+    alert('Error refreshing feed: ' + (err.message || err));
+    if (button) {
+      button.disabled = false;
+      button.innerHTML = origHtml;
+      button.style.opacity = '1';
+      button.style.cursor = 'pointer';
+    }
+  }
+}
+
 async function loadTechWireNewsTab() {
   var container = document.getElementById('adminTechWireList');
   if (!container) return;
@@ -245,12 +313,12 @@ async function loadTechWireNewsTab() {
       var btnLabel = hasDraft ? 'Open Knowledge Draft (' + draftStatus + ')' : '+ Create Knowledge Draft';
       var btnBg = hasDraft ? (draftStatus === 'PUBLISHED' ? '#10B981' : '#FF6B00') : '#0052FF';
 
-      var imgSrc = item.img || 'Creed-Tech-Logo-Clean.png';
+      var imgSrc = item.img || 'Creed-Tech-Logo-Clean.webp';
 
       return `
         <div style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:8px;padding:16px;display:flex;gap:18px;align-items:flex-start;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
           <div style="width:140px;height:100px;background:#0F172A;border-radius:6px;overflow:hidden;flex-shrink:0;position:relative;">
-            <img src="${imgSrc}" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='Creed-Tech-Logo-Clean.png'">
+            <img src="${imgSrc}" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='Creed-Tech-Logo-Clean.webp'">
           </div>
           <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -414,7 +482,7 @@ function populateAndOpenDraftModal(draft) {
 
   document.getElementById('draftEditId').value = draft.id || '';
   document.getElementById('draftSourceProviderBadge').textContent = (draft.source_provider || 'SOURCE').toUpperCase();
-  document.getElementById('draftSourceImage').src = draft.source_image_url || 'Creed-Tech-Logo-Clean.png';
+  document.getElementById('draftSourceImage').src = draft.source_image_url || 'Creed-Tech-Logo-Clean.webp';
   document.getElementById('draftSourceTitle').textContent = draft.source_title || '';
   document.getElementById('draftSourceDate').textContent = draft.source_published_at || 'Recently Published';
   document.getElementById('draftSourceExternalId').textContent = draft.source_external_article_id || 'N/A';

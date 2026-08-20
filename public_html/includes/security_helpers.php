@@ -4,6 +4,49 @@
  */
 
 /**
+ * In-Memory Request-Level Cache for Site Settings JSON
+ */
+if (!function_exists('creed_get_site_settings')) {
+    function creed_get_site_settings() {
+        static $cached = null;
+        if ($cached !== null) {
+            return $cached;
+        }
+        $settingsPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'site_settings.json';
+        if (file_exists($settingsPath)) {
+            $data = json_decode(@file_get_contents($settingsPath), true);
+            $cached = is_array($data) ? $data : [];
+        } else {
+            $cached = [];
+        }
+        return $cached;
+    }
+}
+
+/**
+ * Safe Automatic Static Asset Versioning / Cache Busting
+ * Appends ?v=<filemtime> for local assets without duplicate query strings or PHP warnings.
+ */
+if (!function_exists('creed_asset_url')) {
+    function creed_asset_url($relativePath) {
+        $relativePath = (string)$relativePath;
+        $cleanPath = ltrim($relativePath, '/');
+        if ($cleanPath === '' || str_starts_with($cleanPath, 'http://') || str_starts_with($cleanPath, 'https://') || str_starts_with($cleanPath, '//') || str_starts_with($cleanPath, 'data:')) {
+            return $relativePath;
+        }
+        $fullPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $cleanPath);
+        if (file_exists($fullPath) && is_file($fullPath)) {
+            $mtime = @filemtime($fullPath);
+            if ($mtime !== false) {
+                $separator = (strpos($relativePath, '?') !== false) ? '&' : '?';
+                return $relativePath . $separator . 'v=' . $mtime;
+            }
+        }
+        return $relativePath;
+    }
+}
+
+/**
  * Safe HTML Output Encoding (Prevents Reflected and Stored XSS)
  */
 if (!function_exists('e')) {

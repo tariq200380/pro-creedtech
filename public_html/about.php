@@ -409,24 +409,95 @@ include __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 2. TRUSTED BY LEADING ENTERPRISES (PARTNERS MARQUEE) -->
-  <section style="width:100%;padding:1.5rem 0;border-top:1px solid #D6E4FF;border-bottom:1px solid #D6E4FF;overflow:hidden;position:relative;background:#F4F8FF;user-select:none;">
-    <div style="position:relative;width:100%;overflow:hidden;display:flex;align-items:center;">
-      <div style="position:absolute;left:0;top:0;bottom:0;width:5rem;z-index:10;pointer-events:none;background:linear-gradient(to right, #F4F8FF, transparent);"></div>
-      <div style="position:absolute;right:0;top:0;bottom:0;width:5rem;z-index:10;pointer-events:none;background:linear-gradient(to left, #F4F8FF, transparent);"></div>
+  <!-- 2. PARTNERS MARQUEE: 100% UNBREAKABLE CONTINUOUS SEAMLESS SCROLL -->
+  <section 
+    class="w-full py-6 border-t border-b border-[#D6E4FF] overflow-hidden relative select-none"
+    style="background-color: #F4F8FF;"
+  >
+    <div class="relative w-full overflow-hidden flex items-center">
+      <!-- Gradient Edge Fade Masks -->
+      <div class="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style="background: linear-gradient(to right, #F4F8FF, transparent);"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style="background: linear-gradient(to left, #F4F8FF, transparent);"></div>
 
-      <div class="marquee-track" style="display:flex;flex-shrink:0;align-items:center;justify-content:space-around;gap:3.5rem;min-width:100%;padding:0 1.5rem;">
-        <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/clutch.png" alt="Clutch" style="height:34px;width:auto;display:block;"></a>
-        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/google.png" alt="Google" style="height:34px;width:auto;display:block;"></a>
-        <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/the-manifest.png" alt="The Manifest" style="height:42px;width:auto;display:block;"></a>
-        <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/shopify.png" alt="Shopify" style="height:34px;width:auto;display:block;"></a>
-        <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/trustpilot.png" alt="Trustpilot" style="height:32px;width:auto;display:block;"></a>
-        <!-- Duplicate for loop -->
-        <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/clutch.png" alt="Clutch" style="height:34px;width:auto;display:block;"></a>
-        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/google.png" alt="Google" style="height:34px;width:auto;display:block;"></a>
-        <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/the-manifest.png" alt="The Manifest" style="height:42px;width:auto;display:block;"></a>
-        <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/shopify.png" alt="Shopify" style="height:34px;width:auto;display:block;"></a>
-        <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0.5rem;"><img src="assets/images/partners/trustpilot.png" alt="Trustpilot" style="height:32px;width:auto;display:block;"></a>
+      <!-- Infinite 4-Set Continuous Marquee Track -->
+      <div class="partner-marquee-track items-center gap-14 sm:gap-20 px-6">
+        
+        <!-- Set 1 -->
+        <div class="flex items-center gap-14 sm:gap-20 shrink-0">
+          <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+          </a>
+          <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
+          </a>
+          <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
+          </a>
+          <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
+          </a>
+          <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/trustpilot.webp" alt="Trustpilot" class="h-9 w-auto object-contain" width="130" height="36" loading="lazy" decoding="async" onerror="this.src='trustpilot-seeklogo.png'">
+          </a>
+        </div>
+
+        <!-- Set 2 -->
+        <div class="flex items-center gap-14 sm:gap-20 shrink-0">
+          <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+          </a>
+          <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
+          </a>
+          <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
+          </a>
+          <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
+          </a>
+          <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/trustpilot.webp" alt="Trustpilot" class="h-9 w-auto object-contain" width="130" height="36" loading="lazy" decoding="async" onerror="this.src='trustpilot-seeklogo.png'">
+          </a>
+        </div>
+
+        <!-- Set 3 -->
+        <div class="flex items-center gap-14 sm:gap-20 shrink-0">
+          <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+          </a>
+          <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
+          </a>
+          <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
+          </a>
+          <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
+          </a>
+          <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/trustpilot.webp" alt="Trustpilot" class="h-9 w-auto object-contain" width="130" height="36" loading="lazy" decoding="async" onerror="this.src='trustpilot-seeklogo.png'">
+          </a>
+        </div>
+
+        <!-- Set 4 -->
+        <div class="flex items-center gap-14 sm:gap-20 shrink-0">
+          <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+          </a>
+          <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
+          </a>
+          <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
+          </a>
+          <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
+          </a>
+          <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="partners/trustpilot.webp" alt="Trustpilot" class="h-9 w-auto object-contain" width="130" height="36" loading="lazy" decoding="async" onerror="this.src='trustpilot-seeklogo.png'">
+          </a>
+        </div>
+
       </div>
     </div>
   </section>
@@ -760,7 +831,7 @@ include __DIR__ . '/includes/header.php';
         <div class="about-hub-card">
           <div>
             <div class="about-hub-img">
-              <img src="<?= htmlspecialchars($hub['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($hub['city'] ?? '') ?>" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='assets/img/hero_img.webp'">
+              <img src="<?= htmlspecialchars($hub['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($hub['city'] ?? '') ?>" width="380" height="200" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='assets/img/hero_img.webp'">
               <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);pointer-events:none;"></div>
               <div style="position:absolute;bottom:0.75rem;left:1rem;color:#fff;">
                 <span style="font-size:1.1rem;font-weight:700;display:block;line-height:1.1;"><?= htmlspecialchars($hub['city'] ?? '') ?></span>
@@ -810,7 +881,7 @@ include __DIR__ . '/includes/header.php';
         <?php foreach (($leadershipSection['leaders'] ?? []) as $leader): ?>
         <div class="about-leader-card" onmouseover="this.style.boxShadow='0 12px 24px -4px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.04)'">
           <div class="about-leader-img-box">
-            <img src="<?= htmlspecialchars($leader['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($leader['name'] ?? '') ?>" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='assets/img/hero_img.webp'">
+            <img src="<?= htmlspecialchars($leader['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($leader['name'] ?? '') ?>" width="200" height="200" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='assets/img/hero_img.webp'">
             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);pointer-events:none;"></div>
             <?php if (!empty($leader['badge'])): ?>
             <div style="position:absolute;bottom:8px;left:8px;right:8px;color:#fff;font-size:10px;font-family:monospace;font-weight:600;">

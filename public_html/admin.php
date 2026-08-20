@@ -603,7 +603,7 @@ include __DIR__ . '/includes/header.php';
             <h1 style="font-size:22px;font-weight:700;color:#0F172A;margin:0 0 4px;">Tech Wire News (Canonical Feed Reference)</h1>
             <p style="font-size:13px;color:#64748B;margin:0;">Source items are read-only references. Click <strong>"+ Create Knowledge Draft"</strong> to draft an independent Creed-Tech article.</p>
           </div>
-          <button onclick="loadTechWireNewsTab()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:600;border:none;border-radius:4px;cursor:pointer;">Refresh Feed 🔄</button>
+          <button id="btnRefreshTechWire" onclick="refreshTechWireFeed(this)" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:600;border:none;border-radius:4px;cursor:pointer;">Refresh Feed 🔄</button>
         </div>
 
         <div id="adminTechWireList" style="display:flex;flex-direction:column;gap:14px;">

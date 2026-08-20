@@ -93,9 +93,9 @@ if ($connect instanceof mysqli && $id > 0) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Edit Article | Creed Tech Admin</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/insert-style.css">
-  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/style.min.css">
+  <link rel="stylesheet" href="assets/css/insert-style.min.css">
+  <link rel="stylesheet" href="assets/css/dashboard.min.css">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background:#F8FAFC;">

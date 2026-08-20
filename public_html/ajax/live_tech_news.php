@@ -139,9 +139,262 @@ function format_provider_relative_time($pubDateStr) {
 }
 
 /**
- * Ingest feed with strict Central NewsValidationGate verification
+ * Resolve relative URL to absolute URL against base
  */
-function ingest_and_gate_feed($feedConfig, $uploadDir) {
+function resolve_article_absolute_url($relativeUrl, $baseUrl) {
+    if (empty($relativeUrl)) return '';
+    $relativeUrl = trim(html_entity_decode($relativeUrl, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+    
+    // Protocol-relative URL
+    if (str_starts_with($relativeUrl, '//')) {
+        return 'https:' . $relativeUrl;
+    }
+    
+    // Already absolute HTTP/HTTPS URL
+    if (preg_match('#^https?://#i', $relativeUrl)) {
+        return $relativeUrl;
+    }
+    
+    $parsedBase = parse_url($baseUrl);
+    $scheme = $parsedBase['scheme'] ?? 'https';
+    $host = $parsedBase['host'] ?? '';
+    
+    if (str_starts_with($relativeUrl, '/')) {
+        return $scheme . '://' . $host . $relativeUrl;
+    }
+    
+    $basePath = $parsedBase['path'] ?? '/';
+    $dir = rtrim(dirname($basePath), '/');
+    return $scheme . '://' . $host . $dir . '/' . $relativeUrl;
+}
+
+/**
+ * Parse best high-resolution image candidate from srcset attribute
+ */
+function parse_best_from_srcset($srcsetStr, $baseUrl) {
+    if (empty($srcsetStr)) return null;
+    $parts = explode(',', $srcsetStr);
+    $bestUrl = null;
+    $bestWidth = 0;
+
+    foreach ($parts as $part) {
+        $part = trim($part);
+        if (empty($part)) continue;
+        $tokens = preg_split('/\s+/', $part);
+        $u = $tokens[0] ?? '';
+        $wStr = $tokens[1] ?? '';
+        
+        $width = 0;
+        if (preg_match('/(\d+)w/i', $wStr, $wm)) {
+            $width = (int)$wm[1];
+        } elseif (preg_match('/(\d+)x/i', $wStr, $xm)) {
+            $width = (int)$xm[1] * 800;
+        }
+
+        // We prefer high-resolution assets (between 1080w and 2560w)
+        if ($width > 0) {
+            if ($width >= 1080 && $width <= 2560 && $width > $bestWidth) {
+                $bestWidth = $width;
+                $bestUrl = $u;
+            } elseif ($bestWidth === 0 && $width >= $bestWidth) {
+                $bestWidth = $width;
+                $bestUrl = $u;
+            }
+        } elseif (empty($bestUrl)) {
+            $bestUrl = $u;
+        }
+    }
+
+    return $bestUrl ? resolve_article_absolute_url($bestUrl, $baseUrl) : null;
+}
+
+/**
+ * Filter out tracking pixels, icons, favicons, and social composite cards
+ */
+function is_unwanted_article_asset_url($url) {
+    if (empty($url)) return true;
+    if (preg_match('/\b(favicon|avatar|tracking|spinner|loader|placeholder|nav-logo|header-logo|footer-logo)\b/i', $url)) return true;
+    if (preg_match('/[\/\._-]1x1\.(gif|png|jpg|webp)/i', $url)) return true;
+    if (preg_match('/-seo-16x9-/i', $url)) return true; // Exclude social composite cards with white borders
+    return false;
+}
+
+/**
+ * Extract genuine article hero image applying strict priority:
+ * 
+ * PRIORITY 1: Actual article-body hero / featured image rendered in page content (<picture>, <source srcset>, <img> hero)
+ * PRIORITY 2: picture / source srcset or responsive image belonging to the article hero
+ * PRIORITY 3: JSON-LD Structured Data image
+ * PRIORITY 4: og:image / twitter:image (Fallback only if no genuine article-body hero found)
+ * PRIORITY 5: RSS XML enclosure / media content
+ */
+function extract_real_article_hero_image($itemRaw, $articleUrl, $customImage = null) {
+    if (!empty($customImage)) {
+        return resolve_article_absolute_url($customImage, $articleUrl);
+    }
+
+    $candidates = [];
+    $orderIndex = 0;
+
+    // Attempt deep fetch of article page HTML if URL is valid
+    $pageHtml = null;
+    if (!empty($articleUrl) && filter_var($articleUrl, FILTER_VALIDATE_URL) && NewsValidationGate::isSafeRemoteHost(parse_url($articleUrl, PHP_URL_HOST))) {
+        if (function_exists('curl_init')) {
+            $ch = curl_init();
+            curl_setopt_array($ch, [
+                CURLOPT_URL            => $articleUrl,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_MAXREDIRS      => 4,
+                CURLOPT_TIMEOUT        => 8,
+                CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                CURLOPT_SSL_VERIFYPEER => true
+            ]);
+            $pageHtml = curl_exec($ch);
+            curl_close($ch);
+        }
+    }
+
+    if ($pageHtml) {
+        // Priority 1: <picture> <source srcset="..."> / <img> inside <picture>
+        if (preg_match_all('/<picture[^>]*>(.*?)<\/picture>/is', $pageHtml, $picMatches)) {
+            foreach ($picMatches[1] as $picInner) {
+                if (preg_match('/<source[^>]+srcset=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $picInner, $srcSetM)) {
+                    $best = parse_best_from_srcset($srcSetM[1], $articleUrl);
+                    if ($best && !is_unwanted_article_asset_url($best)) {
+                        $candidates[] = ['priority' => 1, 'order' => $orderIndex++, 'url' => $best, 'type' => 'picture:source_srcset'];
+                    }
+                }
+                if (preg_match('/<img[^>]+src=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $picInner, $imgM)) {
+                    if (!is_unwanted_article_asset_url($imgM[1])) {
+                        $candidates[] = ['priority' => 1, 'order' => $orderIndex++, 'url' => $imgM[1], 'type' => 'picture:img_src'];
+                    }
+                }
+            }
+        }
+
+        // Priority 2: <img> elements in page body (Article hero images)
+        if (preg_match_all('/<img[^>]+>/i', $pageHtml, $imgMatches)) {
+            foreach ($imgMatches[0] as $imgTag) {
+                $isHero = preg_match('/(?:hero|featured|lead|cover|article-img|banner|main-image|story-image|data-nimg=[\x22\x27]fill[\x22\x27]|class=[\x22\x27][^\x22\x27]*object-cover)/i', $imgTag);
+
+                $urlCandidate = null;
+                if (preg_match('/srcset=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $imgTag, $setM)) {
+                    $urlCandidate = parse_best_from_srcset($setM[1], $articleUrl);
+                }
+                if (!$urlCandidate && preg_match('/src=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $imgTag, $srcM)) {
+                    $urlCandidate = $srcM[1];
+                }
+
+                if ($urlCandidate && !is_unwanted_article_asset_url($urlCandidate)) {
+                    $prio = $isHero ? 1 : 2;
+                    $candidates[] = ['priority' => $prio, 'order' => $orderIndex++, 'url' => $urlCandidate, 'type' => ($isHero ? 'html:hero_img' : 'html:body_img')];
+                }
+            }
+        }
+
+        // Priority 3: JSON-LD Structured Data Image
+        if (preg_match_all('/<script[^>]+type=[\x22\x27]application\/ld\+json[\x22\x27][^>]*>(.*?)<\/script>/is', $pageHtml, $jsonLdMatches)) {
+            foreach ($jsonLdMatches[1] as $jStr) {
+                $jData = json_decode(trim($jStr), true);
+                if ($jData) {
+                    if (isset($jData['image'])) {
+                        $imgVal = $jData['image'];
+                        if (is_string($imgVal) && !empty($imgVal) && !is_unwanted_article_asset_url($imgVal)) {
+                            $candidates[] = ['priority' => 3, 'order' => $orderIndex++, 'url' => $imgVal, 'type' => 'jsonld:image'];
+                        } elseif (is_array($imgVal)) {
+                            if (isset($imgVal['url']) && is_string($imgVal['url']) && !is_unwanted_article_asset_url($imgVal['url'])) {
+                                $candidates[] = ['priority' => 3, 'order' => $orderIndex++, 'url' => $imgVal['url'], 'type' => 'jsonld:image.url'];
+                            } elseif (isset($imgVal[0])) {
+                                $first = is_string($imgVal[0]) ? $imgVal[0] : ($imgVal[0]['url'] ?? '');
+                                if (!empty($first) && !is_unwanted_article_asset_url($first)) {
+                                    $candidates[] = ['priority' => 3, 'order' => $orderIndex++, 'url' => $first, 'type' => 'jsonld:image[0]'];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Priority 4: OG:Image / Twitter:Image (Fallback if no article-body hero found)
+        if (preg_match('/<meta[^>]+property=[\x22\x27]og:image[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $pageHtml, $m)) {
+            if (!is_unwanted_article_asset_url($m[1])) {
+                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'og:image'];
+            }
+        } elseif (preg_match('/<meta[^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27][^>]+property=[\x22\x27]og:image[\x22\x27]/i', $pageHtml, $m)) {
+            if (!is_unwanted_article_asset_url($m[1])) {
+                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'og:image'];
+            }
+        }
+
+        if (preg_match('/<meta[^>]+name=[\x22\x27]twitter:image[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $pageHtml, $m)) {
+            if (!is_unwanted_article_asset_url($m[1])) {
+                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'twitter:image'];
+            }
+        } elseif (preg_match('/<meta[^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27][^>]+name=[\x22\x27]twitter:image[\x22\x27]/i', $pageHtml, $m)) {
+            if (!is_unwanted_article_asset_url($m[1])) {
+                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'twitter:image'];
+            }
+        }
+    }
+
+    // Priority 5: RSS XML Enclosure / Media tag Fallback
+    if (!empty($itemRaw)) {
+        if (preg_match('/<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']enclosure["\']/i', $itemRaw, $m)) {
+            $candidates[] = ['priority' => 5, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'rss:link_enclosure'];
+        } elseif (preg_match('/<link[^>]+rel=["\']enclosure["\'][^>]+href=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
+            $candidates[] = ['priority' => 5, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'rss:link_enclosure'];
+        } elseif (preg_match('/<media:content[^>]+url=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
+            $candidates[] = ['priority' => 5, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'rss:media_content'];
+        } elseif (preg_match('/<enclosure[^>]+url=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
+            $candidates[] = ['priority' => 5, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'rss:enclosure'];
+        } elseif (preg_match('/<image[^>]*>(.*?)<\/image>/is', $itemRaw, $imgTagMatch)) {
+            if (preg_match('/src=["\']([^"\']+)["\']/i', $imgTagMatch[1], $srcM)) {
+                $candidates[] = ['priority' => 5, 'order' => $orderIndex++, 'url' => $srcM[1], 'type' => 'rss:image_src'];
+            }
+        } elseif (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $itemRaw, $imgM)) {
+            $candidates[] = ['priority' => 5, 'order' => $orderIndex++, 'url' => $imgM[1], 'type' => 'rss:img_src'];
+        }
+    }
+
+    // Sort by priority ascending, then by DOM order ascending
+    usort($candidates, function($a, $b) {
+        if ($a['priority'] === $b['priority']) {
+            return $a['order'] <=> $b['order'];
+        }
+        return $a['priority'] <=> $b['priority'];
+    });
+
+    foreach ($candidates as $c) {
+        $rawUrl = $c['url'];
+        $absUrl = resolve_article_absolute_url($rawUrl, $articleUrl);
+        if (empty($absUrl) || !filter_var($absUrl, FILTER_VALIDATE_URL)) continue;
+        return $absUrl;
+    }
+
+    return null;
+}
+
+/**
+ * Normalize canonical source URL for consistent identity across refreshes
+ */
+function normalize_canonical_news_url($url) {
+    if (empty($url)) return '';
+    $u = trim(html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+    $parts = parse_url($u);
+    if (!$parts || empty($parts['host'])) return rtrim($u, '/');
+    $scheme = strtolower($parts['scheme'] ?? 'https');
+    $host   = strtolower($parts['host']);
+    $path   = rtrim($parts['path'] ?? '', '/');
+    $query  = !empty($parts['query']) ? '?' . $parts['query'] : '';
+    return $scheme . '://' . $host . $path . $query;
+}
+
+/**
+ * Ingest feed with strict Central NewsValidationGate verification & stable image retention
+ */
+function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
     $url          = $feedConfig['url'];
     $providerKey  = $feedConfig['provider'];
     $sourceName   = $feedConfig['source_name'];
@@ -162,7 +415,7 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT        => 10,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/126.0.0.0',
             CURLOPT_SSL_VERIFYPEER => true
         ]);
         $rawContent = curl_exec($ch);
@@ -175,7 +428,7 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_TIMEOUT        => 8,
-            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/126.0.0.0'
         ]);
         $antHtml = curl_exec($ch);
         curl_close($ch);
@@ -185,6 +438,21 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
                 $antPath = $antMatches[1][$i];
                 if (strpos($antPath, 'team') !== false) continue;
                 $antUrl = 'https://www.anthropic.com' . $antPath;
+                $normAntUrl = normalize_canonical_news_url($antUrl);
+
+                $existingHero = $verifiedHeroMap[$normAntUrl] ?? null;
+                $localPath = null;
+                $imgHash = null;
+                $imgSrc = null;
+
+                if ($existingHero && !empty($existingHero['local_image_path']) && strpos($existingHero['local_image_path'], '_headline_') === false) {
+                    $diskFile = __DIR__ . '/../' . $existingHero['local_image_path'];
+                    if (file_exists($diskFile) && filesize($diskFile) > 0) {
+                        $localPath = $existingHero['local_image_path'];
+                        $imgHash   = $existingHero['image_hash'] ?? hash_file('sha256', $diskFile);
+                        $imgSrc    = $existingHero['source_image_url'] ?? null;
+                    }
+                }
                 
                 $ch2 = curl_init($antUrl);
                 curl_setopt_array($ch2, [
@@ -203,7 +471,9 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
                     
                     $title = !empty($mOgTitle[1]) ? trim(html_entity_decode($mOgTitle[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : 'Anthropic Frontier AI Research Update';
                     $desc  = !empty($mOgDesc[1]) ? trim(html_entity_decode($mOgDesc[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : 'Anthropic research shares latest developments in frontier artificial intelligence and reasoning systems.';
-                    $img   = !empty($mOgImg[1]) ? trim($mOgImg[1]) : null;
+                    if (!$imgSrc) {
+                        $imgSrc = !empty($mOgImg[1]) ? trim($mOgImg[1]) : null;
+                    }
                     
                     $candidate = [
                         'provider'              => 'anthropic',
@@ -212,9 +482,10 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
                         'summary'               => $desc,
                         'source_name'           => 'Anthropic Research',
                         'source_url'            => $antUrl,
-                        'source_image_url'      => $img,
-                        'local_image_path'      => null,
-                        'image_hash'            => null,
+                        'source_image_url'      => $imgSrc,
+                        'local_image_path'      => $localPath,
+                        'image_hash'            => $imgHash,
+                        'screenshot_hash'       => $imgHash,
                         'visual_type'           => VISUAL_SOURCE_IMAGE,
                         'provider_published_at' => date('Y-m-d H:i:s', strtotime('-19 hours')),
                         'category'              => $category,
@@ -289,54 +560,30 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
 
         if (empty($title) || empty($link)) continue;
 
-        // Image extraction
-        $imageUrl = $customImage;
-        if (empty($imageUrl) && !$customLocal) {
-            if (preg_match('/<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']enclosure["\']/i', $itemRaw, $m)) {
-                $imageUrl = trim($m[1]);
-            } elseif (preg_match('/<link[^>]+rel=["\']enclosure["\'][^>]+href=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
-                $imageUrl = trim($m[1]);
-            } elseif (preg_match('/<media:content[^>]+url=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
-                $imageUrl = trim($m[1]);
-            } elseif (preg_match('/<enclosure[^>]+url=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
-                $imageUrl = trim($m[1]);
-            } elseif (preg_match('/<image[^>]*>(.*?)<\/image>/is', $itemRaw, $imgTagMatch)) {
-                if (preg_match('/src=["\']([^"\']+)["\']/i', $imgTagMatch[1], $srcM)) {
-                    $imageUrl = trim($srcM[1]);
-                }
-            } elseif (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $itemRaw, $imgM)) {
-                $imageUrl = trim($imgM[1]);
-            }
+        // Stable Image Retention Check:
+        // If this canonical article URL already has a verified genuine local hero image on disk,
+        // reuse it directly to maintain complete cryptographic stability and prevent network jitter.
+        $normUrl = normalize_canonical_news_url($link);
+        $existingHero = $verifiedHeroMap[$normUrl] ?? null;
 
-            // Deep OpenGraph / Article Page scraping if RSS XML omits the image
-            if (empty($imageUrl) && !empty($link) && NewsValidationGate::isSafeRemoteHost(parse_url($link, PHP_URL_HOST))) {
-                $pageHtml = null;
-                if (function_exists('curl_init')) {
-                    $ch = curl_init();
-                    curl_setopt_array($ch, [
-                        CURLOPT_URL            => $link,
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_MAXREDIRS      => 3,
-                        CURLOPT_TIMEOUT        => 5,
-                        CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                        CURLOPT_SSL_VERIFYPEER => true
-                    ]);
-                    $pageHtml = curl_exec($ch);
-                    curl_close($ch);
-                }
-                if ($pageHtml) {
-                    if (preg_match('/<meta[^>]+property=[\x22\x27]og:image[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $pageHtml, $ogM)) {
-                        $imageUrl = trim($ogM[1]);
-                    } elseif (preg_match('/<meta[^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27][^>]+property=[\x22\x27]og:image[\x22\x27]/i', $pageHtml, $ogM)) {
-                        $imageUrl = trim($ogM[1]);
-                    } elseif (preg_match('/<meta[^>]+name=[\x22\x27]twitter:image[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $pageHtml, $twM)) {
-                        $imageUrl = trim($twM[1]);
-                    } elseif (preg_match('/<meta[^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27][^>]+name=[\x22\x27]twitter:image[\x22\x27]/i', $pageHtml, $twM)) {
-                        $imageUrl = trim($twM[1]);
-                    }
-                }
+        $itemLocalPath  = $customLocal;
+        $itemImageHash  = $customHash;
+        $itemVisualType = $visualType;
+        $itemImageUrl   = $customImage;
+
+        if ($existingHero && !empty($existingHero['local_image_path']) && strpos($existingHero['local_image_path'], '_headline_') === false) {
+            $diskFile = __DIR__ . '/../' . $existingHero['local_image_path'];
+            if (file_exists($diskFile) && filesize($diskFile) > 0) {
+                $itemLocalPath  = $existingHero['local_image_path'];
+                $itemImageHash  = $existingHero['image_hash'] ?? hash_file('sha256', $diskFile);
+                $itemVisualType = VISUAL_SOURCE_IMAGE;
+                $itemImageUrl   = $existingHero['source_image_url'] ?? null;
             }
+        }
+
+        if (empty($itemLocalPath)) {
+            // Only perform upstream network hero extraction if no verified local hero exists
+            $itemImageUrl = extract_real_article_hero_image($itemRaw, $link, $customImage);
         }
 
         $cleanSummary = trim(strip_tags(html_entity_decode($descRaw, ENT_QUOTES | ENT_HTML5, 'UTF-8')));
@@ -352,11 +599,11 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
             'summary'               => $cleanSummary,
             'source_name'           => $sourceName,
             'source_url'            => $link,
-            'source_image_url'      => $imageUrl,
-            'local_image_path'      => $customLocal,
-            'image_hash'            => $customHash,
-            'screenshot_hash'       => $customHash,
-            'visual_type'           => $visualType,
+            'source_image_url'      => $itemImageUrl,
+            'local_image_path'      => $itemLocalPath,
+            'image_hash'            => $itemImageHash,
+            'screenshot_hash'       => $itemImageHash,
+            'visual_type'           => $itemVisualType,
             'provider_published_at' => $pubDateRaw,
             'category'              => $category,
             'brand_badge'           => $brandBadge,
@@ -396,6 +643,79 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
  */
 function sync_all_verified_feeds($forceRefresh = false) {
     global $cacheFile, $uploadDir;
+
+    // Load existing canonical cache if available to preserve verified items
+    $existingCache = [];
+    if (file_exists($cacheFile)) {
+        $rawExisting = @file_get_contents($cacheFile);
+        if ($rawExisting) {
+            $parsed = @json_decode($rawExisting, true);
+            if (is_array($parsed)) {
+                $existingCache = $parsed;
+            }
+        }
+    }
+
+    $existingBrandWires    = (isset($existingCache['brand_wires']) && is_array($existingCache['brand_wires'])) ? $existingCache['brand_wires'] : [];
+    $existingRegionalWires = (isset($existingCache['regional_wires']) && is_array($existingCache['regional_wires'])) ? $existingCache['regional_wires'] : [];
+    $existingRegionalItems = (isset($existingCache['regional_items']) && is_array($existingCache['regional_items'])) ? $existingCache['regional_items'] : [];
+    $existingBreakingNews  = (isset($existingCache['breaking_news']) && is_array($existingCache['breaking_news'])) ? $existingCache['breaking_news'] : [];
+
+    // Build verified hero map from existing cache
+    $verifiedHeroMap = [];
+    foreach ($existingBrandWires as $p => $bw) {
+        $u = $bw['link'] ?? '';
+        $img = $bw['img'] ?? '';
+        if (!empty($u) && !empty($img) && strpos($img, '_headline_') === false) {
+            $full = __DIR__ . '/../' . $img;
+            if (file_exists($full) && filesize($full) > 0) {
+                $norm = normalize_canonical_news_url($u);
+                $verifiedHeroMap[$norm] = [
+                    'provider'         => $p,
+                    'local_image_path' => $img,
+                    'image_hash'       => hash_file('sha256', $full),
+                    'source_image_url' => null,
+                    'visual_type'      => VISUAL_SOURCE_IMAGE
+                ];
+            }
+        }
+    }
+    foreach ($existingRegionalWires as $p => $rw) {
+        $u = $rw['sourceUrl'] ?? '';
+        $img = $rw['image'] ?? '';
+        if (!empty($u) && !empty($img) && strpos($img, '_headline_') === false) {
+            $full = __DIR__ . '/../' . $img;
+            if (file_exists($full) && filesize($full) > 0) {
+                $norm = normalize_canonical_news_url($u);
+                $verifiedHeroMap[$norm] = [
+                    'provider'         => $p,
+                    'local_image_path' => $img,
+                    'image_hash'       => hash_file('sha256', $full),
+                    'source_image_url' => null,
+                    'visual_type'      => VISUAL_SOURCE_IMAGE
+                ];
+            }
+        }
+    }
+    foreach ($existingBreakingNews as $bn) {
+        $u = $bn['link'] ?? '';
+        $img = $bn['img'] ?? '';
+        if (!empty($u) && !empty($img) && strpos($img, '_headline_') === false) {
+            $full = __DIR__ . '/../' . $img;
+            if (file_exists($full) && filesize($full) > 0) {
+                $norm = normalize_canonical_news_url($u);
+                if (!isset($verifiedHeroMap[$norm])) {
+                    $verifiedHeroMap[$norm] = [
+                        'provider'         => $bn['provider'] ?? '',
+                        'local_image_path' => $img,
+                        'image_hash'       => hash_file('sha256', $full),
+                        'source_image_url' => null,
+                        'visual_type'      => VISUAL_SOURCE_IMAGE
+                    ];
+                }
+            }
+        }
+    }
 
     // 1. Pakistani Configs
     $pkFeedConfigs = [
@@ -514,13 +834,18 @@ function sync_all_verified_feeds($forceRefresh = false) {
     ];
 
     // Ingest Pakistani Feeds
-    $regionalWires = [];
-    $regionalItems = [];
+    $regionalWires = $existingRegionalWires;
+    $regionalItemsMap = [];
+    foreach ($existingRegionalItems as $item) {
+        $k = ($item['provider'] ?? ($item['wire_key'] ?? 'pk'));
+        $regionalItemsMap[$k] = $item;
+    }
+
     foreach ($pkFeedConfigs as $cfg) {
-        $gated = ingest_and_gate_feed($cfg, $uploadDir);
+        $key = $cfg['wire_key'];
+        $gated = ingest_and_gate_feed($cfg, $uploadDir, $verifiedHeroMap);
         if (!empty($gated)) {
             $art = $gated[0];
-            $key = $cfg['wire_key'];
             $regionalWires[$key] = [
                 'brandBadge' => $art['brand_badge'],
                 'captionTag' => $art['caption_tag'],
@@ -533,17 +858,24 @@ function sync_all_verified_feeds($forceRefresh = false) {
                 'image'      => $art['image_url'],
                 'caption'    => $art['caption']
             ];
-            $regionalItems[] = $art;
+            $regionalItemsMap[$key] = $art;
         }
     }
+    $regionalItems = array_values($regionalItemsMap);
 
     // Ingest International Feeds (Separately, 1 per provider)
-    $brandWires = [];
-    $breakingNews = [];
+    $brandWires = $existingBrandWires;
+    $breakingNewsMap = [];
+    foreach ($existingBreakingNews as $bn) {
+        $p = $bn['provider'] ?? '';
+        if (!empty($p)) {
+            $breakingNewsMap[$p] = $bn;
+        }
+    }
     $providerStatuses = [];
 
     foreach ($intFeedConfigs as $pKey => $pCfg) {
-        $gated = ingest_and_gate_feed($pCfg, $uploadDir);
+        $gated = ingest_and_gate_feed($pCfg, $uploadDir, $verifiedHeroMap);
         if (!empty($gated)) {
             $art = $gated[0];
             $brandWires[$pKey] = [
@@ -558,7 +890,7 @@ function sync_all_verified_feeds($forceRefresh = false) {
                 'img'        => $art['image_url'],
                 'caption'    => $art['caption']
             ];
-            $breakingNews[] = [
+            $breakingNewsMap[$pKey] = [
                 'provider'              => $pKey,
                 'external_id'           => $art['external_article_id'],
                 'tag'                   => $art['category'],
@@ -572,15 +904,23 @@ function sync_all_verified_feeds($forceRefresh = false) {
             ];
             $providerStatuses[$pKey] = 'VERIFIED';
         } else {
-            $providerStatuses[$pKey] = 'RETAINED_PREVIOUS';
+            // Retain previously verified record for this provider
+            $providerStatuses[$pKey] = isset($brandWires[$pKey]) ? 'RETAINED_PREVIOUS' : 'UNAVAILABLE';
         }
     }
+
+    $breakingNews = array_values($breakingNewsMap);
 
     usort($breakingNews, function($a, $b) {
         $ta = !empty($a['provider_published_at']) ? strtotime($a['provider_published_at']) : 0;
         $tb = !empty($b['provider_published_at']) ? strtotime($b['provider_published_at']) : 0;
         return $tb <=> $ta;
     });
+
+    // Guard against total destructive overwrite: if everything is empty and existing cache had items, keep existing
+    if (empty($brandWires) && empty($regionalWires) && empty($breakingNews) && !empty($existingCache)) {
+        return $existingCache;
+    }
 
     $feedData = [
         'status'            => 'success',
@@ -595,7 +935,10 @@ function sync_all_verified_feeds($forceRefresh = false) {
                 'apple'     => isset($brandWires['apple']) ? 1 : 0,
                 'nvidia'    => isset($brandWires['nvidia']) ? 1 : 0,
                 'anthropic' => isset($brandWires['anthropic']) ? 1 : 0,
-                'openai'    => isset($brandWires['openai']) ? 1 : 0
+                'openai'    => isset($brandWires['openai']) ? 1 : 0,
+                'meta'      => isset($brandWires['meta']) ? 1 : 0,
+                'microsoft' => isset($brandWires['microsoft']) ? 1 : 0,
+                'intel'     => isset($brandWires['intel']) ? 1 : 0
             ]
         ],
         'brand_wires'       => $brandWires,
@@ -608,28 +951,34 @@ function sync_all_verified_feeds($forceRefresh = false) {
     return $feedData;
 }
 
-// Check cache freshness (30-minute auto-refresh TTL)
-$force = isset($_GET['refresh']) || isset($_GET['force']);
-$cachedData = null;
-$cacheMaxAge = 1800; // 30 minutes
+// Only execute standalone output if called directly as the primary script entry point
+$isDirectExecution = (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) === __FILE__) ||
+                      (php_sapi_name() === 'cli' && isset($argv[0]) && realpath($argv[0]) === __FILE__);
 
-if (file_exists($cacheFile)) {
-    $mtime = @filemtime($cacheFile) ?: 0;
-    $isStale = (time() - $mtime) > $cacheMaxAge;
-    $raw = @file_get_contents($cacheFile);
-    if ($raw) {
-        $cachedData = @json_decode($raw, true);
+if ($isDirectExecution) {
+    // Check cache freshness (30-minute auto-refresh TTL)
+    $force = isset($_GET['refresh']) || isset($_GET['force']);
+    $cachedData = null;
+    $cacheMaxAge = 1800; // 30 minutes
+
+    if (file_exists($cacheFile)) {
+        $mtime = @filemtime($cacheFile) ?: 0;
+        $isStale = (time() - $mtime) > $cacheMaxAge;
+        $raw = @file_get_contents($cacheFile);
+        if ($raw) {
+            $cachedData = @json_decode($raw, true);
+        }
+        if ($isStale) {
+            $force = true;
+        }
     }
-    if ($isStale) {
-        $force = true;
+
+    if (!$cachedData || $force) {
+        $cachedData = sync_all_verified_feeds($force);
     }
-}
 
-if (!$cachedData || $force) {
-    $cachedData = sync_all_verified_feeds($force);
-}
-
-if (php_sapi_name() !== 'cli') {
-    echo json_encode($cachedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-    exit;
+    if (php_sapi_name() !== 'cli') {
+        echo json_encode($cachedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        exit;
+    }
 }

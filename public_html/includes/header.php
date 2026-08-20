@@ -6,11 +6,10 @@
 require_once __DIR__ . '/security_headers.php';
 require_once __DIR__ . '/security_helpers.php';
 
-$settingsPath = __DIR__ . '/../data/site_settings.json';
-$siteSettings = file_exists($settingsPath) ? (json_decode(file_get_contents($settingsPath), true) ?: []) : [];
+$siteSettings = creed_get_site_settings();
 $headerConfig = $siteSettings['header'] ?? [];
 
-$headerLogoUrl = !empty($headerConfig['logo_url']) ? $headerConfig['logo_url'] : 'Creed-Tech-Logo-Clean.png';
+$headerLogoUrl = !empty($headerConfig['logo_url']) ? $headerConfig['logo_url'] : 'Creed-Tech-Logo-Clean.webp';
 $headerCtaText = !empty($headerConfig['cta_text']) ? $headerConfig['cta_text'] : 'Get Started';
 $headerCtaUrl  = !empty($headerConfig['cta_url']) ? $headerConfig['cta_url'] : 'get-started';
 
@@ -58,7 +57,7 @@ if (!isset($og_description)) $og_description = $page_description;
 if (!isset($og_url)) $og_url = $canonical_url;
 if (!isset($og_type)) $og_type = 'website';
 if (!isset($og_image) || empty($og_image)) {
-    $og_image = 'https://creed-tech.com/Creed-Tech-Logo-Clean.png';
+    $og_image = 'https://creed-tech.com/Creed-Tech-Logo-Clean.webp';
 } elseif (!str_starts_with($og_image, 'http://') && !str_starts_with($og_image, 'https://')) {
     $og_image = 'https://creed-tech.com/' . ltrim($og_image, '/');
 }
@@ -96,7 +95,7 @@ if (!isset($og_image) || empty($og_image)) {
     "@type": "Organization",
     "name": "Creed Tech",
     "url": "https://creed-tech.com/",
-    "logo": "https://creed-tech.com/Creed-Tech-Logo-Clean.png",
+    "logo": "https://creed-tech.com/Creed-Tech-Logo-Clean.webp",
     "description": "Enterprise IT solutions, custom software engineering, AI workflow orchestration, cloud modernization, and real-time tech industry intelligence.",
     "email": "<?= htmlspecialchars($siteSettings['general']['contact_email'] ?? 'info@creed-tech.com') ?>",
     "telephone": "<?= htmlspecialchars($siteSettings['general']['contact_phone'] ?? '+92 309 8307115') ?>",
@@ -128,32 +127,12 @@ if (!isset($og_image) || empty($og_image)) {
   </script>
   <?php endif; ?>
   
-  <link rel="icon" href="Creed-Tech-Logo-Clean.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link rel="icon" href="Creed-Tech-Logo-Clean.webp">
   
-  <!-- Tailwind CSS Engine -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brandBlue: '#0052FF',
-            brandBlueHover: '#0043D6',
-            brandOrange: '#FF6B00',
-            brandOrangeDark: '#EA580C',
-            dark1: '#0F1420',
-            dark2: '#0B1120',
-            newsDark: '#070D1E',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Local Production Stylesheets with Automatic Cache Busting -->
+  <link rel="stylesheet" href="<?= creed_asset_url('assets/css/tailwind.min.css') ?>">
+  <link rel="stylesheet" href="<?= creed_asset_url('assets/vendor/bootstrap-icons/bootstrap-icons.min.css') ?>">
+  <link rel="stylesheet" href="<?= creed_asset_url('assets/vendor/sweetalert2/sweetalert2.min.css') ?>">
   
   <!-- Bulletproof Button & Component Styles (Immune to Tailwind class gaps) -->
   <style>
@@ -308,13 +287,15 @@ if (!isset($og_image) || empty($og_image)) {
       0% { transform: translate3d(0, 0, 0); }
       100% { transform: translate3d(-50%, 0, 0); }
     }
-    .partner-marquee-track {
+    .partner-marquee-track,
+    .marquee-track {
       display: flex;
       width: max-content;
       animation: infinitePartnerScroll 20s linear infinite;
       will-change: transform;
     }
-    .partner-marquee-track:hover {
+    .partner-marquee-track:hover,
+    .marquee-track:hover {
       animation-play-state: paused;
     }
 
@@ -405,6 +386,10 @@ if (!isset($og_image) || empty($og_image)) {
               src="<?= htmlspecialchars($headerLogoUrl) ?>" 
               alt="CREED TECH Logo" 
               class="h-10 sm:h-11 w-auto object-contain block mix-blend-multiply transition-transform hover:scale-105"
+              width="180"
+              height="44"
+              decoding="async"
+              fetchpriority="high"
             />
           </a>
         </div>

@@ -5,6 +5,12 @@
 
 if (!function_exists('creed_load_env')) {
     function creed_load_env() {
+        static $loaded = false;
+        if ($loaded) {
+            return;
+        }
+        $loaded = true;
+
         $envFile = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . '.env';
         if (!file_exists($envFile) || !is_readable($envFile)) {
             return;

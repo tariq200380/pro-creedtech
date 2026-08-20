@@ -5,6 +5,26 @@
 
 require_once __DIR__ . '/includes/security_headers.php';
 
+// Dynamic response gzip compression for PHP development server
+$acceptEnc = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
+if (str_contains($acceptEnc, 'gzip') && extension_loaded('zlib') && php_sapi_name() === 'cli-server') {
+    ob_start();
+    register_shutdown_function(function() {
+        if (ob_get_level() > 0) {
+            $content = ob_get_clean();
+            if (!empty($content) && !headers_sent() && http_response_code() !== 304 && strlen($content) > 256) {
+                $gzipped = gzencode($content, 6);
+                header('Content-Encoding: gzip');
+                header('Vary: Accept-Encoding');
+                header('Content-Length: ' . strlen($gzipped));
+                echo $gzipped;
+                return;
+            }
+            echo $content;
+        }
+    });
+}
+
 $uri = $_SERVER['REQUEST_URI'] ?? '/';
 $path = parse_url($uri, PHP_URL_PATH) ?? '/';
 
@@ -23,7 +43,7 @@ $blockedPatterns = [
     '#^/scripts(/|$)#i',
     '#^/tests(/|$)#i',
     '#^/cron(/|$)#i',
-    '#\.(json|sql|log|env|bak|tmp|lock|ps1|sh|yml|yaml|ini|md|htaccess|git)$#i'
+    '#(\.(json|sql|log|env|backup|old|orig|save|tmp|lock|ps1|sh|yml|yaml|ini|md|htaccess|git)|\.bak(_.*)?|~)$#i'
 ];
 
 foreach ($blockedPatterns as $pattern) {
@@ -55,11 +75,77 @@ if ($cleanPath === '/sitemap.xml' || $path === '/sitemap.xml') {
     exit;
 }
 
-// 4. Serve legitimate static assets (CSS, JS, images, fonts, media)
+// 4. Serve legitimate static assets (CSS, JS, images, fonts, media) with Cache-Control, ETag, and Gzip
 if ($cleanPath !== '/' && file_exists($docRoot . $path) && !is_dir($docRoot . $path)) {
     $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
     if ($ext !== 'php') {
-        return false;
+        $realFile = realpath($docRoot . $path);
+        if ($realFile && str_starts_with($realFile, realpath($docRoot))) {
+            $mimetypes = [
+                'webp'  => 'image/webp',
+                'avif'  => 'image/avif',
+                'png'   => 'image/png',
+                'jpg'   => 'image/jpeg',
+                'jpeg'  => 'image/jpeg',
+                'gif'   => 'image/gif',
+                'svg'   => 'image/svg+xml',
+                'ico'   => 'image/x-icon',
+                'css'   => 'text/css; charset=utf-8',
+                'js'    => 'application/javascript; charset=utf-8',
+                'mjs'   => 'application/javascript; charset=utf-8',
+                'woff2' => 'font/woff2',
+                'woff'  => 'font/woff',
+                'ttf'   => 'font/ttf',
+                'eot'   => 'application/vnd.ms-fontobject',
+                'otf'   => 'font/otf',
+                'json'  => 'application/json; charset=utf-8',
+                'xml'   => 'application/xml; charset=utf-8',
+                'txt'   => 'text/plain; charset=utf-8'
+            ];
+
+            $mime = $mimetypes[$ext] ?? (function_exists('mime_content_type') ? @mime_content_type($realFile) : null) ?: 'application/octet-stream';
+            $mtime = filemtime($realFile);
+            $size = filesize($realFile);
+            $etag = sprintf('"%x-%x"', $mtime, $size);
+
+            header('Content-Type: ' . $mime);
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s GMT', $mtime));
+            header('ETag: ' . $etag);
+            header('Vary: Accept-Encoding');
+
+            // Static asset caching headers
+            if (in_array($ext, ['webp', 'avif', 'png', 'jpg', 'jpeg', 'gif', 'ico', 'svg', 'woff2', 'woff', 'ttf', 'eot', 'otf'])) {
+                header('Cache-Control: public, max-age=31536000, immutable');
+                header('Expires: ' . gmdate('D, d M Y H:i:s GMT', time() + 31536000));
+            } elseif (in_array($ext, ['css', 'js', 'mjs'])) {
+                header('Cache-Control: public, max-age=2592000, stale-while-revalidate=86400');
+                header('Expires: ' . gmdate('D, d M Y H:i:s GMT', time() + 2592000));
+            }
+
+            // HTTP 304 Not Modified validation
+            $ifNoneMatch = $_SERVER['HTTP_IF_NONE_MATCH'] ?? '';
+            $ifModifiedSince = $_SERVER['HTTP_IF_MODIFIED_SINCE'] ?? '';
+            if (($ifNoneMatch && trim($ifNoneMatch) === $etag) || ($ifModifiedSince && strtotime($ifModifiedSince) >= $mtime)) {
+                http_response_code(304);
+                exit;
+            }
+
+            // Gzip compression for compressible text assets
+            $acceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
+            $compressible = in_array($ext, ['css', 'js', 'mjs', 'svg', 'json', 'xml', 'txt']) && $size > 256;
+            if ($compressible && str_contains($acceptEncoding, 'gzip') && extension_loaded('zlib')) {
+                $content = file_get_contents($realFile);
+                $gzipped = gzencode($content, 6);
+                header('Content-Encoding: gzip');
+                header('Content-Length: ' . strlen($gzipped));
+                echo $gzipped;
+                exit;
+            }
+
+            header('Content-Length: ' . $size);
+            readfile($realFile);
+            exit;
+        }
     }
 }
 

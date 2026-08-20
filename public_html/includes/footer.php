@@ -2,8 +2,8 @@
 /**
  * Creed Tech - Global Footer with Dynamic Settings Integration
  */
-$settingsPath = __DIR__ . '/../data/site_settings.json';
-$siteSettings = file_exists($settingsPath) ? (json_decode(file_get_contents($settingsPath), true) ?: []) : [];
+require_once __DIR__ . '/security_helpers.php';
+$siteSettings = creed_get_site_settings();
 $footerConfig = $siteSettings['footer'] ?? [];
 $generalConfig = $siteSettings['general'] ?? [];
 
@@ -242,7 +242,8 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Local Production SweetAlert2 Bundle with Automatic Cache Busting -->
+  <script src="<?= creed_asset_url('assets/vendor/sweetalert2/sweetalert2.all.min.js') ?>" defer></script>
   <script>
     // Newsletter Submission
     const newsForm = document.getElementById("nextJsNewsletterForm");

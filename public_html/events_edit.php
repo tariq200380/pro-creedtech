@@ -96,9 +96,9 @@ if ($connect instanceof mysqli && $id > 0) {
   <link href="assets/img/mono.png" rel="icon">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/css/style.css" rel="stylesheet">
-  <link href="assets/css/insert-style.css" rel="stylesheet">
-  <link href="assets/css/dashboard.css" rel="stylesheet">
+  <link href="assets/css/style.min.css" rel="stylesheet">
+  <link href="assets/css/insert-style.min.css" rel="stylesheet">
+  <link href="assets/css/dashboard.min.css" rel="stylesheet">
 </head>
 <body style="background:#F8FAFC;">
   <header id="header" class="fixed-top" style="background:#0F172A;padding:12px 24px;">

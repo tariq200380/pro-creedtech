@@ -19,9 +19,18 @@ build/
 
 # Backups & Temporary files
 backups/
+backups
 scratch/
+scratch
 *.tmp
 *.bak
+*.bak_*
+*.bak*
+*.backup
+*.old
+*.orig
+*.save
+*~
 *.swp
 .DS_Store
 Thumbs.db

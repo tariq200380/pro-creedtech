@@ -99,7 +99,9 @@ CREATE TABLE IF NOT EXISTS `video_library` (
   `video_url` VARCHAR(500) NOT NULL,
   `thumbnail` VARCHAR(500) DEFAULT NULL,
   `category` VARCHAR(100) DEFAULT 'General',
-  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`category`),
+  INDEX (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `video_library` (`id`, `title`, `duration`, `video_url`, `thumbnail`, `category`, `created_at`) VALUES
@@ -120,7 +122,9 @@ CREATE TABLE IF NOT EXISTS `client_reviews` (
   `quote` TEXT NOT NULL,
   `rating` TINYINT DEFAULT 5,
   `is_approved` TINYINT(1) DEFAULT 1,
-  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`is_approved`),
+  INDEX (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `client_reviews` (`id`, `author_name`, `author_role`, `company`, `avatar_url`, `quote`, `rating`, `is_approved`, `created_at`) VALUES
