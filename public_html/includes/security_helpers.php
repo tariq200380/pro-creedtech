@@ -160,3 +160,76 @@ if (!function_exists('secure_upload_image')) {
         ];
     }
 }
+
+/**
+ * Lightweight Server-Side Form Rate Limiting & Abuse Prevention
+ *
+ * @param string $action Action namespace (e.g. 'contact_form', 'newsletter')
+ * @param int $maxRequests Maximum submissions allowed in the window (default 5)
+ * @param int $windowSeconds Window duration in seconds (default 60)
+ * @param string|null $ip Client IP address
+ * @return array ['allowed' => bool, 'retry_after' => int, 'remaining' => int]
+ */
+if (!function_exists('check_form_rate_limit')) {
+    function check_form_rate_limit($action, $maxRequests = 5, $windowSeconds = 60, $ip = null) {
+        if ($ip === null) {
+            $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        }
+
+        $rateLimitDir = __DIR__ . '/../data';
+        if (!is_dir($rateLimitDir)) {
+            @mkdir($rateLimitDir, 0755, true);
+        }
+        $rateLimitFile = $rateLimitDir . '/form_rate_limits.json';
+
+        $records = [];
+        if (file_exists($rateLimitFile)) {
+            $records = @json_decode(@file_get_contents($rateLimitFile), true) ?: [];
+        }
+
+        $now = time();
+        $key = md5($action . ':' . trim((string)$ip));
+
+        // Purge expired entries for this key
+        $userTimestamps = isset($records[$key]) && is_array($records[$key]) ? $records[$key] : [];
+        $userTimestamps = array_values(array_filter($userTimestamps, function($ts) use ($now, $windowSeconds) {
+            return ($now - (int)$ts) < $windowSeconds;
+        }));
+
+        if (count($userTimestamps) >= $maxRequests) {
+            $oldestInWindow = min($userTimestamps);
+            $retryAfter = max(1, $windowSeconds - ($now - $oldestInWindow));
+            return [
+                'allowed'     => false,
+                'retry_after' => $retryAfter,
+                'remaining'   => 0
+            ];
+        }
+
+        $userTimestamps[] = $now;
+        $records[$key] = $userTimestamps;
+
+        // Clean up other dead keys (older than 24h) to keep file compact
+        foreach ($records as $k => $tsList) {
+            if ($k !== $key && is_array($tsList)) {
+                $filtered = array_filter($tsList, function($ts) use ($now) {
+                    return ($now - (int)$ts) < 86400;
+                });
+                if (empty($filtered)) {
+                    unset($records[$k]);
+                } else {
+                    $records[$k] = array_values($filtered);
+                }
+            }
+        }
+
+        @file_put_contents($rateLimitFile, json_encode($records), LOCK_EX);
+
+        return [
+            'allowed'     => true,
+            'retry_after' => 0,
+            'remaining'   => max(0, $maxRequests - count($userTimestamps))
+        ];
+    }
+}
+

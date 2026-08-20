@@ -1,0 +1,24 @@
+# Creed Tech - Production Robots Directive
+User-agent: *
+Allow: /
+
+# Private & Administrative Endpoints
+Disallow: /admin
+Disallow: /admin.php
+Disallow: /edit_panel
+Disallow: /edit_panel.php
+Disallow: /edit
+Disallow: /edit.php
+Disallow: /login
+Disallow: /login.php
+Disallow: /logout.php
+Disallow: /ajax/
+Disallow: /cron/
+Disallow: /data/
+Disallow: /logs/
+Disallow: /backups/
+Disallow: /scripts/
+Disallow: /tests/
+
+# Sitemap Declaration
+Sitemap: https://creed-tech.com/sitemap.xml

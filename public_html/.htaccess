@@ -19,6 +19,9 @@ RewriteRule ^scripts/ - [F,L]
 RewriteRule ^tests/ - [F,L]
 RewriteRule ^cron/ - [F,L]
 
+# Dynamic XML Sitemap Route
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
 # Clean URL Routing
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

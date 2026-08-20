@@ -49,6 +49,12 @@ if (empty($cleanPath)) {
 
 $filePath = $docRoot . $cleanPath;
 
+// Dynamic XML Sitemap Generation Route
+if ($cleanPath === '/sitemap.xml' || $path === '/sitemap.xml') {
+    require $docRoot . '/sitemap.php';
+    exit;
+}
+
 // 4. Serve legitimate static assets (CSS, JS, images, fonts, media)
 if ($cleanPath !== '/' && file_exists($docRoot . $path) && !is_dir($docRoot . $path)) {
     $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
@@ -59,6 +65,7 @@ if ($cleanPath !== '/' && file_exists($docRoot . $path) && !is_dir($docRoot . $p
 
 // 5. Clean URL mappings for admin and public routes
 $mappings = [
+    '/sitemap.xml'       => '/sitemap.php',
     '/admin'             => '/admin.php',
     '/edit_panel'        => '/edit_panel.php',
     '/login'             => '/login.php',
@@ -100,7 +107,8 @@ $mappings = [
     '/qa'                => '/qa.php',
     '/ui-ux'             => '/ui-ux.php',
     '/software-development' => '/software-development.php',
-    '/database'          => '/database.php'
+    '/database'          => '/database.php',
+    '/404'               => '/404.php'
 ];
 
 if (isset($mappings[$cleanPath])) {
@@ -123,9 +131,10 @@ if (file_exists($filePath) && is_file($filePath)) {
     exit;
 }
 
-// 8. Fallback to Home
-if (file_exists($docRoot . '/Home.php')) {
-    require $docRoot . '/Home.php';
+// 8. Fallback to 404 (Proper HTTP 404 Status Code Delivery & Soft-404 Prevention)
+if (file_exists($docRoot . '/404.php')) {
+    http_response_code(404);
+    require $docRoot . '/404.php';
     exit;
 }
 

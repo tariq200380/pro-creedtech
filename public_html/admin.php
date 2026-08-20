@@ -188,7 +188,7 @@ include __DIR__ . '/includes/header.php';
         <span>📧</span> <span>Newsletter Leads</span>
       </button>
 
-      <button type="button" onclick="switchAdminTab('website_settings', this); setTimeout(function(){ var el = document.getElementById('ws_portfolio_section_card'); if (el) el.scrollIntoView({behavior:'smooth'}); }, 50);" class="admin-tab-btn">
+      <button type="button" onclick="switchAdminTab('website_settings', this); switchWsSubTab('portfolio', document.querySelector('.ws-subtab-btn:nth-child(4)'));" class="admin-tab-btn">
         <span>💼</span> <span>Portfolio Projects</span>
       </button>
 
@@ -1104,460 +1104,614 @@ include __DIR__ . '/includes/header.php';
           </div>
         </div>
 
+        <!-- Internal Page Tabs Sub-Navigation -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;border-bottom:1px solid #CBD5E1;padding-bottom:12px;overflow-x:auto;">
+          <button type="button" onclick="switchWsSubTab('home', this)" class="ws-subtab-btn active" style="padding:9px 18px;font-size:13px;font-weight:700;border:1px solid #0052FF;border-radius:6px;background:#0052FF;color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;">
+            <span>🏠</span> Home Page
+          </button>
+          <button type="button" onclick="switchWsSubTab('about', this)" class="ws-subtab-btn" style="padding:9px 18px;font-size:13px;font-weight:700;border:1px solid #CBD5E1;border-radius:6px;background:#F1F5F9;color:#475569;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;">
+            <span>🏢</span> About Page
+          </button>
+          <button type="button" onclick="switchWsSubTab('contact', this)" class="ws-subtab-btn" style="padding:9px 18px;font-size:13px;font-weight:700;border:1px solid #CBD5E1;border-radius:6px;background:#F1F5F9;color:#475569;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;">
+            <span>📞</span> Contact Page
+          </button>
+          <button type="button" onclick="switchWsSubTab('portfolio', this)" class="ws-subtab-btn" style="padding:9px 18px;font-size:13px;font-weight:700;border:1px solid #CBD5E1;border-radius:6px;background:#F1F5F9;color:#475569;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;">
+            <span>💼</span> Portfolio Page
+          </button>
+          <button type="button" onclick="switchWsSubTab('header_footer', this)" class="ws-subtab-btn" style="padding:9px 18px;font-size:13px;font-weight:700;border:1px solid #CBD5E1;border-radius:6px;background:#F1F5F9;color:#475569;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;">
+            <span>🎨</span> Header &amp; Footer
+          </button>
+          <button type="button" onclick="switchWsSubTab('global', this)" class="ws-subtab-btn" style="padding:9px 18px;font-size:13px;font-weight:700;border:1px solid #CBD5E1;border-radius:6px;background:#F1F5F9;color:#475569;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;">
+            <span>🌐</span> Global Settings
+          </button>
+        </div>
+
         <form id="websiteSettingsForm" onsubmit="event.preventDefault(); saveWebsiteSettings();" style="display:flex;flex-direction:column;gap:24px;">
           
-          <!-- 1. General Brand & Company Info -->
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
-              <span style="font-size:18px;">🏢</span>
-              <div>
-                <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">General Site Information &amp; Branding</h3>
-                <p style="font-size:12px;color:#64748B;margin:0;">Core company details and primary identity displayed across headers and contact forms.</p>
-              </div>
-            </div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Website / Brand Name *</label>
-                <input type="text" id="ws_site_name" value="Creed Tech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Company Tagline / Slogan</label>
-                <input type="text" id="ws_site_tagline" value="Enterprise Systems &amp; AI Solutions" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary Support / Contact Email</label>
-                <input type="email" id="ws_contact_email" value="info@creedtech.co" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Contact Phone Number</label>
-                <input type="text" id="ws_contact_phone" value="+92 300 1234567" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div style="grid-column: span 2;">
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary Office Address</label>
-                <input type="text" id="ws_office_address" value="Islamabad / Lahore, Pakistan &amp; Global Pods" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-            </div>
-          </div>
-
-          <!-- 2. Live Top Announcement Bar -->
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:18px;">📢</span>
+          <!-- ================= 1. SUB-PANE: HOME PAGE ================= -->
+          <div id="ws_subpane_home" class="ws-subpane" style="display:flex;flex-direction:column;gap:24px;">
+            <!-- Homepage Hero Banner -->
+            <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+                <span style="font-size:18px;">🚀</span>
                 <div>
-                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Top Live Announcement Bar</h3>
-                  <p style="font-size:12px;color:#64748B;margin:0;">The top header ribbon displayed above navigation on all pages.</p>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Homepage Hero Content &amp; Call To Actions</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">Customize main landing page headlines and primary conversion buttons.</p>
                 </div>
               </div>
-              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-                <input type="checkbox" id="ws_bar_enabled" checked style="width:18px;height:18px;cursor:pointer;">
-                <span style="font-size:12px;font-weight:700;color:#0F172A;">Show Announcement Bar</span>
-              </label>
-            </div>
 
-            <div style="display:grid;grid-template-columns:140px 1fr 140px 180px;gap:14px;">
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Badge Label</label>
-                <input type="text" id="ws_bar_badge" value="LIVE" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:700;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Announcement Message Text *</label>
-                <input type="text" id="ws_bar_message" value="Creed Tech recognized as Leading Enterprise Systems &amp; Cloud Modernization Provider." style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Action Link Text</label>
-                <input type="text" id="ws_bar_link_text" value="Explore →" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Action Link URL</label>
-                <input type="text" id="ws_bar_link_url" value="services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-            </div>
-          </div>
-
-          <!-- 3. Homepage Hero Banner -->
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
-              <span style="font-size:18px;">🚀</span>
-              <div>
-                <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Homepage Hero Content &amp; Call To Actions</h3>
-                <p style="font-size:12px;color:#64748B;margin:0;">Customize main landing page headlines and primary conversion buttons.</p>
-              </div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:14px;">
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Hero Headline *</label>
-                <input type="text" id="ws_hero_headline" value="Engineering Scalable Enterprise Systems &amp; High-Velocity AI Products" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:14px;font-weight:700;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Hero Subheadline / Description</label>
-                <textarea id="ws_hero_subheadline" rows="2" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;line-height:1.5;outline:none;">We design, architect, and deploy production-grade software solutions, high-throughput cloud platforms, and frontier AI systems for ambitious enterprises globally.</textarea>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;">
+              <div style="display:flex;flex-direction:column;gap:14px;">
                 <div>
-                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary CTA Text</label>
-                  <input type="text" id="ws_hero_cta1_text" value="Get Started" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Hero Headline *</label>
+                  <input type="text" id="ws_hero_headline" value="Engineering Scalable Enterprise Systems &amp; High-Velocity AI Products" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:14px;font-weight:700;outline:none;">
                 </div>
                 <div>
-                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary CTA URL</label>
-                  <input type="text" id="ws_hero_cta1_url" value="get-started" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Hero Subheadline / Description</label>
+                  <textarea id="ws_hero_subheadline" rows="2" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;line-height:1.5;outline:none;">We design, architect, and deploy production-grade software solutions, high-throughput cloud platforms, and frontier AI systems for ambitious enterprises globally.</textarea>
                 </div>
-                <div>
-                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Secondary CTA Text</label>
-                  <input type="text" id="ws_hero_cta2_text" value="Explore Services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Secondary CTA URL</label>
-                  <input type="text" id="ws_hero_cta2_url" value="services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;">
+                  <div>
+                    <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary CTA Text</label>
+                    <input type="text" id="ws_hero_cta1_text" value="Get Started" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary CTA URL</label>
+                    <input type="text" id="ws_hero_cta1_url" value="get-started" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Secondary CTA Text</label>
+                    <input type="text" id="ws_hero_cta2_text" value="Explore Services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Secondary CTA URL</label>
+                    <input type="text" id="ws_hero_cta2_url" value="services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 4. Portfolio Projects & Case Studies Configuration -->
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:18px;">💼</span>
-                <div>
-                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Portfolio Case Studies &amp; Projects Settings</h3>
-                  <p style="font-size:12px;color:#64748B;margin:0;">Manage project titles, cover pictures, impact metrics, technologies, and client locations displayed on the Portfolio page.</p>
+          <!-- ================= 2. SUB-PANE: ABOUT PAGE ================= -->
+          <div id="ws_subpane_about" class="ws-subpane" style="display:none;flex-direction:column;gap:24px;">
+            <!-- Global Engineering Centers / Hubs Configuration -->
+            <div id="ws_hubs_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:18px;">🌍</span>
+                  <div>
+                    <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Global Engineering Centers &amp; Hubs</h3>
+                    <p style="font-size:12px;color:#64748B;margin:0;">Manage international hub cities, countries, core specializations, addresses, and cover photos shown on the About page.</p>
+                  </div>
+                </div>
+                <button type="button" onclick="addNewEngineeringHubRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
+                  <span>➕</span> Add Engineering Center
+                </button>
+              </div>
+
+              <!-- Hubs Header Settings -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Badge Tag</label>
+                    <input type="text" id="ws_hubs_badge" value="GLOBAL REACH &amp; CONTINUOUS COVERAGE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
+                    <input type="text" id="ws_hubs_title" value="Three Specialized Global Engineering Centers" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div style="grid-column: span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
+                    <textarea id="ws_hubs_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Operating across multiple time zones to deliver seamless 24/7 technical continuity and deep regional domain expertise.</textarea>
+                  </div>
                 </div>
               </div>
-              <button type="button" onclick="addNewPortfolioProjectRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
-                <span>➕</span> Add New Project
-              </button>
-            </div>
 
-            <!-- Engineering Standards Header Showcase Picture & Copy -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+              <!-- Dynamic Hub Cards Container -->
               <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-                <span>🛠️</span> Portfolio Engineering Standards Showcase Section
+                <span>🏢</span> Regional Engineering Hub Cards
               </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
-                  <input type="text" id="ws_pf_std_title" value="Built on Rigorous Enterprise Standards" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Showcase Picture URL *</label>
-                  <input type="url" id="ws_pf_std_img" value="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Badge Label</label>
-                  <input type="text" id="ws_pf_std_badge" value="ENGINEERING CULTURE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Overlay Metric Title</label>
-                  <input type="text" id="ws_pf_std_overlay_title" value="100% Principal Engineer Led" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div style="grid-column: span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
-                  <textarea id="ws_pf_std_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Every case study in our portfolio is the direct outcome of disciplined architectural principles, continuous automated verification, and zero-compromise security controls.</textarea>
-                </div>
+              <div id="adminEngineeringHubsList" style="display:flex;flex-direction:column;gap:16px;">
+                <!-- Loaded via JavaScript -->
               </div>
             </div>
 
-            <!-- Dynamic Project Cards Container -->
-            <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>📁</span> Individual Case Studies &amp; Project Cards
-            </div>
-            <div id="adminPortfolioProjectsList" style="display:flex;flex-direction:column;gap:16px;">
-              <!-- Loaded via JavaScript -->
-            </div>
-          </div>
-
-          <!-- 5. Global Engineering Centers / Hubs Configuration -->
-          <div id="ws_hubs_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:18px;">🌍</span>
-                <div>
-                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Global Engineering Centers &amp; Hubs</h3>
-                  <p style="font-size:12px;color:#64748B;margin:0;">Manage international hub cities, countries, core specializations, addresses, and cover photos shown on the About page.</p>
+            <!-- Executive Leadership & Custodians Configuration -->
+            <div id="ws_leadership_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:18px;">👥</span>
+                  <div>
+                    <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Executive Leadership &amp; Technical Custodians</h3>
+                    <p style="font-size:12px;color:#64748B;margin:0;">Manage team names, executive titles, portrait pictures, specializations, biographies, quotes, and connect links.</p>
+                  </div>
                 </div>
-              </div>
-              <button type="button" onclick="addNewEngineeringHubRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
-                <span>➕</span> Add Engineering Center
-              </button>
-            </div>
-
-            <!-- Hubs Header Settings -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Badge Tag</label>
-                  <input type="text" id="ws_hubs_badge" value="GLOBAL REACH &amp; CONTINUOUS COVERAGE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
-                  <input type="text" id="ws_hubs_title" value="Three Specialized Global Engineering Centers" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div style="grid-column: span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
-                  <textarea id="ws_hubs_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Operating across multiple time zones to deliver seamless 24/7 technical continuity and deep regional domain expertise.</textarea>
-                </div>
-              </div>
-            </div>
-
-            <!-- Dynamic Hub Cards Container -->
-            <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>🏢</span> Regional Engineering Hub Cards
-            </div>
-            <div id="adminEngineeringHubsList" style="display:flex;flex-direction:column;gap:16px;">
-              <!-- Loaded via JavaScript -->
-            </div>
-          </div>
-
-          <!-- 6. Executive Leadership & Custodians Configuration -->
-          <div id="ws_leadership_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:18px;">👥</span>
-                <div>
-                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Executive Leadership &amp; Technical Custodians</h3>
-                  <p style="font-size:12px;color:#64748B;margin:0;">Manage team names, executive titles, portrait pictures, specializations, biographies, quotes, and connect links.</p>
-                </div>
-              </div>
-              <button type="button" onclick="addNewLeadershipMemberRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
-                <span>➕</span> Add Team Member
-              </button>
-            </div>
-
-            <!-- Leadership Header Settings -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Badge Tag</label>
-                  <input type="text" id="ws_leader_badge" value="THE PEOPLE BEHIND THE CODE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
-                  <input type="text" id="ws_leader_title" value="Executive Leadership &amp; Technical Custodians" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div style="grid-column: span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
-                  <textarea id="ws_leader_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Meet the founders and principal architects who guide our engineering vision and mentor our senior pods across 3 global centers.</textarea>
-                </div>
-              </div>
-            </div>
-
-            <!-- Dynamic Leader Cards Container -->
-            <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>👤</span> Individual Leadership Profiles
-            </div>
-            <div id="adminLeadershipMembersList" style="display:flex;flex-direction:column;gap:16px;">
-              <!-- Loaded via JavaScript -->
-            </div>
-          </div>
-
-          <!-- 7. Contact Page & Scoping Channels Configuration -->
-          <div id="ws_contact_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:18px;">📞</span>
-                <div>
-                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Contact Page &amp; Scoping Channels</h3>
-                  <p style="font-size:12px;color:#64748B;margin:0;">Manage hero headers, SLA metric badges, direct phone/WhatsApp lines, onboarding stages, and FAQ accordion questions.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Contact Hero & Metrics Section -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
-              <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-                <span>🎯</span> Contact Page Hero &amp; Metrics
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Badge Tag</label>
-                  <input type="text" id="ws_contact_hero_badge" value="DIRECT ARCHITECT ACCESS • 4-HOUR GUARANTEED SLA" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Headline *</label>
-                  <input type="text" id="ws_contact_hero_title" value="Let's Build Something Enduring Together." style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div style="grid-column:span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Description Paragraph</label>
-                  <textarea id="ws_contact_hero_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Connect directly with senior systems architects and technical leaders. Whether you need an end-to-end enterprise platform, sovereign AI pipelines, or dedicated engineering pods—we are ready.</textarea>
-                </div>
-              </div>
-
-              <!-- 3 Metrics -->
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;background:#fff;padding:12px;border:1px solid #E2E8F0;border-radius:6px;">
-                <div>
-                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 1 Label</label>
-                  <input type="text" id="ws_contact_m1_label" value="Average Response" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
-                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 1 Value</label>
-                  <input type="text" id="ws_contact_m1_val" value="< 2.4 Hours" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 2 Label</label>
-                  <input type="text" id="ws_contact_m2_label" value="NDA &amp; IP Protection" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
-                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 2 Value</label>
-                  <input type="text" id="ws_contact_m2_val" value="Signed Day 1" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 3 Label</label>
-                  <input type="text" id="ws_contact_m3_label" value="Verified Ratings" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
-                  <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 3 Value</label>
-                  <input type="text" id="ws_contact_m3_val" value="5.0 Clutch &amp; Google" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
-                </div>
-              </div>
-            </div>
-
-            <!-- Direct Channels & Instant Call Box -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
-              <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-                <span>💬</span> Direct Communications &amp; Instant Discovery Call
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Badge</label>
-                  <input type="text" id="ws_contact_disc_badge" value="⚡ INSTANT DISCOVERY" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Title</label>
-                  <input type="text" id="ws_contact_disc_title" value="Need a Direct Architectural Call?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div style="grid-column:span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Description</label>
-                  <input type="text" id="ws_contact_disc_desc" value="Skip the form and schedule a 30-minute discovery call directly with one of our Principal Systems Architects." style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Booking Email</label>
-                  <input type="email" id="ws_contact_disc_email" value="contact@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Official Inquiries Email</label>
-                  <input type="email" id="ws_contact_off_email" value="contact@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Global Telemetry Line Phone</label>
-                  <input type="text" id="ws_contact_phone" value="+1 (415) 890-4820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">WhatsApp Number Display</label>
-                  <input type="text" id="ws_contact_wa_num" value="+1 (415) 890-4820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div style="grid-column:span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">WhatsApp Direct Chat Link URL</label>
-                  <input type="text" id="ws_contact_wa_url" value="https://wa.me/14158904820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-              </div>
-            </div>
-
-            <!-- 4-Step Onboarding Process -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
-                <div style="font-size:12.5px;font-weight:700;color:#0F172A;display:flex;align-items:center;gap:6px;">
-                  <span>🚀</span> 4-Stage Onboarding Process Steps
-                </div>
-                <button type="button" onclick="addNewContactStepRow()" style="padding:6px 14px;background:#0F172A;color:#fff;font-size:11.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;">
-                  ➕ Add Onboarding Step
+                <button type="button" onclick="addNewLeadershipMemberRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
+                  <span>➕</span> Add Team Member
                 </button>
               </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Badge Tag</label>
-                  <input type="text" id="ws_contact_steps_badge" value="EXECUTION CERTAINTY" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Section Title</label>
-                  <input type="text" id="ws_contact_steps_title" value="What Happens After You Reach Out?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div style="grid-column:span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Description</label>
-                  <textarea id="ws_contact_steps_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Our deterministic 4-stage onboarding model eliminates ambiguity and ensures rapid engineering ramp-up.</textarea>
+
+              <!-- Leadership Header Settings -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Badge Tag</label>
+                    <input type="text" id="ws_leader_badge" value="THE PEOPLE BEHIND THE CODE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
+                    <input type="text" id="ws_leader_title" value="Executive Leadership &amp; Technical Custodians" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div style="grid-column: span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
+                    <textarea id="ws_leader_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Meet the founders and principal architects who guide our engineering vision and mentor our senior pods across 3 global centers.</textarea>
+                  </div>
                 </div>
               </div>
-              <div id="adminContactStepsList" style="display:flex;flex-direction:column;gap:12px;">
+
+              <!-- Dynamic Leader Cards Container -->
+              <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <span>👤</span> Individual Leadership Profiles
+              </div>
+              <div id="adminLeadershipMembersList" style="display:flex;flex-direction:column;gap:16px;">
+                <!-- Loaded via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 3. SUB-PANE: CONTACT PAGE ================= -->
+          <div id="ws_subpane_contact" class="ws-subpane" style="display:none;flex-direction:column;gap:24px;">
+            <!-- Contact Page & Scoping Channels Configuration -->
+            <div id="ws_contact_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:18px;">📞</span>
+                  <div>
+                    <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Contact Page &amp; Scoping Channels</h3>
+                    <p style="font-size:12px;color:#64748B;margin:0;">Manage hero headers, SLA metric badges, direct phone/WhatsApp lines, onboarding stages, and FAQ accordion questions.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contact Hero & Metrics Section -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                  <span>🎯</span> Contact Page Hero &amp; Metrics
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Badge Tag</label>
+                    <input type="text" id="ws_contact_hero_badge" value="DIRECT ARCHITECT ACCESS • 4-HOUR GUARANTEED SLA" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Headline *</label>
+                    <input type="text" id="ws_contact_hero_title" value="Let's Build Something Enduring Together." style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div style="grid-column:span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Hero Description Paragraph</label>
+                    <textarea id="ws_contact_hero_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Connect directly with senior systems architects and technical leaders. Whether you need an end-to-end enterprise platform, sovereign AI pipelines, or dedicated engineering pods—we are ready.</textarea>
+                  </div>
+                </div>
+
+                <!-- 3 Metrics -->
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;background:#fff;padding:12px;border:1px solid #E2E8F0;border-radius:6px;">
+                  <div>
+                    <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 1 Label</label>
+                    <input type="text" id="ws_contact_m1_label" value="Average Response" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                    <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 1 Value</label>
+                    <input type="text" id="ws_contact_m1_val" value="< 2.4 Hours" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 2 Label</label>
+                    <input type="text" id="ws_contact_m2_label" value="NDA &amp; IP Protection" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                    <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 2 Value</label>
+                    <input type="text" id="ws_contact_m2_val" value="Signed Day 1" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:3px;">Metric 3 Label</label>
+                    <input type="text" id="ws_contact_m3_label" value="Verified Ratings" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                    <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin:6px 0 3px;">Metric 3 Value</label>
+                    <input type="text" id="ws_contact_m3_val" value="5.0 Clutch &amp; Google" style="width:100%;padding:6px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Direct Channels & Instant Call Box -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                  <span>💬</span> Direct Communications &amp; Instant Discovery Call
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Badge</label>
+                    <input type="text" id="ws_contact_disc_badge" value="⚡ INSTANT DISCOVERY" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Title</label>
+                    <input type="text" id="ws_contact_disc_title" value="Need a Direct Architectural Call?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div style="grid-column:span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Box Description</label>
+                    <input type="text" id="ws_contact_disc_desc" value="Skip the form and schedule a 30-minute discovery call directly with one of our Principal Systems Architects." style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Discovery Booking Email</label>
+                    <input type="email" id="ws_contact_disc_email" value="contact@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Official Inquiries Email</label>
+                    <input type="email" id="ws_contact_off_email" value="contact@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Global Telemetry Line Phone</label>
+                    <input type="text" id="ws_contact_phone" value="+1 (415) 890-4820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">WhatsApp Number Display</label>
+                    <input type="text" id="ws_contact_wa_num" value="+1 (415) 890-4820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div style="grid-column:span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">WhatsApp Direct Chat Link URL</label>
+                    <input type="text" id="ws_contact_wa_url" value="https://wa.me/14158904820" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4-Step Onboarding Process -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+                  <div style="font-size:12.5px;font-weight:700;color:#0F172A;display:flex;align-items:center;gap:6px;">
+                    <span>🚀</span> 4-Stage Onboarding Process Steps
+                  </div>
+                  <button type="button" onclick="addNewContactStepRow()" style="padding:6px 14px;background:#0F172A;color:#fff;font-size:11.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;">
+                    ➕ Add Onboarding Step
+                  </button>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Badge Tag</label>
+                    <input type="text" id="ws_contact_steps_badge" value="EXECUTION CERTAINTY" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Section Title</label>
+                    <input type="text" id="ws_contact_steps_title" value="What Happens After You Reach Out?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div style="grid-column:span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Steps Description</label>
+                    <textarea id="ws_contact_steps_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Our deterministic 4-stage onboarding model eliminates ambiguity and ensures rapid engineering ramp-up.</textarea>
+                  </div>
+                </div>
+                <div id="adminContactStepsList" style="display:flex;flex-direction:column;gap:12px;">
+                  <!-- Loaded via JS -->
+                </div>
+              </div>
+
+              <!-- FAQs Accordion List -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+                  <div style="font-size:12.5px;font-weight:700;color:#0F172A;display:flex;align-items:center;gap:6px;">
+                    <span>❓</span> Frequently Asked Questions (FAQs)
+                  </div>
+                  <button type="button" onclick="addNewContactFaqRow()" style="padding:6px 14px;background:#0052FF;color:#fff;font-size:11.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;">
+                    ➕ Add FAQ
+                  </button>
+                </div>
+                <div id="adminContactFaqsList" style="display:flex;flex-direction:column;gap:12px;">
+                  <!-- Loaded via JS -->
+                </div>
+              </div>
+
+              <!-- Bottom RFP CTA Banner -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;">
+                <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                  <span>📢</span> Bottom Enterprise RFP Banner
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                  <div style="grid-column:span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Banner Title</label>
+                    <input type="text" id="ws_contact_cta_title" value="Prefer direct enterprise correspondence?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div style="grid-column:span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Banner Description</label>
+                    <textarea id="ws_contact_cta_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Send your RFP, architecture specs, or tender documents directly to our senior leadership inbox at projects@creed-tech.com.</textarea>
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Button Text</label>
+                    <input type="text" id="ws_contact_cta_btn_text" value="Email RFP / Architecture Docs" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Target Email</label>
+                    <input type="email" id="ws_contact_cta_btn_email" value="projects@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 4. SUB-PANE: PORTFOLIO PAGE ================= -->
+          <div id="ws_subpane_portfolio" class="ws-subpane" style="display:none;flex-direction:column;gap:24px;">
+            <!-- Portfolio Projects & Case Studies Configuration -->
+            <div id="ws_portfolio_section_card" style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:18px;">💼</span>
+                  <div>
+                    <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Portfolio Case Studies &amp; Projects Settings</h3>
+                    <p style="font-size:12px;color:#64748B;margin:0;">Manage project titles, cover pictures, impact metrics, technologies, and client locations displayed on the Portfolio page.</p>
+                  </div>
+                </div>
+                <button type="button" onclick="addNewPortfolioProjectRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
+                  <span>➕</span> Add New Project
+                </button>
+              </div>
+
+              <!-- Engineering Standards Header Showcase Picture & Copy -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                  <span>🛠️</span> Portfolio Engineering Standards Showcase Section
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Headline *</label>
+                    <input type="text" id="ws_pf_std_title" value="Built on Rigorous Enterprise Standards" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Showcase Picture URL *</label>
+                    <input type="url" id="ws_pf_std_img" value="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Badge Label</label>
+                    <input type="text" id="ws_pf_std_badge" value="ENGINEERING CULTURE" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Overlay Metric Title</label>
+                    <input type="text" id="ws_pf_std_overlay_title" value="100% Principal Engineer Led" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                  </div>
+                  <div style="grid-column: span 2;">
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Section Description Paragraph</label>
+                    <textarea id="ws_pf_std_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Every case study in our portfolio is the direct outcome of disciplined architectural principles, continuous automated verification, and zero-compromise security controls.</textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dynamic Project Cards Container -->
+              <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <span>📁</span> Individual Case Studies &amp; Project Cards
+              </div>
+              <div id="adminPortfolioProjectsList" style="display:flex;flex-direction:column;gap:16px;">
+                <!-- Loaded via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 5. SUB-PANE: HEADER & FOOTER ================= -->
+          <div id="ws_subpane_header_footer" class="ws-subpane" style="display:none;flex-direction:column;gap:24px;">
+            
+            <!-- Header Settings Card -->
+            <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:18px;">🧭</span>
+                  <div>
+                    <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Header Navigation &amp; CTA Settings</h3>
+                    <p style="font-size:12px;color:#64748B;margin:0;">Manage brand logo asset, top navigation links (desktop &amp; mobile), and the primary header Call To Action button.</p>
+                  </div>
+                </div>
+                <button type="button" onclick="addNewNavLinkRow()" style="padding:8px 16px;background:#0052FF;color:#fff;font-size:12px;font-weight:700;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(0,82,255,0.25);">
+                  <span>➕</span> Add Navigation Link
+                </button>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Logo Asset / Image Path *</label>
+                  <input type="text" id="ws_header_logo_url" value="Creed-Tech-Logo-Clean.png" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Header CTA Button Text *</label>
+                  <input type="text" id="ws_header_cta_text" value="Get Started" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;font-weight:600;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Header CTA Button URL / Route *</label>
+                  <input type="text" id="ws_header_cta_url" value="get-started" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                </div>
+              </div>
+
+              <!-- Dynamic Navigation Links List -->
+              <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <span>🔗</span> Global Navigation Menu (Desktop &amp; Mobile)
+              </div>
+              <div id="adminNavLinksList" style="display:flex;flex-direction:column;gap:12px;">
                 <!-- Loaded via JS -->
               </div>
             </div>
 
-            <!-- FAQs Accordion List -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
-                <div style="font-size:12.5px;font-weight:700;color:#0F172A;display:flex;align-items:center;gap:6px;">
-                  <span>❓</span> Frequently Asked Questions (FAQs)
+            <!-- Footer Settings Card -->
+            <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+                <span style="font-size:18px;">📄</span>
+                <div>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Footer Information, Description &amp; Links</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">Manage company brand overview paragraphs, Useful Links column, and Our Services links column.</p>
                 </div>
-                <button type="button" onclick="addNewContactFaqRow()" style="padding:6px 14px;background:#0052FF;color:#fff;font-size:11.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;">
-                  ➕ Add FAQ
-                </button>
               </div>
-              <div id="adminContactFaqsList" style="display:flex;flex-direction:column;gap:12px;">
-                <!-- Loaded via JS -->
-              </div>
-            </div>
 
-            <!-- Bottom RFP CTA Banner -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;">
-              <div style="font-size:12.5px;font-weight:700;color:#0F172A;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-                <span>📢</span> Bottom Enterprise RFP Banner
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                <div style="grid-column:span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Banner Title</label>
-                  <input type="text" id="ws_contact_cta_title" value="Prefer direct enterprise correspondence?" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+              <!-- Brand Description Paragraphs -->
+              <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;margin-bottom:20px;">
+                <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                  <span>📝</span> Company Description Paragraphs (Under Footer Logo)
                 </div>
-                <div style="grid-column:span 2;">
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Banner Description</label>
-                  <textarea id="ws_contact_cta_desc" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Send your RFP, architecture specs, or tender documents directly to our senior leadership inbox at projects@creed-tech.com.</textarea>
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Button Text</label>
-                  <input type="text" id="ws_contact_cta_btn_text" value="Email RFP / Architecture Docs" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
-                </div>
-                <div>
-                  <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">CTA Target Email</label>
-                  <input type="email" id="ws_contact_cta_btn_email" value="projects@creed-tech.com" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Paragraph 1</label>
+                    <textarea id="ws_footer_p1" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">We specialize in enterprise software architecture, robust cloud infrastructure, and next-generation cybersecurity.</textarea>
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Paragraph 2</label>
+                    <textarea id="ws_footer_p2" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Engineering scalable, high-performance, and resilient systems tailored for global enterprises and modern businesses.</textarea>
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;">Paragraph 3</label>
+                    <textarea id="ws_footer_p3" rows="2" style="width:100%;padding:8px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;line-height:1.5;outline:none;">Delivering end-to-end digital transformation, modern web systems, and strategic IT consulting to accelerate growth.</textarea>
+                  </div>
                 </div>
               </div>
+
+              <!-- Contact Info Notice (No duplicates, connected to General Settings) -->
+              <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;">
+                <span style="font-size:16px;color:#1E40AF;">ℹ️</span>
+                <div style="font-size:12px;color:#1E40AF;line-height:1.5;">
+                  <strong>Footer Contact Coordinates:</strong> Address, Email, and Phone shown in the Footer are dynamically synchronized with <strong>Global Settings &rarr; General Site Information</strong>. Any changes to Primary Office Address, Contact Email, or Phone in Global Settings automatically reflect in the Footer.
+                </div>
+              </div>
+
+              <!-- Useful Links & Services Links Columns -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                <!-- Useful Links Column -->
+                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                    <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;">
+                      <span>📌</span> Useful Links Column
+                    </div>
+                    <button type="button" onclick="addNewUsefulLinkRow()" style="padding:5px 12px;background:#0F172A;color:#fff;font-size:11.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;">
+                      ➕ Add Link
+                    </button>
+                  </div>
+                  <div id="adminUsefulLinksList" style="display:flex;flex-direction:column;gap:10px;">
+                    <!-- Loaded via JS -->
+                  </div>
+                </div>
+
+                <!-- Our Services Column -->
+                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:16px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                    <div style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;">
+                      <span>⚡</span> Our Services Links Column
+                    </div>
+                    <button type="button" onclick="addNewServicesLinkRow()" style="padding:5px 12px;background:#0052FF;color:#fff;font-size:11.5px;font-weight:700;border:none;border-radius:4px;cursor:pointer;">
+                      ➕ Add Service Link
+                    </button>
+                  </div>
+                  <div id="adminServicesLinksList" style="display:flex;flex-direction:column;gap:10px;">
+                    <!-- Loaded via JS -->
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>
 
-          <!-- 8. Footer & Social Channels -->
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
-              <span style="font-size:18px;">🔗</span>
-              <div>
-                <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Footer Information &amp; Social Links</h3>
-                <p style="font-size:12px;color:#64748B;margin:0;">Copyright notice and official corporate social media profiles.</p>
+          <!-- ================= 6. SUB-PANE: GLOBAL SETTINGS ================= -->
+          <div id="ws_subpane_global" class="ws-subpane" style="display:none;flex-direction:column;gap:24px;">
+            <!-- General Brand & Company Info -->
+            <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+                <span style="font-size:18px;">🏢</span>
+                <div>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">General Site Information &amp; Branding</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">Core company details and primary identity displayed across headers and contact forms.</p>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Website / Brand Name *</label>
+                  <input type="text" id="ws_site_name" value="Creed Tech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Company Tagline / Slogan</label>
+                  <input type="text" id="ws_site_tagline" value="Enterprise Systems &amp; AI Solutions" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary Support / Contact Email</label>
+                  <input type="email" id="ws_contact_email" value="info@creedtech.co" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Contact Phone Number</label>
+                  <input type="text" id="ws_contact_phone" value="+92 300 1234567" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div style="grid-column: span 2;">
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Primary Office Address</label>
+                  <input type="text" id="ws_office_address" value="Islamabad / Lahore, Pakistan &amp; Global Pods" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
               </div>
             </div>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
-              <div style="grid-column:span 2;">
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Copyright Notice Text</label>
-                <input type="text" id="ws_footer_copyright" value="© 2026 Creed Tech. All rights reserved." style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+            <!-- Live Top Announcement Bar -->
+            <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:18px;">📢</span>
+                  <div>
+                    <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Top Live Announcement Bar</h3>
+                    <p style="font-size:12px;color:#64748B;margin:0;">The top header ribbon displayed above navigation on all pages.</p>
+                  </div>
+                </div>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input type="checkbox" id="ws_bar_enabled" checked style="width:18px;height:18px;cursor:pointer;">
+                  <span style="font-size:12px;font-weight:700;color:#0F172A;">Show Announcement Bar</span>
+                </label>
               </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Facebook Profile / Page URL</label>
-                <input type="url" id="ws_social_facebook" value="https://facebook.com/creedtechnology" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+
+              <div style="display:grid;grid-template-columns:140px 1fr 140px 180px;gap:14px;">
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Badge Label</label>
+                  <input type="text" id="ws_bar_badge" value="LIVE" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:700;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Announcement Message Text *</label>
+                  <input type="text" id="ws_bar_message" value="Creed Tech recognized as Leading Enterprise Systems &amp; Cloud Modernization Provider." style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Action Link Text</label>
+                  <input type="text" id="ws_bar_link_text" value="Explore →" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;font-weight:600;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Action Link URL</label>
+                  <input type="text" id="ws_bar_link_url" value="services" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
               </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Instagram Profile URL</label>
-                <input type="url" id="ws_social_instagram" value="https://instagram.com/creed.technologiess" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+            </div>
+
+            <!-- Footer & Social Channels -->
+            <div style="background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid #F1F5F9;">
+                <span style="font-size:18px;">🔗</span>
+                <div>
+                  <h3 style="font-size:15px;font-weight:700;color:#0F172A;margin:0;">Footer Information &amp; Social Links</h3>
+                  <p style="font-size:12px;color:#64748B;margin:0;">Copyright notice and official corporate social media profiles.</p>
+                </div>
               </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">LinkedIn Company URL</label>
-                <input type="url" id="ws_social_linkedin" value="https://linkedin.com/company/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Pinterest Profile URL</label>
-                <input type="url" id="ws_social_pinterest" value="https://pinterest.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Twitter / X Profile URL</label>
-                <input type="url" id="ws_social_twitter" value="https://x.com/Creedtech3" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
-              </div>
-              <div>
-                <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">GitHub Organization URL</label>
-                <input type="url" id="ws_social_github" value="https://github.com/creed-tech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+                <div style="grid-column:span 2;">
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Copyright Notice Text</label>
+                  <input type="text" id="ws_footer_copyright" value="© 2026 Creed Tech. All rights reserved." style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Facebook Profile / Page URL</label>
+                  <input type="url" id="ws_social_facebook" value="https://facebook.com/creedtechnology" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Instagram Profile URL</label>
+                  <input type="url" id="ws_social_instagram" value="https://instagram.com/creed.technologiess" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">LinkedIn Company URL</label>
+                  <input type="url" id="ws_social_linkedin" value="https://linkedin.com/company/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Pinterest Profile URL</label>
+                  <input type="url" id="ws_social_pinterest" value="https://pinterest.com/creedtech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">Twitter / X Profile URL</label>
+                  <input type="url" id="ws_social_twitter" value="https://x.com/Creedtech3" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div>
+                  <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;">GitHub Organization URL</label>
+                  <input type="url" id="ws_social_github" value="https://github.com/creed-tech" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
               </div>
             </div>
           </div>
@@ -2150,6 +2304,29 @@ function switchAdminTab(tabName, btn) {
     loadWebsiteSettingsFromBackend();
   }
 }
+
+function switchWsSubTab(subTabKey, btn) {
+  var panes = document.querySelectorAll('.ws-subpane');
+  panes.forEach(function(p) { p.style.display = 'none'; });
+
+  var btns = document.querySelectorAll('.ws-subtab-btn');
+  btns.forEach(function(b) {
+    b.classList.remove('active');
+    b.style.background = '#F1F5F9';
+    b.style.color = '#475569';
+    b.style.borderColor = '#CBD5E1';
+  });
+
+  var target = document.getElementById('ws_subpane_' + subTabKey);
+  if (target) target.style.display = 'flex';
+  if (btn) {
+    btn.classList.add('active');
+    btn.style.background = '#0052FF';
+    btn.style.color = '#FFFFFF';
+    btn.style.borderColor = '#0052FF';
+  }
+}
+window.switchWsSubTab = switchWsSubTab;
 
 var ADMIN_PORTFOLIO_PROJECTS = [];
 
@@ -2791,6 +2968,193 @@ function deleteContactFaqRow(index) {
 }
 window.deleteContactFaqRow = deleteContactFaqRow;
 
+var ADMIN_NAV_LINKS = [];
+var ADMIN_USEFUL_LINKS = [];
+var ADMIN_SERVICES_LINKS = [];
+
+function escapeAdminHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderAdminNavLinks(links) {
+  var container = document.getElementById('adminNavLinksList');
+  if (!container) return;
+  if (Array.isArray(links)) ADMIN_NAV_LINKS = links;
+  if (!Array.isArray(ADMIN_NAV_LINKS)) ADMIN_NAV_LINKS = [];
+
+  if (ADMIN_NAV_LINKS.length === 0) {
+    container.innerHTML = '<div style="color:#64748B;font-size:12px;font-style:italic;padding:12px;background:#F8FAFC;border:1px dashed #CBD5E1;border-radius:4px;">No navigation links configured. Click "➕ Add Navigation Link" above to add one.</div>';
+    return;
+  }
+
+  var html = '';
+  ADMIN_NAV_LINKS.forEach(function(item, idx) {
+    html += '<div style="background:#fff;border:1px solid #CBD5E1;border-radius:6px;padding:12px 14px;display:grid;grid-template-columns:1fr 1fr 1fr 40px;gap:12px;align-items:center;">' +
+      '<div>' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#64748B;margin-bottom:4px;">Link Label *</label>' +
+        '<input type="text" id="nav_label_' + idx + '" value="' + escapeAdminHtml(item.label || '') + '" placeholder="e.g. Services" style="width:100%;padding:7px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">' +
+      '</div>' +
+      '<div>' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#64748B;margin-bottom:4px;">Target URL / Route *</label>' +
+        '<input type="text" id="nav_url_' + idx + '" value="' + escapeAdminHtml(item.url || '') + '" placeholder="e.g. services" style="width:100%;padding:7px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">' +
+      '</div>' +
+      '<div>' +
+        '<label style="display:block;font-size:11px;font-weight:700;color:#64748B;margin-bottom:4px;">Active Key (optional)</label>' +
+        '<input type="text" id="nav_key_' + idx + '" value="' + escapeAdminHtml(item.active_key || '') + '" placeholder="e.g. services" style="width:100%;padding:7px 10px;border:1px solid #CBD5E1;border-radius:4px;font-size:12.5px;outline:none;">' +
+      '</div>' +
+      '<div style="text-align:right;padding-top:18px;">' +
+        '<button type="button" onclick="deleteNavLinkRow(' + idx + ')" style="background:#FEE2E2;border:1px solid #FCA5A5;color:#DC2626;border-radius:4px;padding:6px 9px;cursor:pointer;font-size:12px;" title="Delete Link">🗑️</button>' +
+      '</div>' +
+    '</div>';
+  });
+  container.innerHTML = html;
+}
+window.renderAdminNavLinks = renderAdminNavLinks;
+
+function addNewNavLinkRow() {
+  syncCurrentNavLinksInputsIntoMemory();
+  ADMIN_NAV_LINKS.push({ label: 'New Link', url: '#', active_key: '' });
+  renderAdminNavLinks(ADMIN_NAV_LINKS);
+}
+window.addNewNavLinkRow = addNewNavLinkRow;
+
+function deleteNavLinkRow(idx) {
+  syncCurrentNavLinksInputsIntoMemory();
+  if (confirm('Are you sure you want to remove this navigation link?')) {
+    ADMIN_NAV_LINKS.splice(idx, 1);
+    renderAdminNavLinks(ADMIN_NAV_LINKS);
+  }
+}
+window.deleteNavLinkRow = deleteNavLinkRow;
+
+function syncCurrentNavLinksInputsIntoMemory() {
+  if (!Array.isArray(ADMIN_NAV_LINKS)) ADMIN_NAV_LINKS = [];
+  ADMIN_NAV_LINKS = ADMIN_NAV_LINKS.map(function(item, idx) {
+    var lblEl = document.getElementById('nav_label_' + idx);
+    var urlEl = document.getElementById('nav_url_' + idx);
+    var keyEl = document.getElementById('nav_key_' + idx);
+    return {
+      label: lblEl ? lblEl.value.trim() : (item.label || ''),
+      url: urlEl ? urlEl.value.trim() : (item.url || ''),
+      active_key: keyEl ? keyEl.value.trim() : (item.active_key || '')
+    };
+  });
+}
+window.syncCurrentNavLinksInputsIntoMemory = syncCurrentNavLinksInputsIntoMemory;
+
+function renderAdminUsefulLinks(links) {
+  var container = document.getElementById('adminUsefulLinksList');
+  if (!container) return;
+  if (Array.isArray(links)) ADMIN_USEFUL_LINKS = links;
+  if (!Array.isArray(ADMIN_USEFUL_LINKS)) ADMIN_USEFUL_LINKS = [];
+
+  if (ADMIN_USEFUL_LINKS.length === 0) {
+    container.innerHTML = '<div style="color:#64748B;font-size:12px;font-style:italic;padding:10px;background:#fff;border:1px dashed #CBD5E1;border-radius:4px;">No useful links configured.</div>';
+    return;
+  }
+
+  var html = '';
+  ADMIN_USEFUL_LINKS.forEach(function(item, idx) {
+    html += '<div style="background:#fff;border:1px solid #CBD5E1;border-radius:4px;padding:8px 10px;display:grid;grid-template-columns:1fr 1fr 34px;gap:8px;align-items:center;">' +
+      '<div>' +
+        '<input type="text" id="useful_label_' + idx + '" value="' + escapeAdminHtml(item.label || '') + '" placeholder="Label" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+      '</div>' +
+      '<div>' +
+        '<input type="text" id="useful_url_' + idx + '" value="' + escapeAdminHtml(item.url || '') + '" placeholder="URL (e.g. portfolio)" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+      '</div>' +
+      '<div style="text-align:right;">' +
+        '<button type="button" onclick="deleteUsefulLinkRow(' + idx + ')" style="background:#FEE2E2;border:1px solid #FCA5A5;color:#DC2626;border-radius:4px;padding:5px 7px;cursor:pointer;font-size:11px;" title="Delete">✕</button>' +
+      '</div>' +
+    '</div>';
+  });
+  container.innerHTML = html;
+}
+window.renderAdminUsefulLinks = renderAdminUsefulLinks;
+
+function addNewUsefulLinkRow() {
+  syncCurrentUsefulLinksInputsIntoMemory();
+  ADMIN_USEFUL_LINKS.push({ label: 'New Link', url: '#' });
+  renderAdminUsefulLinks(ADMIN_USEFUL_LINKS);
+}
+window.addNewUsefulLinkRow = addNewUsefulLinkRow;
+
+function deleteUsefulLinkRow(idx) {
+  syncCurrentUsefulLinksInputsIntoMemory();
+  ADMIN_USEFUL_LINKS.splice(idx, 1);
+  renderAdminUsefulLinks(ADMIN_USEFUL_LINKS);
+}
+window.deleteUsefulLinkRow = deleteUsefulLinkRow;
+
+function syncCurrentUsefulLinksInputsIntoMemory() {
+  if (!Array.isArray(ADMIN_USEFUL_LINKS)) ADMIN_USEFUL_LINKS = [];
+  ADMIN_USEFUL_LINKS = ADMIN_USEFUL_LINKS.map(function(item, idx) {
+    var lblEl = document.getElementById('useful_label_' + idx);
+    var urlEl = document.getElementById('useful_url_' + idx);
+    return {
+      label: lblEl ? lblEl.value.trim() : (item.label || ''),
+      url: urlEl ? urlEl.value.trim() : (item.url || '')
+    };
+  });
+}
+window.syncCurrentUsefulLinksInputsIntoMemory = syncCurrentUsefulLinksInputsIntoMemory;
+
+function renderAdminServicesLinks(links) {
+  var container = document.getElementById('adminServicesLinksList');
+  if (!container) return;
+  if (Array.isArray(links)) ADMIN_SERVICES_LINKS = links;
+  if (!Array.isArray(ADMIN_SERVICES_LINKS)) ADMIN_SERVICES_LINKS = [];
+
+  if (ADMIN_SERVICES_LINKS.length === 0) {
+    container.innerHTML = '<div style="color:#64748B;font-size:12px;font-style:italic;padding:10px;background:#fff;border:1px dashed #CBD5E1;border-radius:4px;">No services links configured.</div>';
+    return;
+  }
+
+  var html = '';
+  ADMIN_SERVICES_LINKS.forEach(function(item, idx) {
+    html += '<div style="background:#fff;border:1px solid #CBD5E1;border-radius:4px;padding:8px 10px;display:grid;grid-template-columns:1fr 1fr 34px;gap:8px;align-items:center;">' +
+      '<div>' +
+        '<input type="text" id="service_label_' + idx + '" value="' + escapeAdminHtml(item.label || '') + '" placeholder="Service Name" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+      '</div>' +
+      '<div>' +
+        '<input type="text" id="service_url_' + idx + '" value="' + escapeAdminHtml(item.url || '') + '" placeholder="URL (e.g. services)" style="width:100%;padding:6px 8px;border:1px solid #CBD5E1;border-radius:4px;font-size:12px;outline:none;">' +
+      '</div>' +
+      '<div style="text-align:right;">' +
+        '<button type="button" onclick="deleteServicesLinkRow(' + idx + ')" style="background:#FEE2E2;border:1px solid #FCA5A5;color:#DC2626;border-radius:4px;padding:5px 7px;cursor:pointer;font-size:11px;" title="Delete">✕</button>' +
+      '</div>' +
+    '</div>';
+  });
+  container.innerHTML = html;
+}
+window.renderAdminServicesLinks = renderAdminServicesLinks;
+
+function addNewServicesLinkRow() {
+  syncCurrentServicesLinksInputsIntoMemory();
+  ADMIN_SERVICES_LINKS.push({ label: 'New Service', url: 'services' });
+  renderAdminServicesLinks(ADMIN_SERVICES_LINKS);
+}
+window.addNewServicesLinkRow = addNewServicesLinkRow;
+
+function deleteServicesLinkRow(idx) {
+  syncCurrentServicesLinksInputsIntoMemory();
+  ADMIN_SERVICES_LINKS.splice(idx, 1);
+  renderAdminServicesLinks(ADMIN_SERVICES_LINKS);
+}
+window.deleteServicesLinkRow = deleteServicesLinkRow;
+
+function syncCurrentServicesLinksInputsIntoMemory() {
+  if (!Array.isArray(ADMIN_SERVICES_LINKS)) ADMIN_SERVICES_LINKS = [];
+  ADMIN_SERVICES_LINKS = ADMIN_SERVICES_LINKS.map(function(item, idx) {
+    var lblEl = document.getElementById('service_label_' + idx);
+    var urlEl = document.getElementById('service_url_' + idx);
+    return {
+      label: lblEl ? lblEl.value.trim() : (item.label || ''),
+      url: urlEl ? urlEl.value.trim() : (item.url || '')
+    };
+  });
+}
+window.syncCurrentServicesLinksInputsIntoMemory = syncCurrentServicesLinksInputsIntoMemory;
+
 async function loadWebsiteSettingsFromBackend() {
   try {
     const res = await fetch('ajax/site_settings_admin.php?t=' + Date.now());
@@ -2804,6 +3168,15 @@ async function loadWebsiteSettingsFromBackend() {
         if (document.getElementById('ws_contact_email')) document.getElementById('ws_contact_email').value = s.general.contact_email || '';
         if (document.getElementById('ws_contact_phone')) document.getElementById('ws_contact_phone').value = s.general.contact_phone || '';
         if (document.getElementById('ws_office_address')) document.getElementById('ws_office_address').value = s.general.office_address || '';
+      }
+      if (s.header) {
+        if (document.getElementById('ws_header_logo_url')) document.getElementById('ws_header_logo_url').value = s.header.logo_url || '';
+        if (document.getElementById('ws_header_cta_text')) document.getElementById('ws_header_cta_text').value = s.header.cta_text || '';
+        if (document.getElementById('ws_header_cta_url')) document.getElementById('ws_header_cta_url').value = s.header.cta_url || '';
+        if (Array.isArray(s.header.nav_links)) {
+          ADMIN_NAV_LINKS = s.header.nav_links;
+          renderAdminNavLinks(ADMIN_NAV_LINKS);
+        }
       }
       if (s.announcement_bar) {
         if (document.getElementById('ws_bar_enabled')) document.getElementById('ws_bar_enabled').checked = !!s.announcement_bar.enabled;
@@ -2821,6 +3194,17 @@ async function loadWebsiteSettingsFromBackend() {
         if (document.getElementById('ws_hero_cta2_url')) document.getElementById('ws_hero_cta2_url').value = s.hero_section.cta_secondary_url || '';
       }
       if (s.footer) {
+        if (document.getElementById('ws_footer_p1')) document.getElementById('ws_footer_p1').value = s.footer.brand_description_p1 || '';
+        if (document.getElementById('ws_footer_p2')) document.getElementById('ws_footer_p2').value = s.footer.brand_description_p2 || '';
+        if (document.getElementById('ws_footer_p3')) document.getElementById('ws_footer_p3').value = s.footer.brand_description_p3 || '';
+        if (Array.isArray(s.footer.useful_links)) {
+          ADMIN_USEFUL_LINKS = s.footer.useful_links;
+          renderAdminUsefulLinks(ADMIN_USEFUL_LINKS);
+        }
+        if (Array.isArray(s.footer.services_links)) {
+          ADMIN_SERVICES_LINKS = s.footer.services_links;
+          renderAdminServicesLinks(ADMIN_SERVICES_LINKS);
+        }
         if (document.getElementById('ws_footer_copyright')) document.getElementById('ws_footer_copyright').value = s.footer.copyright_text || '';
         if (document.getElementById('ws_social_facebook')) document.getElementById('ws_social_facebook').value = s.footer.facebook_url || '';
         if (document.getElementById('ws_social_instagram')) document.getElementById('ws_social_instagram').value = s.footer.instagram_url || '';
@@ -2925,6 +3309,9 @@ async function saveWebsiteSettings() {
   syncCurrentHubsInputsIntoMemory();
   syncCurrentLeadershipInputsIntoMemory();
   syncCurrentContactInputsIntoMemory();
+  syncCurrentNavLinksInputsIntoMemory();
+  syncCurrentUsefulLinksInputsIntoMemory();
+  syncCurrentServicesLinksInputsIntoMemory();
 
   var stdTitle = (document.getElementById('ws_pf_std_title') ? document.getElementById('ws_pf_std_title').value.trim() : '') ||
                  (document.getElementById('admin_pf_std_title') ? document.getElementById('admin_pf_std_title').value.trim() : '');
@@ -2944,6 +3331,12 @@ async function saveWebsiteSettings() {
       contact_email: document.getElementById('ws_contact_email') ? document.getElementById('ws_contact_email').value.trim() : '',
       contact_phone: document.getElementById('ws_contact_phone') ? document.getElementById('ws_contact_phone').value.trim() : '',
       office_address: document.getElementById('ws_office_address') ? document.getElementById('ws_office_address').value.trim() : ''
+    },
+    header: {
+      logo_url: document.getElementById('ws_header_logo_url') ? document.getElementById('ws_header_logo_url').value.trim() : 'Creed-Tech-Logo-Clean.png',
+      cta_text: document.getElementById('ws_header_cta_text') ? document.getElementById('ws_header_cta_text').value.trim() : 'Get Started',
+      cta_url: document.getElementById('ws_header_cta_url') ? document.getElementById('ws_header_cta_url').value.trim() : 'get-started',
+      nav_links: ADMIN_NAV_LINKS
     },
     announcement_bar: {
       enabled: document.getElementById('ws_bar_enabled') ? document.getElementById('ws_bar_enabled').checked : true,
@@ -3024,6 +3417,11 @@ async function saveWebsiteSettings() {
       }
     },
     footer: {
+      brand_description_p1: document.getElementById('ws_footer_p1') ? document.getElementById('ws_footer_p1').value.trim() : '',
+      brand_description_p2: document.getElementById('ws_footer_p2') ? document.getElementById('ws_footer_p2').value.trim() : '',
+      brand_description_p3: document.getElementById('ws_footer_p3') ? document.getElementById('ws_footer_p3').value.trim() : '',
+      useful_links: ADMIN_USEFUL_LINKS,
+      services_links: ADMIN_SERVICES_LINKS,
       copyright_text: document.getElementById('ws_footer_copyright') ? document.getElementById('ws_footer_copyright').value.trim() : '',
       facebook_url: document.getElementById('ws_social_facebook') ? document.getElementById('ws_social_facebook').value.trim() : '',
       instagram_url: document.getElementById('ws_social_instagram') ? document.getElementById('ws_social_instagram').value.trim() : '',
@@ -3678,8 +4076,16 @@ function renderArticleReviewsTable() {
 function setArticleReviewStatus(id, newStatus) {
   fetch('ajax/article_reviews.php', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'update_status', id: id, status: newStatus })
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+    },
+    body: JSON.stringify({
+      action: 'update_status',
+      id: id,
+      status: newStatus,
+      csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+    })
   })
   .then(function(res) { return res.json(); })
   .then(function(data) {
@@ -3702,8 +4108,15 @@ function deleteArticleReview(id) {
   if (confirm('Are you sure you want to permanently delete this user review?')) {
     fetch('ajax/article_reviews.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'delete', id: id })
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+      },
+      body: JSON.stringify({
+        action: 'delete',
+        id: id,
+        csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+      })
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {
@@ -3811,8 +4224,16 @@ function renderApplicantsTable() {
 function setApplicantStatus(id, newStatus) {
   fetch('/ajax/careers_admin.php', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'update_applicant_status', id: id, status: newStatus })
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+    },
+    body: JSON.stringify({
+      action: 'update_applicant_status',
+      id: id,
+      status: newStatus,
+      csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+    })
   })
   .then(function(res) { return res.json(); })
   .then(function(data) {
@@ -3827,8 +4248,15 @@ function deleteApplicant(id) {
   if (confirm('Are you sure you want to remove this candidate from the talent pool?')) {
     fetch('/ajax/careers_admin.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'delete_applicant', id: id })
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+      },
+      body: JSON.stringify({
+        action: 'delete_applicant',
+        id: id,
+        csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+      })
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {
@@ -3932,12 +4360,16 @@ function changeJobStatus(id, newStatus) {
     location: job.location,
     status: newStatus,
     description: job.description,
-    tags: job.tags || []
+    tags: job.tags || [],
+    csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
   };
 
   fetch('/ajax/careers_admin.php', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+    },
     body: JSON.stringify(payload)
   })
   .then(function(res) { return res.json(); })
@@ -3957,12 +4389,16 @@ function handleCreateJob(e) {
     location: document.getElementById('jobLoc').value.trim(),
     status: document.getElementById('jobStatus').value,
     description: document.getElementById('jobDesc').value.trim(),
-    tags: document.getElementById('jobTags').value.split(',').map(function(s){return s.trim();}).filter(Boolean)
+    tags: document.getElementById('jobTags').value.split(',').map(function(s){return s.trim();}).filter(Boolean),
+    csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
   };
 
   fetch('/ajax/careers_admin.php', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+    },
     body: JSON.stringify(payload)
   })
   .then(function(res) { return res.json(); })
@@ -3977,8 +4413,15 @@ function deleteJob(id) {
   if (confirm('Are you sure you want to delete this job position?')) {
     fetch('/ajax/careers_admin.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'delete_job', id: id })
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+      },
+      body: JSON.stringify({
+        action: 'delete_job',
+        id: id,
+        csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+      })
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {
@@ -4436,12 +4879,16 @@ function handleCreateArticle(e) {
     buy_links: buyButtons,
     pros: pros.length > 0 ? pros : ['Field-leading efficiency', 'Top-tier display fidelity'],
     cons: cons.length > 0 ? cons : ['High-end price point'],
-    specs: specs
+    specs: specs,
+    csrf_token: typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
   };
 
   fetch('ajax/articles_admin.php', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': typeof ADMIN_CSRF_TOKEN !== 'undefined' ? ADMIN_CSRF_TOKEN : ''
+    },
     body: JSON.stringify(payload)
   })
   .then(function(res) { return res.json(); })

@@ -18,9 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $action = $jsonData['action'] ?? $_POST['action'] ?? 'create';
 
-    // Administrative actions require authentication
+    // Administrative actions require authentication and CSRF token
     if ($action === 'update_status' || $action === 'delete') {
         require_once __DIR__ . '/../includes/auth_guard.php';
+        $token = $jsonData['csrf_token'] ?? $_POST['csrf_token'] ?? '';
+        if (!validate_csrf_token($token)) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'Forbidden: Invalid or missing CSRF security token.']);
+            exit;
+        }
     }
     if ($action === 'update_status') {
         $revId = intval($jsonData['id'] ?? $_POST['id'] ?? 0);

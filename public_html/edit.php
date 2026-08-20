@@ -1,61 +1,64 @@
 <?php 
 require_once __DIR__ . '/includes/auth_guard.php';
 require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/security_helpers.php';
 
 $id = (int)($_GET['id'] ?? 0);
 $error = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_submit'])) { 
+    if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        http_response_code(403);
+        die("HTTP 403 Forbidden: Invalid or missing CSRF security token.\n");
+    }
+
     $title  = trim($_POST['title'] ?? '');
     $detail = trim($_POST['detail'] ?? '');
 
     $folder = __DIR__ . "/uploads/";
-    $image_file = $_FILES['image']['name'] ?? '';
-    $file = $_FILES['image']['tmp_name'] ?? '';
-    $imageFileType = strtolower(pathinfo($image_file, PATHINFO_EXTENSION));
+    $newImageName = null;
 
-    $allowed_types = ["jpg", "jpeg", "png", "gif", "webp"];
-
-    if (!empty($file)) {
-        if ($_FILES["image"]["size"] > 5242880) {
-            $error[] = 'Image is too large. Upload less than 5 MB.';
-        }
-        if (!in_array($imageFileType, $allowed_types)) {
-            $error[] = 'Only JPG, JPEG, PNG, GIF, and WEBP files are allowed.';
+    if (isset($_FILES['image']) && !empty($_FILES['image']['tmp_name']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+        $uploadResult = secure_upload_image($_FILES['image'], $folder);
+        if (!$uploadResult['success']) {
+            $error[] = $uploadResult['error'];
+        } else {
+            $newImageName = $uploadResult['filename'];
         }
     }
 
     if (empty($error)) {
-        if (!empty($file)) {
-            $stmtOld = mysqli_prepare($connect, "SELECT `blog_image` FROM `blog` WHERE `id` = ? LIMIT 1");
-            if ($stmtOld) {
-                mysqli_stmt_bind_param($stmtOld, "i", $id);
-                mysqli_stmt_execute($stmtOld);
-                $resOld = mysqli_stmt_get_result($stmtOld);
-                if ($rowOld = mysqli_fetch_assoc($resOld)) {
-                    $deleteimage = $rowOld['blog_image'];
-                    if (!empty($deleteimage) && file_exists($folder . $deleteimage)) {
-                        @unlink($folder . $deleteimage);
+        if ($newImageName !== null) {
+            if ($connect instanceof mysqli) {
+                $stmtOld = mysqli_prepare($connect, "SELECT `blog_image` FROM `blog` WHERE `id` = ? LIMIT 1");
+                if ($stmtOld) {
+                    mysqli_stmt_bind_param($stmtOld, "i", $id);
+                    mysqli_stmt_execute($stmtOld);
+                    $resOld = mysqli_stmt_get_result($stmtOld);
+                    if ($rowOld = mysqli_fetch_assoc($resOld)) {
+                        $deleteimage = $rowOld['blog_image'];
+                        if (!empty($deleteimage) && file_exists($folder . $deleteimage)) {
+                            @unlink($folder . $deleteimage);
+                        }
                     }
+                    mysqli_stmt_close($stmtOld);
                 }
-                mysqli_stmt_close($stmtOld);
-            }
 
-            $newImageName = 'blog_' . bin2hex(random_bytes(8)) . '.' . $imageFileType;
-            move_uploaded_file($file, $folder . $newImageName);
-
-            $stmtUp = mysqli_prepare($connect, "UPDATE `blog` SET `blog_image` = ?, `title` = ?, `detail` = ? WHERE `id` = ?");
-            if ($stmtUp) {
-                mysqli_stmt_bind_param($stmtUp, "sssi", $newImageName, $title, $detail, $id);
-                mysqli_stmt_execute($stmtUp);
-                mysqli_stmt_close($stmtUp);
+                $stmtUp = mysqli_prepare($connect, "UPDATE `blog` SET `blog_image` = ?, `title` = ?, `detail` = ? WHERE `id` = ?");
+                if ($stmtUp) {
+                    mysqli_stmt_bind_param($stmtUp, "sssi", $newImageName, $title, $detail, $id);
+                    mysqli_stmt_execute($stmtUp);
+                    mysqli_stmt_close($stmtUp);
+                }
             }
         } else {
-            $stmtUp = mysqli_prepare($connect, "UPDATE `blog` SET `title` = ?, `detail` = ? WHERE `id` = ?");
-            if ($stmtUp) {
-                mysqli_stmt_bind_param($stmtUp, "ssi", $title, $detail, $id);
-                mysqli_stmt_execute($stmtUp);
-                mysqli_stmt_close($stmtUp);
+            if ($connect instanceof mysqli) {
+                $stmtUp = mysqli_prepare($connect, "UPDATE `blog` SET `title` = ?, `detail` = ? WHERE `id` = ?");
+                if ($stmtUp) {
+                    mysqli_stmt_bind_param($stmtUp, "ssi", $title, $detail, $id);
+                    mysqli_stmt_execute($stmtUp);
+                    mysqli_stmt_close($stmtUp);
+                }
             }
         }
         header("Location: edit_panel.php?updated=1");
@@ -128,12 +131,12 @@ if ($connect instanceof mysqli) {
     <header id="header" class="fixed-top ">
     <div class="container d-flex align-items-center justify-content-lg-between">
 
-      <h1 class="logo me-auto me-lg-0"><a href="Home"><img src="assets/img/mono.webp"></a></h1>
+      <h1 class="logo me-auto me-lg-0"><a href="/"><img src="assets/img/mono.webp" alt="CREED TECH Logo"></a></h1>
       
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link active" href="Home">Home</a></li>
+          <li><a class="nav-link active" href="/">Home</a></li>
           <li><a class="nav-link" href="about">About</a></li>
           <li><a class="nav-link" href="services">Services</a></li>
           <li><a class="nav-link" href="portfolio">Portfolio</a></li>
@@ -170,7 +173,7 @@ if ($connect instanceof mysqli) {
      
      <div class="col-md-3 col-lg-3 col-xl-3">
       
-    <img style="box-shadow: 5px 10px 18px #EFF6F4; border-radius: 5px;" src="uploads/<?php echo $image;?>" height="200" width="100%"><br><br>
+    <img style="box-shadow: 5px 10px 18px #EFF6F4; border-radius: 5px;" src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES, 'UTF-8');?>" height="200" width="100%" alt="Article Image Preview"><br><br>
         
     <input type="file" name="image" class="form-control"><br>
     </div>

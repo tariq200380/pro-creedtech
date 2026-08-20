@@ -25,6 +25,36 @@ if (!$article && !empty($articlesList)) {
 $page_title = htmlspecialchars($article['title'] ?? 'The Best Laptops We\'ve Tested') . " | Creed Tech";
 $page_description = "In-depth enterprise hardware benchmarks, audio briefings, video walkthroughs, and pros & cons breakdown from Creed Tech Labs.";
 $active_page = "knowledge-center";
+$canonical_url = "https://creed-tech.com/blog_detail?id=" . intval($article['id'] ?? $article_id);
+
+$schema_json = [
+    "@context" => "https://schema.org",
+    "@type" => "TechArticle",
+    "headline" => $article['title'] ?? 'Enterprise Systems Architecture & Hardware Teardown',
+    "description" => $page_description,
+    "image" => "https://creed-tech.com/Creed-Tech-Logo-Clean.png",
+    "datePublished" => "2026-08-16T08:00:00+00:00",
+    "dateModified" => "2026-08-20T08:00:00+00:00",
+    "author" => [
+        "@type" => "Person",
+        "name" => $article['author'] ?? "Dr. Sarah Jenkins",
+        "jobTitle" => "Senior Hardware Benchmarking & Architecture Lead"
+    ],
+    "publisher" => [
+        "@type" => "Organization",
+        "name" => "Creed Tech",
+        "logo" => [
+            "@type" => "ImageObject",
+            "url" => "https://creed-tech.com/Creed-Tech-Logo-Clean.png"
+        ]
+    ],
+    "mainEntityOfPage" => [
+        "@type" => "WebPage",
+        "@id" => $canonical_url
+    ]
+];
+
+$og_type = "article";
 
 include __DIR__ . '/includes/header.php';
 ?>

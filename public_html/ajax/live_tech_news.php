@@ -201,9 +201,9 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
                     preg_match("/<meta[^>]+property=[\x22\x27]og:title[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i", $artHtml, $mOgTitle);
                     preg_match("/<meta[^>]+property=[\x22\x27]og:description[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i", $artHtml, $mOgDesc);
                     
-                    $title = $mOgTitle[1] ?? 'How Claude is accelerating protein design and analytical chemistry';
-                    $desc  = $mOgDesc[1] ?? 'Anthropic research shares how Claude designs protein binders from scratch and accelerates chemical analysis.';
-                    $img   = $mOgImg[1] ?? 'https://cdn.sanity.io/images/4zrzovbb/website/e3758f1bc27af0786f4249cc1ab194fc2c6cce63-3840x2160.png';
+                    $title = !empty($mOgTitle[1]) ? trim(html_entity_decode($mOgTitle[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : 'Anthropic Frontier AI Research Update';
+                    $desc  = !empty($mOgDesc[1]) ? trim(html_entity_decode($mOgDesc[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : 'Anthropic research shares latest developments in frontier artificial intelligence and reasoning systems.';
+                    $img   = !empty($mOgImg[1]) ? trim($mOgImg[1]) : null;
                     
                     $candidate = [
                         'provider'              => 'anthropic',
@@ -213,7 +213,7 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
                         'source_name'           => 'Anthropic Research',
                         'source_url'            => $antUrl,
                         'source_image_url'      => $img,
-                        'local_image_path'      => 'uploads/live_news/anthropic_claude_protein_design.png',
+                        'local_image_path'      => null,
                         'image_hash'            => null,
                         'visual_type'           => VISUAL_SOURCE_IMAGE,
                         'provider_published_at' => date('Y-m-d H:i:s', strtotime('-19 hours')),
@@ -228,7 +228,7 @@ function ingest_and_gate_feed($feedConfig, $uploadDir) {
                         $record = $gateResult['record'];
                         $record['caption_tag'] = 'ANTHROPIC OFFICIAL WIRE';
                         $record['caption']     = '📷 ' . $record['title'];
-                        $record['date']        = 'Aug 18, 2026 • Anthropic Research (Live Wire)';
+                        $record['date']        = format_provider_relative_time($record['provider_published_at']) . ' • Anthropic Research (Live Wire)';
                         $record['wire_type']   = $wireType;
                         $record['wire_key']    = $wireKey;
                         upsert_verified_news_db($record);

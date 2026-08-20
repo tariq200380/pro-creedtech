@@ -5,8 +5,23 @@
  * Usage via Web: https://example.com/cron/import_news.php?key=cron_secret
  */
 
+require_once __DIR__ . '/../includes/env_loader.php';
+
+// If accessed via Web, enforce Secret Key authentication
 if (php_sapi_name() !== 'cli') {
     header('Content-Type: application/json; charset=utf-8');
+
+    $expectedSecret = creed_env('CRON_SECRET', 'cron_secret');
+    $providedKey = (string)($_GET['key'] ?? $_SERVER['HTTP_X_CRON_KEY'] ?? '');
+
+    if (empty($providedKey) || !hash_equals($expectedSecret, $providedKey)) {
+        http_response_code(403);
+        echo json_encode([
+            'status'  => 'error',
+            'message' => 'Forbidden: Invalid or missing cron secret key.'
+        ], JSON_PRETTY_PRINT);
+        exit;
+    }
 }
 
 $lockFile = sys_get_temp_dir() . '/creed_news_import.lock';

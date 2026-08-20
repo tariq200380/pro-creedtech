@@ -17,6 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rawInput = file_get_contents('php://input');
     $jsonData = json_decode($rawInput, true);
 
+    $token = $jsonData['csrf_token'] ?? $_POST['csrf_token'] ?? '';
+    if (!validate_csrf_token($token)) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Forbidden: Invalid or missing CSRF security token.']);
+        exit;
+    }
+
     $action = $jsonData['action'] ?? $_POST['action'] ?? 'save_article';
 
     // 1. SAVE / UPDATE ARTICLE

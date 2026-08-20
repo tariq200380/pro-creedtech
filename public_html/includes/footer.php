@@ -5,7 +5,9 @@
 $settingsPath = __DIR__ . '/../data/site_settings.json';
 $siteSettings = file_exists($settingsPath) ? (json_decode(file_get_contents($settingsPath), true) ?: []) : [];
 $footerConfig = $siteSettings['footer'] ?? [];
+$generalConfig = $siteSettings['general'] ?? [];
 
+// Social media URLs (already dynamic, completely unchanged!)
 $fbUrl   = !empty($footerConfig['facebook_url']) ? $footerConfig['facebook_url'] : 'https://facebook.com/creedtechnology';
 $instaUrl = !empty($footerConfig['instagram_url']) ? $footerConfig['instagram_url'] : 'https://instagram.com/creed.technologiess';
 $liUrl   = !empty($footerConfig['linkedin_url']) ? $footerConfig['linkedin_url'] : 'https://linkedin.com/company/creedtech';
@@ -13,6 +15,42 @@ $pinUrl  = !empty($footerConfig['pinterest_url']) ? $footerConfig['pinterest_url
 $xUrl    = !empty($footerConfig['twitter_url']) ? $footerConfig['twitter_url'] : 'https://x.com/Creedtech3';
 $ghUrl   = !empty($footerConfig['github_url']) ? $footerConfig['github_url'] : 'https://github.com/creed-tech';
 $copyrightText = !empty($footerConfig['copyright_text']) ? $footerConfig['copyright_text'] : '© 2026 Creed Tech. All rights reserved.';
+
+// Brand description paragraphs (with fallback)
+$brandP1 = !empty($footerConfig['brand_description_p1']) ? $footerConfig['brand_description_p1'] : 'We specialize in enterprise software architecture, robust cloud infrastructure, and next-generation cybersecurity.';
+$brandP2 = !empty($footerConfig['brand_description_p2']) ? $footerConfig['brand_description_p2'] : 'Engineering scalable, high-performance, and resilient systems tailored for global enterprises and modern businesses.';
+$brandP3 = !empty($footerConfig['brand_description_p3']) ? $footerConfig['brand_description_p3'] : 'Delivering end-to-end digital transformation, modern web systems, and strategic IT consulting to accelerate growth.';
+
+// Contact Information: Connected directly to general settings with fallback
+$footerAddress = !empty($generalConfig['office_address']) ? $generalConfig['office_address'] : 'Office # 02, Mian Shopping Center, Sheikhupura, Pakistan';
+$footerEmail   = !empty($generalConfig['contact_email']) ? $generalConfig['contact_email'] : 'info@creed-tech.com';
+$footerPhone   = !empty($generalConfig['contact_phone']) ? $generalConfig['contact_phone'] : '+92 309 8307115';
+
+// Useful Links (with fallback)
+$defaultUsefulLinks = [
+  ['label' => 'Home', 'url' => '/'],
+  ['label' => 'Services', 'url' => 'services'],
+  ['label' => 'Knowledge Center', 'url' => 'knowledge-center'],
+  ['label' => 'Portfolio', 'url' => 'portfolio'],
+  ['label' => 'About', 'url' => 'about'],
+  ['label' => 'Contact', 'url' => 'contact'],
+  ['label' => 'Careers', 'url' => 'careers'],
+  ['label' => 'Security Center', 'url' => 'security'],
+];
+$usefulLinks = (!empty($footerConfig['useful_links']) && is_array($footerConfig['useful_links'])) ? $footerConfig['useful_links'] : $defaultUsefulLinks;
+
+// Services Links (with fallback)
+$defaultServicesLinks = [
+  ['label' => 'Database Management', 'url' => 'services'],
+  ['label' => 'Web Development', 'url' => 'services'],
+  ['label' => 'Software Development', 'url' => 'services'],
+  ['label' => 'Digital Marketing', 'url' => 'services'],
+  ['label' => 'Artificial Intelligence (AI)', 'url' => 'services'],
+  ['label' => 'Cloud Infrastructure', 'url' => 'services'],
+  ['label' => 'UI/UX Design', 'url' => 'services'],
+  ['label' => 'Digital Branding', 'url' => 'services'],
+];
+$servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerConfig['services_links'])) ? $footerConfig['services_links'] : $defaultServicesLinks;
 ?>
   <!-- ======= NEWSLETTER STRIP (newsletter-strip/index.tsx) ======= -->
   <section class="w-full bg-[#F4F6F8]">
@@ -73,15 +111,9 @@ $copyrightText = !empty($footerConfig['copyright_text']) ? $footerConfig['copyri
             <span class="text-[#FF6A00]"> TECH</span>
           </h2>
           <div class="text-sm text-[#F4F6F8]/80 leading-relaxed flex flex-col justify-between h-auto md:h-[290px] space-y-3.5 md:space-y-0">
-            <p>
-              We specialize in enterprise software architecture, robust cloud infrastructure, and next-generation cybersecurity.
-            </p>
-            <p>
-              Engineering scalable, high-performance, and resilient systems tailored for global enterprises and modern businesses.
-            </p>
-            <p>
-              Delivering end-to-end digital transformation, modern web systems, and strategic IT consulting to accelerate growth.
-            </p>
+            <p><?= htmlspecialchars($brandP1) ?></p>
+            <p><?= htmlspecialchars($brandP2) ?></p>
+            <p><?= htmlspecialchars($brandP3) ?></p>
           </div>
         </div>
 
@@ -91,14 +123,12 @@ $copyrightText = !empty($footerConfig['copyright_text']) ? $footerConfig['copyri
             Useful Links
           </h3>
           <ul class="flex flex-col space-y-3.5">
-            <li class="h-6 flex items-center"><a href="Home" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Home</a></li>
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Services</a></li>
-            <li class="h-6 flex items-center"><a href="knowledge-center" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Knowledge Center</a></li>
-            <li class="h-6 flex items-center"><a href="portfolio" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Portfolio</a></li>
-            <li class="h-6 flex items-center"><a href="about" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">About</a></li>
-            <li class="h-6 flex items-center"><a href="contact" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Contact</a></li>
-            <li class="h-6 flex items-center"><a href="careers" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Careers</a></li>
-            <li class="h-6 flex items-center"><a href="security" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Security Center</a></li>
+            <?php foreach ($usefulLinks as $uLink): 
+              $uRawUrl = $uLink['url'] ?? '#';
+              $uUrl = htmlspecialchars(($uRawUrl === 'Home' || $uRawUrl === 'home') ? '/' : $uRawUrl);
+            ?>
+            <li class="h-6 flex items-center"><a href="<?= $uUrl ?>" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors"><?= htmlspecialchars($uLink['label'] ?? '') ?></a></li>
+            <?php endforeach; ?>
           </ul>
         </div>
 
@@ -108,14 +138,9 @@ $copyrightText = !empty($footerConfig['copyright_text']) ? $footerConfig['copyri
             Our Services
           </h3>
           <ul class="flex flex-col space-y-3.5">
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Database Management</a></li>
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Web Development</a></li>
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Software Development</a></li>
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Digital Marketing</a></li>
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Artificial Intelligence (AI)</a></li>
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Cloud Infrastructure</a></li>
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">UI/UX Design</a></li>
-            <li class="h-6 flex items-center"><a href="services" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors">Digital Branding</a></li>
+            <?php foreach ($servicesLinks as $sLink): ?>
+            <li class="h-6 flex items-center"><a href="<?= htmlspecialchars($sLink['url'] ?? '#') ?>" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors"><?= htmlspecialchars($sLink['label'] ?? '') ?></a></li>
+            <?php endforeach; ?>
           </ul>
         </div>
 
@@ -161,16 +186,15 @@ $copyrightText = !empty($footerConfig['copyright_text']) ? $footerConfig['copyri
 
             <!-- RIGHT on Mobile / TOP on Desktop: Address, Email, Phone -->
             <div class="flex flex-col space-y-3.5 order-2 md:order-1">
-              <div class="h-6 flex items-center">Office # 02, Mian Shopping Center</div>
-              <div class="h-6 flex items-center">Sheikhupura, Pakistan</div>
+              <div class="h-auto leading-tight flex items-center"><?= htmlspecialchars($footerAddress) ?></div>
               <div class="h-6 flex items-center">
-                <a href="mailto:info@creed-tech.com" class="hover:text-white transition-colors">
-                  info@creed-tech.com
+                <a href="mailto:<?= htmlspecialchars($footerEmail) ?>" class="hover:text-white transition-colors">
+                  <?= htmlspecialchars($footerEmail) ?>
                 </a>
               </div>
               <div class="h-6 flex items-center">
-                <a href="tel:+923098307115" class="hover:text-white transition-colors">
-                  +92 309 8307115
+                <a href="tel:<?= htmlspecialchars(preg_replace('/[^0-9+]/', '', $footerPhone)) ?>" class="hover:text-white transition-colors">
+                  <?= htmlspecialchars($footerPhone) ?>
                 </a>
               </div>
             </div>
@@ -183,7 +207,7 @@ $copyrightText = !empty($footerConfig['copyright_text']) ? $footerConfig['copyri
       <!-- FooterSubLegalBar.tsx -->
       <div class="flex flex-col sm:flex-row items-center justify-between border-t border-[#2A2A2A] pt-6 mt-8">
         <div class="text-xs text-[#F4F6F8]/60 mb-4 sm:mb-0 text-center sm:text-left">
-          Designed & Developed by <span class="font-semibold text-white">CREED TECH</span>
+          <?= htmlspecialchars($copyrightText) ?> • Designed & Developed by <span class="font-semibold text-white">CREED TECH</span>
         </div>
         
         <!-- 4 Equal-Sized Clickable Security Badges (2 Left & 2 Right on Mobile, Horizontal Row on Desktop) -->

@@ -1,9 +1,22 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/security_helpers.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
+    exit;
+}
+
+// Rate Limiting Protection (Max 5 submissions per 60 seconds per IP)
+$rateLimit = check_form_rate_limit('contact_form', 5, 60);
+if (!$rateLimit['allowed']) {
+    http_response_code(429);
+    echo json_encode([
+        'success'     => false,
+        'message'     => 'Too many requests. Please wait ' . $rateLimit['retry_after'] . ' seconds before submitting again.',
+        'retry_after' => $rateLimit['retry_after']
+    ]);
     exit;
 }
 

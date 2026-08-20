@@ -1,6 +1,19 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/security_helpers.php';
+
+// Rate Limiting Protection (Max 5 submissions per 60 seconds per IP)
+$rateLimit = check_form_rate_limit('newsletter_form', 5, 60);
+if (!$rateLimit['allowed']) {
+    http_response_code(429);
+    echo json_encode([
+        'success'     => false,
+        'message'     => 'Too many subscription requests. Please wait ' . $rateLimit['retry_after'] . ' seconds before trying again.',
+        'retry_after' => $rateLimit['retry_after']
+    ]);
+    exit;
+}
 
 $raw = file_get_contents('php://input');
 $data = json_decode($raw, true) ?? $_POST;

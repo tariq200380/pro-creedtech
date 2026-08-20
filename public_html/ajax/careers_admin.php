@@ -39,6 +39,16 @@ if (file_exists($careersFile)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Enforce CSRF token validation for administrative actions
+    if (!$isPublicAction) {
+        $token = $jsonData['csrf_token'] ?? $_POST['csrf_token'] ?? '';
+        if (!validate_csrf_token($token)) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'Forbidden: Invalid or missing CSRF security token.']);
+            exit;
+        }
+    }
+
     // 1. CREATE APPLICANT / CANDIDATE REGISTRATION (PUBLIC)
     if ($action === 'create_applicant' || $action === 'register_alert') {
         $name = trim($jsonData['fullName'] ?? $jsonData['name'] ?? $_POST['fullName'] ?? '');

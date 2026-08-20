@@ -6,9 +6,62 @@
 require_once __DIR__ . '/security_headers.php';
 require_once __DIR__ . '/security_helpers.php';
 
+$settingsPath = __DIR__ . '/../data/site_settings.json';
+$siteSettings = file_exists($settingsPath) ? (json_decode(file_get_contents($settingsPath), true) ?: []) : [];
+$headerConfig = $siteSettings['header'] ?? [];
+
+$headerLogoUrl = !empty($headerConfig['logo_url']) ? $headerConfig['logo_url'] : 'Creed-Tech-Logo-Clean.png';
+$headerCtaText = !empty($headerConfig['cta_text']) ? $headerConfig['cta_text'] : 'Get Started';
+$headerCtaUrl  = !empty($headerConfig['cta_url']) ? $headerConfig['cta_url'] : 'get-started';
+
+$defaultNavLinks = [
+  ['label' => 'Home', 'url' => '/', 'active_key' => 'home'],
+  ['label' => 'Services', 'url' => 'services', 'active_key' => 'services'],
+  ['label' => 'Knowledge Center', 'url' => 'knowledge-center', 'active_key' => 'knowledge-center'],
+  ['label' => 'Portfolio', 'url' => 'portfolio', 'active_key' => 'portfolio'],
+  ['label' => 'About', 'url' => 'about', 'active_key' => 'about'],
+  ['label' => 'Contact', 'url' => 'contact', 'active_key' => 'contact'],
+];
+$headerNavLinks = (!empty($headerConfig['nav_links']) && is_array($headerConfig['nav_links'])) ? $headerConfig['nav_links'] : $defaultNavLinks;
+
 if (!isset($page_title)) $page_title = "CREED TECH | Enterprise IT Intelligence & Custom Software Engineering";
 if (!isset($page_description)) $page_description = "Enterprise IT solutions, custom software engineering, AI workflow orchestration, cloud modernization, and real-time tech industry intelligence.";
 if (!isset($active_page)) $active_page = "home";
+
+// Canonical URL Resolution
+if (!isset($canonical_url) || empty($canonical_url)) {
+    require_once __DIR__ . '/env_loader.php';
+    $baseUrl = rtrim(creed_env('CANONICAL_BASE_URL', 'https://creed-tech.com'), '/');
+    if (empty($baseUrl) || str_contains($baseUrl, 'localhost')) {
+        $baseUrl = 'https://creed-tech.com';
+    }
+    
+    if ($active_page === 'home') {
+        $canonical_url = $baseUrl . '/';
+    } elseif (!empty($active_page)) {
+        $canonical_url = $baseUrl . '/' . $active_page;
+    } else {
+        $reqUri = $_SERVER['REQUEST_URI'] ?? '';
+        $reqPath = parse_url($reqUri, PHP_URL_PATH) ?? '';
+        $cleanRoute = trim(preg_replace('/\.php$/i', '', ltrim($reqPath, '/')));
+        if (empty($cleanRoute) || strtolower($cleanRoute) === 'home' || strtolower($cleanRoute) === 'index') {
+            $canonical_url = $baseUrl . '/';
+        } else {
+            $canonical_url = $baseUrl . '/' . $cleanRoute;
+        }
+    }
+}
+
+// Open Graph Resolution
+if (!isset($og_title)) $og_title = $page_title;
+if (!isset($og_description)) $og_description = $page_description;
+if (!isset($og_url)) $og_url = $canonical_url;
+if (!isset($og_type)) $og_type = 'website';
+if (!isset($og_image) || empty($og_image)) {
+    $og_image = 'https://creed-tech.com/Creed-Tech-Logo-Clean.png';
+} elseif (!str_starts_with($og_image, 'http://') && !str_starts_with($og_image, 'https://')) {
+    $og_image = 'https://creed-tech.com/' . ltrim($og_image, '/');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +70,63 @@ if (!isset($active_page)) $active_page = "home";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo htmlspecialchars($page_title); ?></title>
   <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
+  <link rel="canonical" href="<?php echo htmlspecialchars($canonical_url); ?>">
+
+  <!-- Open Graph Social Metadata -->
+  <meta property="og:site_name" content="Creed Tech">
+  <meta property="og:title" content="<?php echo htmlspecialchars($og_title); ?>">
+  <meta property="og:description" content="<?php echo htmlspecialchars($og_description); ?>">
+  <meta property="og:url" content="<?php echo htmlspecialchars($og_url); ?>">
+  <meta property="og:type" content="<?php echo htmlspecialchars($og_type); ?>">
+  <meta property="og:image" content="<?php echo htmlspecialchars($og_image); ?>">
+
+  <!-- Twitter / X Card Social Metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@Creedtech3">
+  <meta name="twitter:title" content="<?php echo htmlspecialchars($og_title); ?>">
+  <meta name="twitter:description" content="<?php echo htmlspecialchars($og_description); ?>">
+  <meta name="twitter:image" content="<?php echo htmlspecialchars($og_image); ?>">
+
   <?php if (isset($extra_head_tags)) echo $extra_head_tags . "\n"; ?>
+
+  <!-- Structured Data: Organization & WebSite (Schema.org JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Creed Tech",
+    "url": "https://creed-tech.com/",
+    "logo": "https://creed-tech.com/Creed-Tech-Logo-Clean.png",
+    "description": "Enterprise IT solutions, custom software engineering, AI workflow orchestration, cloud modernization, and real-time tech industry intelligence.",
+    "email": "<?= htmlspecialchars($siteSettings['general']['contact_email'] ?? 'info@creed-tech.com') ?>",
+    "telephone": "<?= htmlspecialchars($siteSettings['general']['contact_phone'] ?? '+92 309 8307115') ?>",
+    "sameAs": [
+      "https://linkedin.com/company/creedtech",
+      "https://x.com/Creedtech3",
+      "https://github.com/creed-tech",
+      "https://facebook.com/creedtechnology",
+      "https://instagram.com/creed.technologiess"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Creed Tech",
+    "url": "https://creed-tech.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://creed-tech.com/knowledge-center?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <?php if (isset($schema_json) && !empty($schema_json)): ?>
+  <script type="application/ld+json">
+  <?= is_array($schema_json) ? json_encode($schema_json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : $schema_json ?>
+  </script>
+  <?php endif; ?>
   
   <link rel="icon" href="Creed-Tech-Logo-Clean.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -291,9 +400,9 @@ if (!isset($active_page)) $active_page = "home";
         
         <!-- Logo -->
         <div class="flex items-center justify-start shrink-0">
-          <a href="Home" class="inline-flex items-center" aria-label="CREED TECH">
+          <a href="/" class="inline-flex items-center" aria-label="CREED TECH">
             <img 
-              src="Creed-Tech-Logo-Clean.png" 
+              src="<?= htmlspecialchars($headerLogoUrl) ?>" 
               alt="CREED TECH Logo" 
               class="h-10 sm:h-11 w-auto object-contain block mix-blend-multiply transition-transform hover:scale-105"
             />
@@ -302,36 +411,24 @@ if (!isset($active_page)) $active_page = "home";
 
         <!-- Navigation Links (Desktop) -->
         <nav class="hidden lg:flex items-center justify-center gap-8 h-full">
-          <a href="Home" class="relative h-full flex items-center text-sm font-medium transition-colors hover:text-[#0052FF] <?php echo $active_page == 'home' ? 'text-[#0052FF] font-semibold' : 'text-[#1A1A1A]/80'; ?>">
-            Home
-            <?php if($active_page == 'home'): ?><span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#0052FF]"></span><?php endif; ?>
+          <?php foreach ($headerNavLinks as $hNav):
+            $hLabel = htmlspecialchars($hNav['label'] ?? '');
+            $hRawUrl = $hNav['url'] ?? '#';
+            $hUrl   = htmlspecialchars(($hRawUrl === 'Home' || $hRawUrl === 'home') ? '/' : $hRawUrl);
+            $hKey   = strtolower(trim($hNav['active_key'] ?? $hNav['label'] ?? ''));
+            $isHActive = ($active_page === $hKey || $active_page === strtolower($hNav['url'] ?? '') || ($active_page === 'home' && ($hNav['url'] === 'Home' || $hNav['url'] === '/' || $hKey === 'home')));
+          ?>
+          <a href="<?= $hUrl ?>" class="relative h-full flex items-center text-sm font-medium transition-colors hover:text-[#0052FF] <?= $isHActive ? 'text-[#0052FF] font-semibold' : 'text-[#1A1A1A]/80' ?>">
+            <?= $hLabel ?>
+            <?php if ($isHActive): ?><span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#0052FF]"></span><?php endif; ?>
           </a>
-          <a href="services" class="relative h-full flex items-center text-sm font-medium transition-colors hover:text-[#0052FF] <?php echo $active_page == 'services' ? 'text-[#0052FF] font-semibold' : 'text-[#1A1A1A]/80'; ?>">
-            Services
-            <?php if($active_page == 'services'): ?><span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#0052FF]"></span><?php endif; ?>
-          </a>
-          <a href="knowledge-center" class="relative h-full flex items-center text-sm font-medium transition-colors hover:text-[#0052FF] <?php echo $active_page == 'knowledge-center' ? 'text-[#0052FF] font-semibold' : 'text-[#1A1A1A]/80'; ?>">
-            Knowledge Center
-            <?php if($active_page == 'knowledge-center'): ?><span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#0052FF]"></span><?php endif; ?>
-          </a>
-          <a href="portfolio" class="relative h-full flex items-center text-sm font-medium transition-colors hover:text-[#0052FF] <?php echo $active_page == 'portfolio' ? 'text-[#0052FF] font-semibold' : 'text-[#1A1A1A]/80'; ?>">
-            Portfolio
-            <?php if($active_page == 'portfolio'): ?><span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#0052FF]"></span><?php endif; ?>
-          </a>
-          <a href="about" class="relative h-full flex items-center text-sm font-medium transition-colors hover:text-[#0052FF] <?php echo $active_page == 'about' ? 'text-[#0052FF] font-semibold' : 'text-[#1A1A1A]/80'; ?>">
-            About
-            <?php if($active_page == 'about'): ?><span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#0052FF]"></span><?php endif; ?>
-          </a>
-          <a href="contact" class="relative h-full flex items-center text-sm font-medium transition-colors hover:text-[#0052FF] <?php echo $active_page == 'contact' ? 'text-[#0052FF] font-semibold' : 'text-[#1A1A1A]/80'; ?>">
-            Contact
-            <?php if($active_page == 'contact'): ?><span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#0052FF]"></span><?php endif; ?>
-          </a>
+          <?php endforeach; ?>
         </nav>
 
         <!-- Desktop CTA Button -->
         <div class="hidden lg:flex shrink-0">
-          <a href="get-started" class="btn-blue-sm">
-            Get Started
+          <a href="<?= htmlspecialchars($headerCtaUrl) ?>" class="btn-blue-sm">
+            <?= htmlspecialchars($headerCtaText) ?>
           </a>
         </div>
 
@@ -420,46 +517,24 @@ if (!isset($active_page)) $active_page = "home";
     <div id="mobileDropdownMenu" class="lg:hidden w-full bg-[#F4F6F8]">
       <div id="mobileDropdownInner" class="px-4 py-3 max-h-[80vh] overflow-y-auto">
         <ul class="flex flex-col space-y-1 mb-3">
+          <?php foreach ($headerNavLinks as $hNav):
+            $hLabel = htmlspecialchars($hNav['label'] ?? '');
+            $hRawUrl = $hNav['url'] ?? '#';
+            $hUrl   = htmlspecialchars(($hRawUrl === 'Home' || $hRawUrl === 'home') ? '/' : $hRawUrl);
+            $hKey   = strtolower(trim($hNav['active_key'] ?? $hNav['label'] ?? ''));
+            $isHActive = ($active_page === $hKey || $active_page === strtolower($hNav['url'] ?? '') || ($active_page === 'home' && ($hNav['url'] === 'Home' || $hNav['url'] === '/' || $hKey === 'home')));
+          ?>
           <li>
-            <a href="Home" onclick="closeMobileMenu()" class="mobile-nav-link group <?php echo $active_page == 'home' ? 'bg-[#0052FF] text-white shadow-xs' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]'; ?>">
-              <span>Home</span>
+            <a href="<?= $hUrl ?>" onclick="closeMobileMenu()" class="mobile-nav-link group <?= $isHActive ? 'bg-[#0052FF] text-white shadow-xs' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]' ?>">
+              <span><?= $hLabel ?></span>
               <span class="text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
             </a>
           </li>
-          <li>
-            <a href="services" onclick="closeMobileMenu()" class="mobile-nav-link group <?php echo $active_page == 'services' ? 'bg-[#0052FF] text-white shadow-xs' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]'; ?>">
-              <span>Services</span>
-              <span class="text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
-            </a>
-          </li>
-          <li>
-            <a href="knowledge-center" onclick="closeMobileMenu()" class="mobile-nav-link group <?php echo $active_page == 'knowledge-center' ? 'bg-[#0052FF] text-white shadow-xs' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]'; ?>">
-              <span>Knowledge Center</span>
-              <span class="text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
-            </a>
-          </li>
-          <li>
-            <a href="portfolio" onclick="closeMobileMenu()" class="mobile-nav-link group <?php echo $active_page == 'portfolio' ? 'bg-[#0052FF] text-white shadow-xs' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]'; ?>">
-              <span>Portfolio</span>
-              <span class="text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
-            </a>
-          </li>
-          <li>
-            <a href="about" onclick="closeMobileMenu()" class="mobile-nav-link group <?php echo $active_page == 'about' ? 'bg-[#0052FF] text-white shadow-xs' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]'; ?>">
-              <span>About</span>
-              <span class="text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
-            </a>
-          </li>
-          <li>
-            <a href="contact" onclick="closeMobileMenu()" class="mobile-nav-link group <?php echo $active_page == 'contact' ? 'bg-[#0052FF] text-white shadow-xs' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]'; ?>">
-              <span>Contact</span>
-              <span class="text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
-            </a>
-          </li>
+          <?php endforeach; ?>
         </ul>
         <div class="pt-2 border-t border-gray-200/80">
-          <a href="get-started" onclick="closeMobileMenu()" class="btn-blue w-full justify-center text-center shadow-xs py-2 text-xs font-bold uppercase tracking-wider">
-            Get Started
+          <a href="<?= htmlspecialchars($headerCtaUrl) ?>" onclick="closeMobileMenu()" class="btn-blue w-full justify-center text-center shadow-xs py-2 text-xs font-bold uppercase tracking-wider">
+            <?= htmlspecialchars($headerCtaText) ?>
           </a>
         </div>
       </div>

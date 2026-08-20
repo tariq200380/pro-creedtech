@@ -329,15 +329,19 @@ include __DIR__ . '/includes/header.php';
             <span style="font-size:11px;font-weight:800;color:#00A3FF;text-transform:uppercase;letter-spacing:0.08em;">FLAGSHIP RESEARCH &amp; BENCHMARKS</span>
           </div>
 
+          <h1 style="font-size:clamp(1.4rem, 2.6vw, 2.1rem);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.2;margin:0;">
+            Enterprise Knowledge Center &amp; Tech Intelligence
+          </h1>
+
           <div style="display:flex;flex-direction:column;gap:1rem;">
             <div style="display:flex;flex-direction:column;gap:6px;">
-              <a href="javascript:void(0)" onclick="openDynamicArticle(1, event)" style="font-size:clamp(1.25rem, 2.2vw, 1.65rem);font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1.3;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#22D3EE'" onmouseout="this.style.color='#fff'">
+              <a href="blog_detail?id=1" onclick="openDynamicArticle(1, event)" style="font-size:clamp(1.25rem, 2.2vw, 1.65rem);font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1.3;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#22D3EE'" onmouseout="this.style.color='#fff'">
                 The 7 Best Enterprise AI &amp; Cloud Laptops for Senior Engineers &amp; Architects
               </a>
             </div>
 
             <div style="display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.12);">
-              <a href="javascript:void(0)" onclick="openDynamicArticle(2, event)" style="font-size:clamp(0.95rem, 1.5vw, 1.2rem);font-weight:600;color:#D1D5DB;letter-spacing:-0.01em;line-height:1.45;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#22D3EE'" onmouseout="this.style.color='#D1D5DB'">
+              <a href="blog_detail?id=2" onclick="openDynamicArticle(2, event)" style="font-size:clamp(0.95rem, 1.5vw, 1.2rem);font-weight:600;color:#D1D5DB;letter-spacing:-0.01em;line-height:1.45;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#22D3EE'" onmouseout="this.style.color='#D1D5DB'">
                 Artificial Intelligence Development from 1950 to 1965: The Foundation of Modern AI
               </a>
             </div>
@@ -382,7 +386,7 @@ include __DIR__ . '/includes/header.php';
         ?>
         <div id="mainNewsCard" style="background:#fff;border:1px solid #E2E8F0;border-radius:1rem;overflow:hidden;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);display:flex;flex-direction:column;width:100%;">
           <div class="kc-main-news-visual">
-            <img id="mainNewsImg" src="<?= htmlspecialchars($mainItem['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="Tech News" style="width:100%;height:100%;object-fit:cover;object-position:center;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
+            <img id="mainNewsImg" src="<?= htmlspecialchars($mainItem['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="<?= htmlspecialchars(!empty($mainItem['title']) ? $mainItem['title'] : 'Tech News Intelligence') ?>" style="width:100%;height:100%;object-fit:cover;object-position:center;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
             <span id="mainNewsTag" style="position:absolute;top:1rem;left:1rem;background:#0052FF;color:#fff;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;"><?= htmlspecialchars($mainItem['tag'] ?? 'GOOGLE AI & DEVICES') ?></span>
           </div>
           <div style="padding:1.5rem;">
@@ -425,7 +429,7 @@ include __DIR__ . '/includes/header.php';
           <div onclick="switchMainNews(<?= $i ?>)" style="background:#fff;border:1px solid #E2E8F0;border-radius:0.65rem;padding:0.75rem 0.9rem;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.04);width:100%;box-sizing:border-box;" onmouseover="this.style.borderColor='#0052FF';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='#E2E8F0';this.style.transform='none'">
             <div style="display:flex;gap:0.75rem;align-items:center;">
               <div style="width:3.75rem;height:3.75rem;border-radius:6px;overflow:hidden;background:#0B1120;flex-shrink:0;">
-                <img src="<?= htmlspecialchars($s['img'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($s['title'] ?? '') ?>" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
+                <img src="<?= htmlspecialchars($s['img'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars(!empty($s['title']) ? $s['title'] : 'Enterprise Tech News Story') ?>" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
               </div>
               <div style="flex:1;min-width:0;">
                 <span style="font-size:9.5px;font-weight:800;color:<?= $pBadge['color'] ?>;text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?= $pBadge['label'] ?></span>
@@ -486,7 +490,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Selected Brand Story Showcase Card -->
       <div class="kc-wire-card-grid" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:1rem;padding:1.5rem sm:padding:2rem;">
         <div id="wireVisualContainer" class="kc-wire-visual">
-          <img id="wireImg" src="<?= htmlspecialchars($gw['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="News Story Photo" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
+          <img id="wireImg" src="<?= htmlspecialchars($gw['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="<?= htmlspecialchars(!empty($gw['title']) ? $gw['title'] : 'Global Tech Wire Story') ?>" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
           <div style="position:absolute;top:12px;right:12px;z-index:3;">
             <span id="wireBrandBadge" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);color:#0F172A;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;box-shadow:0 4px 12px rgba(0,0,0,0.25);">
               <?= htmlspecialchars($gw['brandBadge'] ?? '🌐 GOOGLE') ?>
@@ -539,7 +543,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Selected Regional Story Card -->
       <div class="kc-wire-card-grid" style="background:#fff;border:1px solid #E2E8F0;border-radius:1rem;padding:1.5rem sm:padding:2rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
         <div id="regVisualContainer" class="kc-reg-visual">
-          <img id="regImg" src="<?= htmlspecialchars($dw['image'] ?? 'assets/img/hero_img.webp') ?>" alt="Regional Story Photo" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
+          <img id="regImg" src="<?= htmlspecialchars($dw['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars(!empty($dw['title']) ? $dw['title'] : 'Regional Tech Wire Story') ?>" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
           <div style="position:absolute;top:12px;right:12px;z-index:3;">
             <span id="regBrandBadge" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);color:#065F46;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;box-shadow:0 4px 12px rgba(0,0,0,0.25);">
               <?= htmlspecialchars($dw['brandBadge'] ?? '🇵🇰 DAWN TECH') ?>
@@ -635,9 +639,9 @@ include __DIR__ . '/includes/header.php';
                 <span id="readerReadTime" style="font-size:12px;color:#64748B;font-weight:600;">⏱️ 18 min read</span>
               </div>
 
-              <h1 id="readerTitle" style="font-size:clamp(1.85rem, 3vw, 2.5rem);font-weight:800;color:#0F172A;line-height:1.25;margin:0 0 16px;letter-spacing:-0.02em;">
+              <h2 id="readerTitle" style="font-size:clamp(1.85rem, 3vw, 2.5rem);font-weight:800;color:#0F172A;line-height:1.25;margin:0 0 16px;letter-spacing:-0.02em;">
                 Article Title
-              </h1>
+              </h2>
 
               <div style="display:flex;align-items:center;gap:12px;">
                 <div style="width:42px;height:42px;border-radius:50%;background:#0052FF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;box-shadow:0 2px 6px rgba(0,82,255,0.3);">
@@ -746,7 +750,7 @@ include __DIR__ . '/includes/header.php';
 
               <div class="sidebar-top-stories-list" style="display:flex;flex-direction:column;gap:1rem;transition:opacity 0.25s ease;">
                 
-                <a href="javascript:void(0)" onclick="openDynamicArticle(1, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+                <a href="blog_detail?id=1" onclick="openDynamicArticle(1, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
                   <div style="width:3.5rem;height:3.5rem;border-radius:8px;background:#1E293B;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">
                     💻
                   </div>
@@ -756,7 +760,7 @@ include __DIR__ . '/includes/header.php';
                   </div>
                 </a>
 
-                <a href="javascript:void(0)" onclick="openDynamicArticle(2, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding-top:0.5rem;border-top:1px solid #F9FAFB;">
+                <a href="blog_detail?id=2" onclick="openDynamicArticle(2, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding-top:0.5rem;border-top:1px solid #F9FAFB;">
                   <div style="width:3.5rem;height:3.5rem;border-radius:8px;background:#312E81;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">
                     🤖
                   </div>
@@ -766,7 +770,7 @@ include __DIR__ . '/includes/header.php';
                   </div>
                 </a>
 
-                <a href="javascript:void(0)" onclick="openDynamicArticle(3, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding-top:0.5rem;border-top:1px solid #F9FAFB;">
+                <a href="blog_detail?id=3" onclick="openDynamicArticle(3, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding-top:0.5rem;border-top:1px solid #F9FAFB;">
                   <div style="width:3.5rem;height:3.5rem;border-radius:8px;background:#0F766E;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">
                     📈
                   </div>
@@ -911,7 +915,7 @@ include __DIR__ . '/includes/header.php';
             <div class="kc-dontmiss-grid">
               
               <!-- Card 1 -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(2, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);transition:all 0.2s;" onmouseover="this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
+              <a href="blog_detail?id=2" onclick="openDynamicArticle(2, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);transition:all 0.2s;" onmouseover="this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
                 <div style="width:100%;height:13rem;background:linear-gradient(135deg,#111827,#1E293B,#000);display:flex;align-items:center;justify-content:center;padding:1rem;text-align:center;">
                   <div>
                     <div style="width:3.5rem;height:3.5rem;margin:0 auto 0.5rem;border-radius:8px;background:rgba(37,99,235,0.3);border:1px solid rgba(96,165,250,0.4);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">
@@ -926,7 +930,7 @@ include __DIR__ . '/includes/header.php';
               </a>
 
               <!-- Card 2 -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(3, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);transition:all 0.2s;" onmouseover="this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
+              <a href="blog_detail?id=3" onclick="openDynamicArticle(3, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);transition:all 0.2s;" onmouseover="this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
                 <div style="width:100%;height:13rem;background:linear-gradient(135deg,#064E3B,#134E4A,#0F172A);display:flex;align-items:center;justify-content:center;padding:1rem;text-align:center;">
                   <div>
                     <div style="width:3.5rem;height:3.5rem;margin:0 auto 0.5rem;border-radius:8px;background:rgba(16,185,129,0.3);border:1px solid rgba(52,211,153,0.4);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">
@@ -966,7 +970,7 @@ include __DIR__ . '/includes/header.php';
             <div id="topicCardsGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));gap:1.25rem;">
               
               <!-- Hosting Cards -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(3, event)" class="topic-card-item" data-topic="Hosting" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=3" onclick="openDynamicArticle(3, event)" class="topic-card-item" data-topic="Hosting" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#92400E,#7C2D12,#1C1917);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#FDE68A;text-transform:uppercase;font-weight:700;">CLOUD HOSTING</span>
                 </div>
@@ -975,7 +979,7 @@ include __DIR__ . '/includes/header.php';
                 </div>
               </a>
 
-              <a href="javascript:void(0)" onclick="openDynamicArticle(3, event)" class="topic-card-item" data-topic="Hosting" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=3" onclick="openDynamicArticle(3, event)" class="topic-card-item" data-topic="Hosting" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#78350F,#451A03,#1C1917);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#FDE68A;text-transform:uppercase;font-weight:700;">INFRASTRUCTURE</span>
                 </div>
@@ -985,7 +989,7 @@ include __DIR__ . '/includes/header.php';
               </a>
 
               <!-- AI & Cloud Cards -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(1, event)" class="topic-card-item" data-topic="AI & Cloud" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=1" onclick="openDynamicArticle(1, event)" class="topic-card-item" data-topic="AI & Cloud" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#1E293B,#0F172A,#000);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#38BDF8;text-transform:uppercase;font-weight:700;">AI HARDWARE</span>
                 </div>
@@ -994,7 +998,7 @@ include __DIR__ . '/includes/header.php';
                 </div>
               </a>
 
-              <a href="javascript:void(0)" onclick="openDynamicArticle(2, event)" class="topic-card-item" data-topic="AI & Cloud" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=2" onclick="openDynamicArticle(2, event)" class="topic-card-item" data-topic="AI & Cloud" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#312E81,#1E1B4B,#0F172A);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#A5B4FC;text-transform:uppercase;font-weight:700;">NEURAL ARCHITECTURE</span>
                 </div>
@@ -1004,7 +1008,7 @@ include __DIR__ . '/includes/header.php';
               </a>
 
               <!-- SEO Cards -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(1, event)" class="topic-card-item" data-topic="SEO" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=1" onclick="openDynamicArticle(1, event)" class="topic-card-item" data-topic="SEO" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#047857,#064E3B,#06281E);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#6EE7B7;text-transform:uppercase;font-weight:700;">TECHNICAL SEO</span>
                 </div>
@@ -1014,7 +1018,7 @@ include __DIR__ . '/includes/header.php';
               </a>
 
               <!-- Social Cards -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(2, event)" class="topic-card-item" data-topic="Social" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=2" onclick="openDynamicArticle(2, event)" class="topic-card-item" data-topic="Social" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#BE123C,#881337,#4C0519);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#FDA4AF;text-transform:uppercase;font-weight:700;">DIGITAL SOCIAL</span>
                 </div>
@@ -1024,7 +1028,7 @@ include __DIR__ . '/includes/header.php';
               </a>
 
               <!-- DevOps Cards -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(3, event)" class="topic-card-item" data-topic="DevOps" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=3" onclick="openDynamicArticle(3, event)" class="topic-card-item" data-topic="DevOps" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#4338CA,#312E81,#1E1B4B);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#C7D2FE;text-transform:uppercase;font-weight:700;">GITOPS &amp; K8S</span>
                 </div>
@@ -1049,7 +1053,7 @@ include __DIR__ . '/includes/header.php';
             <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));gap:1.25rem;">
               
               <!-- Trending 1 -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(2, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=2" onclick="openDynamicArticle(2, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#0F172A,#111827,#000);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#67E8F9;font-weight:700;">HISTORICAL AI</span>
                 </div>
@@ -1059,7 +1063,7 @@ include __DIR__ . '/includes/header.php';
               </a>
 
               <!-- Trending 2 -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(1, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;display:flex;flex-direction:column;justify-content:space-between;">
+              <a href="blog_detail?id=1" onclick="openDynamicArticle(1, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;display:flex;flex-direction:column;justify-content:space-between;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#EFF6FF,#EEF2FF);border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <svg style="width:3.2rem;height:3.2rem;color:#3B82F6;" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5">
                     <circle cx="12" cy="12" r="3" />
@@ -1073,7 +1077,7 @@ include __DIR__ . '/includes/header.php';
               </a>
 
               <!-- Trending 3 -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(3, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=3" onclick="openDynamicArticle(3, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#064E3B,#134E4A,#0F172A);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#6EE7B7;font-weight:700;">CLOUD DEVOPS</span>
                 </div>
@@ -1083,7 +1087,7 @@ include __DIR__ . '/includes/header.php';
               </a>
 
               <!-- Trending 4 -->
-              <a href="javascript:void(0)" onclick="openDynamicArticle(1, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
+              <a href="blog_detail?id=1" onclick="openDynamicArticle(1, event)" style="text-decoration:none;background:#fff;border-radius:0.75rem;border:1px solid #E5E7EB;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.2s;">
                 <div style="width:100%;height:9rem;background:linear-gradient(135deg,#B45309,#7C2D12,#1C1917);display:flex;align-items:center;justify-content:center;padding:0.75rem;">
                   <span style="font-size:11px;font-family:monospace;color:#FDE68A;font-weight:700;">HARDWARE SPECS</span>
                 </div>
@@ -1111,7 +1115,7 @@ include __DIR__ . '/includes/header.php';
 
             <div class="sidebar-top-stories-list" style="display:flex;flex-direction:column;gap:1rem;transition:opacity 0.25s ease;">
               
-              <a href="javascript:void(0)" onclick="openDynamicArticle(1, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+              <a href="blog_detail?id=1" onclick="openDynamicArticle(1, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
                 <div style="width:3.5rem;height:3.5rem;border-radius:8px;background:#1E293B;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">
                   💻
                 </div>
@@ -1121,7 +1125,7 @@ include __DIR__ . '/includes/header.php';
                 </div>
               </a>
 
-              <a href="javascript:void(0)" onclick="openDynamicArticle(2, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding-top:0.5rem;border-top:1px solid #F9FAFB;">
+              <a href="blog_detail?id=2" onclick="openDynamicArticle(2, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding-top:0.5rem;border-top:1px solid #F9FAFB;">
                 <div style="width:3.5rem;height:3.5rem;border-radius:8px;background:#312E81;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">
                   🤖
                 </div>
@@ -1131,7 +1135,7 @@ include __DIR__ . '/includes/header.php';
                 </div>
               </a>
 
-              <a href="javascript:void(0)" onclick="openDynamicArticle(3, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding-top:0.5rem;border-top:1px solid #F9FAFB;">
+              <a href="blog_detail?id=3" onclick="openDynamicArticle(3, event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;padding-top:0.5rem;border-top:1px solid #F9FAFB;">
                 <div style="width:3.5rem;height:3.5rem;border-radius:8px;background:#0F766E;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">
                   📈
                 </div>
@@ -2335,7 +2339,7 @@ function renderStoriesWidget() {
     c.style.opacity = '0';
     setTimeout(function() {
       c.innerHTML = page.map(function(item, idx) {
-        return '<a href="javascript:void(0)" onclick="openDynamicArticle(' + item.id + ', event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;' + (idx > 0 ? 'padding-top:0.5rem;border-top:1px solid #F9FAFB;' : '') + '">' +
+        return '<a href="blog_detail?id=' + item.id + '" onclick="openDynamicArticle(' + item.id + ', event)" style="text-decoration:none;display:flex;align-items:center;gap:12px;' + (idx > 0 ? 'padding-top:0.5rem;border-top:1px solid #F9FAFB;' : '') + '">' +
           '<div style="width:3.5rem;height:3.5rem;border-radius:8px;background:' + item.iconBg + ';flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">' + item.icon + '</div>' +
           '<div>' +
             '<h5 style="font-size:12.5px;font-weight:700;color:#111827;line-height:1.35;margin:0 0 2px;">' + item.title + '</h5>' +

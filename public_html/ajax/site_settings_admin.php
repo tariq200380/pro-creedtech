@@ -29,9 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rawInput = @file_get_contents('php://input');
     $payload = @json_decode($rawInput, true);
-
     if (!is_array($payload)) {
-        echo json_encode(['success' => false, 'message' => 'Invalid JSON payload.']);
+        $payload = !empty($_POST) && is_array($_POST) ? $_POST : [];
+    }
+
+    $token = $payload['csrf_token'] ?? $_POST['csrf_token'] ?? '';
+    if (!validate_csrf_token($token)) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Forbidden: Invalid or missing CSRF security token.']);
+        exit;
+    }
+
+    if (empty($payload)) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Empty or invalid settings payload.']);
         exit;
     }
 
@@ -43,6 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (isset($payload['announcement_bar'])) {
         $current['announcement_bar'] = array_merge($current['announcement_bar'] ?? [], $payload['announcement_bar']);
+    }
+    if (isset($payload['header'])) {
+        $current['header'] = array_merge($current['header'] ?? [], $payload['header']);
     }
     if (isset($payload['hero_section'])) {
         $current['hero_section'] = array_merge($current['hero_section'] ?? [], $payload['hero_section']);
