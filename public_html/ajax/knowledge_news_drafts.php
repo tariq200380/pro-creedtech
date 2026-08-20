@@ -169,6 +169,126 @@ function get_all_canonical_news_items() {
     return $items;
 }
 
+/**
+ * Isolated News Editorial Image Optimizer
+ * Proportionally resizes raster images (JPEG, PNG, WebP) and encodes to WebP without upscaling.
+ *
+ * @param string $sourcePath Absolute filesystem path of source image
+ * @param int $maxWidth Maximum width constraint (default 1600)
+ * @param int $maxHeight Maximum height constraint (default 1200)
+ * @param int $quality WebP compression quality (default 82)
+ * @return array ['success' => bool, 'filepath' => string, 'filename' => string, 'width' => int, 'height' => int, 'size' => int] | ['success' => false, 'error' => string]
+ */
+function optimize_news_editorial_image($sourcePath, $maxWidth = 1600, $maxHeight = 1200, $quality = 82) {
+    if (!is_string($sourcePath) || !file_exists($sourcePath) || !is_file($sourcePath)) {
+        return ['success' => false, 'error' => 'Source image file does not exist.'];
+    }
+
+    if (!extension_loaded('gd') || !function_exists('imagewebp')) {
+        return ['success' => false, 'error' => 'GD extension with WebP support is unavailable.'];
+    }
+
+    $imageInfo = @getimagesize($sourcePath);
+    if ($imageInfo === false) {
+        return ['success' => false, 'error' => 'Invalid or unreadable raster image payload.'];
+    }
+
+    $origWidth  = (int)($imageInfo[0] ?? 0);
+    $origHeight = (int)($imageInfo[1] ?? 0);
+    $mimeType   = $imageInfo['mime'] ?? '';
+
+    if ($origWidth <= 0 || $origHeight <= 0) {
+        return ['success' => false, 'error' => 'Image dimensions cannot be zero.'];
+    }
+
+    // 1. Create source image resource based on MIME type
+    $srcImg = null;
+    switch ($mimeType) {
+        case 'image/jpeg':
+        case 'image/pjpeg':
+            if (function_exists('imagecreatefromjpeg')) {
+                $srcImg = @imagecreatefromjpeg($sourcePath);
+            }
+            break;
+        case 'image/png':
+            if (function_exists('imagecreatefrompng')) {
+                $srcImg = @imagecreatefrompng($sourcePath);
+            }
+            break;
+        case 'image/webp':
+            if (function_exists('imagecreatefromwebp')) {
+                $srcImg = @imagecreatefromwebp($sourcePath);
+            }
+            break;
+        default:
+            return ['success' => false, 'error' => 'Unsupported image MIME format: ' . $mimeType];
+    }
+
+    if (!$srcImg) {
+        return ['success' => false, 'error' => 'Failed to initialize GD image resource from source.'];
+    }
+
+    // 2. Calculate proportional dimensions (Never upscale)
+    $targetWidth  = $origWidth;
+    $targetHeight = $origHeight;
+
+    if ($origWidth > $maxWidth || $origHeight > $maxHeight) {
+        $ratio = min($maxWidth / $origWidth, $maxHeight / $origHeight);
+        $targetWidth  = max(1, (int)round($origWidth * $ratio));
+        $targetHeight = max(1, (int)round($origHeight * $ratio));
+    }
+
+    // 3. Create destination canvas and preserve alpha channel transparency
+    $dstImg = imagecreatetruecolor($targetWidth, $targetHeight);
+    if (!$dstImg) {
+        imagedestroy($srcImg);
+        return ['success' => false, 'error' => 'Failed to allocate destination truecolor canvas.'];
+    }
+
+    imagealphablending($dstImg, false);
+    imagesavealpha($dstImg, true);
+    $transparentColor = imagecolorallocatealpha($dstImg, 0, 0, 0, 127);
+    imagefilledrectangle($dstImg, 0, 0, $targetWidth, $targetHeight, $transparentColor);
+
+    // 4. Resample with high quality interpolation
+    if (!imagecopyresampled($dstImg, $srcImg, 0, 0, 0, 0, $targetWidth, $targetHeight, $origWidth, $origHeight)) {
+        imagedestroy($srcImg);
+        imagedestroy($dstImg);
+        return ['success' => false, 'error' => 'Failed to resample and scale image canvas.'];
+    }
+
+    // 5. Generate collision-safe WebP destination path
+    $targetDir = dirname($sourcePath);
+    $randomHex = bin2hex(random_bytes(16));
+    $destFilename = 'upload_' . $randomHex . '.webp';
+    $destPath = rtrim($targetDir, '/\\') . DIRECTORY_SEPARATOR . $destFilename;
+
+    // 6. Encode to WebP
+    $encodeSuccess = @imagewebp($dstImg, $destPath, $quality);
+
+    // 7. Cleanup GD resources immediately
+    imagedestroy($srcImg);
+    imagedestroy($dstImg);
+
+    if (!$encodeSuccess || !file_exists($destPath) || filesize($destPath) <= 0) {
+        if (file_exists($destPath)) {
+            @unlink($destPath);
+        }
+        return ['success' => false, 'error' => 'WebP encoding failed or produced empty file.'];
+    }
+
+    @chmod($destPath, 0644);
+
+    return [
+        'success'  => true,
+        'filepath' => $destPath,
+        'filename' => $destFilename,
+        'width'    => $targetWidth,
+        'height'   => $targetHeight,
+        'size'     => (int)filesize($destPath)
+    ];
+}
+
 // 1. Route Dispatcher
 $rawInput = file_get_contents('php://input');
 $jsonData = @json_decode($rawInput, true) ?: [];
@@ -378,7 +498,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $uploadRes = secure_upload_image($_FILES['editorial_image'], __DIR__ . '/../uploads/', 5242880);
             if ($uploadRes['success']) {
                 $coverPath = 'uploads/' . $uploadRes['filename'];
-                creed_audit_log('UPLOAD_ACCEPTED', 'KNOWLEDGE_DRAFT', $id, 'SUCCESS', ['filename' => $uploadRes['filename']]);
+
+                // Attempt isolated News Editorial WebP auto-optimization
+                $optRes = optimize_news_editorial_image($uploadRes['filepath'], 1600, 1200, 82);
+                if ($optRes['success']) {
+                    $coverPath = 'uploads/' . $optRes['filename'];
+
+                    // Delete original uploaded raw file ONLY after verified successful WebP generation
+                    if (
+                        !empty($uploadRes['filepath']) &&
+                        file_exists($uploadRes['filepath']) &&
+                        !empty($optRes['filepath']) &&
+                        $optRes['filepath'] !== $uploadRes['filepath'] &&
+                        file_exists($optRes['filepath']) &&
+                        filesize($optRes['filepath']) > 0
+                    ) {
+                        @unlink($uploadRes['filepath']);
+                    }
+
+                    creed_audit_log('UPLOAD_ACCEPTED', 'KNOWLEDGE_DRAFT', $id, 'SUCCESS', [
+                        'original_filename'  => $uploadRes['filename'],
+                        'optimized_filename' => $optRes['filename']
+                    ]);
+                } else {
+                    creed_audit_log('UPLOAD_ACCEPTED', 'KNOWLEDGE_DRAFT', $id, 'SUCCESS', [
+                        'filename'           => $uploadRes['filename'],
+                        'optimizer_fallback' => $optRes['error'] ?? 'Optimizer failed'
+                    ]);
+                }
             } else {
                 echo json_encode(['success' => false, 'error' => 'Cover image upload failed: ' . $uploadRes['error']]);
                 exit;
