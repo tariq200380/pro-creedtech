@@ -350,6 +350,19 @@ class NewsValidationGate {
             return ['valid' => false, 'error' => "Disallowed image MIME type: '$detectedMime'"];
         }
 
+        // Validate image dimensions: reject tiny navigation icons and logos under 250x150
+        $imgSize = @getimagesizefromstring($imageContent);
+        if ($imgSize !== false) {
+            $w = $imgSize[0] ?? 0;
+            $h = $imgSize[1] ?? 0;
+            if ($w > 0 && $h > 0 && ($w < 250 || $h < 150)) {
+                $headlineRes = self::generateHeadlineCardVisual($candidate, $uploadDir);
+                if ($headlineRes['valid']) {
+                    return $headlineRes;
+                }
+            }
+        }
+
         $ext = $allowedMimes[$detectedMime];
         $imageHash = hash('sha256', $imageContent);
         $provider = strtolower($candidate['provider'] ?? 'unknown');
