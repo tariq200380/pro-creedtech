@@ -209,8 +209,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_submit'])) {
                         ) {
                             @unlink($folder . $deleteimage);
                         }
+                    } else {
+                        // DB UPDATE failed: Clean up newly created image asset so it does not become orphaned on disk
+                        if (
+                            !empty($newImageName) &&
+                            $newImageName !== $deleteimage &&
+                            file_exists($folder . $newImageName) &&
+                            !is_dir($folder . $newImageName)
+                        ) {
+                            @unlink($folder . $newImageName);
+                        }
+                        creed_audit_log('UPDATE_FAILED', 'VIDEO', $id, 'FAILURE', ['error' => mysqli_stmt_error($stmtUp)]);
                     }
                     mysqli_stmt_close($stmtUp);
+                } else {
+                    if (
+                        !empty($newImageName) &&
+                        $newImageName !== $deleteimage &&
+                        file_exists($folder . $newImageName) &&
+                        !is_dir($folder . $newImageName)
+                    ) {
+                        @unlink($folder . $newImageName);
+                    }
+                    creed_audit_log('UPDATE_FAILED', 'VIDEO', $id, 'FAILURE', ['error' => mysqli_error($connect)]);
                 }
             } else {
                 $stmtUp = mysqli_prepare($connect, "UPDATE `video` SET `title` = ?, `detail` = ? WHERE `id` = ?");
