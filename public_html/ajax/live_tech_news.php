@@ -872,7 +872,7 @@ function sync_all_verified_feeds($forceRefresh = false) {
             'brand_badge'  => '🪟 MICROSOFT',
             'category'     => 'ENTERPRISE CLOUD & AI',
             'wire_type'    => 'brand',
-            'url'          => 'https://news.microsoft.com/feed/'
+            'url'          => 'https://news.microsoft.com/source/feed/'
         ],
         'intel' => [
             'provider'     => 'intel',
