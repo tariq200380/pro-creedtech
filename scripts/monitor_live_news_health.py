@@ -21,7 +21,15 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHECKER_PATH = os.path.join(PROJECT_ROOT, "scripts", "check_live_news_health.py")
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 LOG_FILE = os.path.join(DATA_DIR, "live_news_health.log")
+ALERT_LOG = os.path.join(DATA_DIR, "live_news_alerts.log")
+ALERT_STATE = os.path.join(DATA_DIR, "live_news_alert_state.json")
 MAX_LOG_BYTES = 5 * 1024 * 1024  # 5 MB
+
+try:
+    import live_news_alert
+except ImportError:
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts"))
+    import live_news_alert
 
 def rotate_log_if_needed(log_path, max_bytes=MAX_LOG_BYTES):
     if os.path.exists(log_path):
@@ -94,11 +102,15 @@ def evaluate_report(report):
     else:
         return "HEALTHY", 0
 
-def run_monitor(checker_path=CHECKER_PATH, log_path=LOG_FILE):
+def run_monitor(checker_path=CHECKER_PATH, log_path=LOG_FILE, alert_log_path=ALERT_LOG, alert_state_path=ALERT_STATE):
     if not os.path.exists(checker_path):
         now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
         err_msg = f'[{now_str}] STATUS=ERROR error="Health checker script not found at {checker_path}"'
         log_health_entry(err_msg, log_path)
+        try:
+            live_news_alert.process_monitor_error(f"Health checker script not found at {checker_path}", alert_log_path, alert_state_path)
+        except Exception:
+            pass
         print(f"ERROR: Health checker script not found at {checker_path}", file=sys.stderr)
         return 3
 
@@ -113,12 +125,20 @@ def run_monitor(checker_path=CHECKER_PATH, log_path=LOG_FILE):
         now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
         err_msg = f'[{now_str}] STATUS=ERROR error="Health checker timed out after 30s"'
         log_health_entry(err_msg, log_path)
+        try:
+            live_news_alert.process_monitor_error("Health checker timed out after 30s", alert_log_path, alert_state_path)
+        except Exception:
+            pass
         print("ERROR: Health checker timed out after 30s", file=sys.stderr)
         return 3
     except Exception as e:
         now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
         err_msg = f'[{now_str}] STATUS=ERROR error="Failed to execute health checker: {e}"'
         log_health_entry(err_msg, log_path)
+        try:
+            live_news_alert.process_monitor_error(f"Failed to execute health checker: {e}", alert_log_path, alert_state_path)
+        except Exception:
+            pass
         print(f"ERROR: Failed to execute health checker: {e}", file=sys.stderr)
         return 3
 
@@ -127,6 +147,10 @@ def run_monitor(checker_path=CHECKER_PATH, log_path=LOG_FILE):
         now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
         err_msg = f'[{now_str}] STATUS=ERROR error="Health checker produced empty output (exit {proc.returncode})"'
         log_health_entry(err_msg, log_path)
+        try:
+            live_news_alert.process_monitor_error(f"Health checker produced empty output (exit {proc.returncode})", alert_log_path, alert_state_path)
+        except Exception:
+            pass
         print("ERROR: Health checker produced empty output", file=sys.stderr)
         return 3
 
@@ -136,6 +160,10 @@ def run_monitor(checker_path=CHECKER_PATH, log_path=LOG_FILE):
         now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
         err_msg = f'[{now_str}] STATUS=ERROR error="Malformed JSON from health checker: {e}"'
         log_health_entry(err_msg, log_path)
+        try:
+            live_news_alert.process_monitor_error(f"Malformed JSON from health checker: {e}", alert_log_path, alert_state_path)
+        except Exception:
+            pass
         print(f"ERROR: Malformed JSON from health checker: {e}", file=sys.stderr)
         return 3
 
@@ -143,12 +171,22 @@ def run_monitor(checker_path=CHECKER_PATH, log_path=LOG_FILE):
         now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
         err_msg = f'[{now_str}] STATUS=ERROR error="Invalid report format from health checker"'
         log_health_entry(err_msg, log_path)
+        try:
+            live_news_alert.process_monitor_error("Invalid report format from health checker", alert_log_path, alert_state_path)
+        except Exception:
+            pass
         print("ERROR: Invalid report format from health checker", file=sys.stderr)
         return 3
 
     status, exit_code = evaluate_report(report)
     log_entry = format_log_entry(report, status)
     log_health_entry(log_entry, log_path)
+
+    # Process local alerts safely
+    try:
+        live_news_alert.process_health_report(report, status, alert_log_path, alert_state_path)
+    except Exception as alert_err:
+        print(f"WARNING: Live news alert evaluation failed: {alert_err}", file=sys.stderr)
 
     print(f"LIVE NEWS MONITOR: STATUS={status} (Exit Code: {exit_code})")
     print(log_entry)
