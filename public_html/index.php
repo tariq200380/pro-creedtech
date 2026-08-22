@@ -67,10 +67,10 @@ include __DIR__ . '/includes/header.php';
           <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
+          <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
         </a>
         <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
+          <img src="partners/the-manifest.webp" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
         </a>
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
           <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
@@ -86,10 +86,10 @@ include __DIR__ . '/includes/header.php';
           <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
+          <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
         </a>
         <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
+          <img src="partners/the-manifest.webp" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
         </a>
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
           <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
@@ -105,10 +105,10 @@ include __DIR__ . '/includes/header.php';
           <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
+          <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
         </a>
         <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
+          <img src="partners/the-manifest.webp" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
         </a>
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
           <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">
@@ -124,10 +124,10 @@ include __DIR__ . '/includes/header.php';
           <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/google.png" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
+          <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
         </a>
         <a href="https://themanifest.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/the-manifest.png" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
+          <img src="partners/the-manifest.webp" alt="The Manifest" class="h-11 w-auto object-contain" width="130" height="44" loading="lazy" decoding="async" onerror="this.src='The-Manifest-Logo.svg'">
         </a>
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
           <img src="partners/shopify.webp" alt="Shopify" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='shopify-ar21.svg'">

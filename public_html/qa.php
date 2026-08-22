@@ -26,7 +26,7 @@ include __DIR__ . '/includes/header.php';
       </div>
 
       <div class="hero-img-container">
-        <img src="assets/img/service.webp" alt="QA Testing Services" onerror="this.src='assets/img/hero_img.webp'">
+        <img src="assets/img/service.webp" alt="QA Testing Services" width="700" height="467" fetchpriority="high" decoding="async" onerror="this.src='assets/img/hero_img.webp'">
       </div>
 
     </div>

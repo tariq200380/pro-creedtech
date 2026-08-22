@@ -397,7 +397,7 @@ include __DIR__ . '/includes/header.php';
         ?>
         <div id="mainNewsCard" style="background:#fff;border:1px solid #E2E8F0;border-radius:1rem;overflow:hidden;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);display:flex;flex-direction:column;width:100%;">
           <div class="kc-main-news-visual">
-            <img id="mainNewsImg" src="<?= htmlspecialchars($mainItem['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="<?= htmlspecialchars(!empty($mainItem['title']) ? $mainItem['title'] : 'Tech News Intelligence') ?>" style="width:100%;height:100%;object-fit:cover;object-position:center;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
+            <img id="mainNewsImg" src="<?= htmlspecialchars($mainItem['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="<?= htmlspecialchars(!empty($mainItem['title']) ? $mainItem['title'] : 'Tech News Intelligence') ?>" width="800" height="450" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
             <span id="mainNewsTag" style="position:absolute;top:1rem;left:1rem;background:#0052FF;color:#fff;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;"><?= htmlspecialchars($mainItem['tag'] ?? 'GOOGLE AI & DEVICES') ?></span>
           </div>
           <div style="padding:1.5rem;">
@@ -440,7 +440,7 @@ include __DIR__ . '/includes/header.php';
           <div onclick="switchMainNews(<?= $i ?>)" style="background:#fff;border:1px solid #E2E8F0;border-radius:0.65rem;padding:0.75rem 0.9rem;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.04);width:100%;box-sizing:border-box;" onmouseover="this.style.borderColor='#0052FF';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='#E2E8F0';this.style.transform='none'">
             <div style="display:flex;gap:0.75rem;align-items:center;">
               <div style="width:3.75rem;height:3.75rem;border-radius:6px;overflow:hidden;background:#0B1120;flex-shrink:0;">
-                <img src="<?= htmlspecialchars($s['img'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars(!empty($s['title']) ? $s['title'] : 'Enterprise Tech News Story') ?>" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
+                <img src="<?= htmlspecialchars($s['img'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars(!empty($s['title']) ? $s['title'] : 'Enterprise Tech News Story') ?>" width="60" height="60" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
               </div>
               <div style="flex:1;min-width:0;">
                 <span style="font-size:9.5px;font-weight:800;color:<?= $pBadge['color'] ?>;text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?= $pBadge['label'] ?></span>
@@ -501,7 +501,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Selected Brand Story Showcase Card -->
       <div class="kc-wire-card-grid" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:1rem;padding:1.5rem;">
         <div id="wireVisualContainer" class="kc-wire-visual">
-          <img id="wireImg" src="<?= htmlspecialchars($gw['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="<?= htmlspecialchars(!empty($gw['title']) ? $gw['title'] : 'Global Tech Wire Story') ?>" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
+          <img id="wireImg" src="<?= htmlspecialchars($gw['img'] ?? 'uploads/live_news/google_gemini_chrome_hero.png') ?>" alt="<?= htmlspecialchars(!empty($gw['title']) ? $gw['title'] : 'Global Tech Wire Story') ?>" width="600" height="340" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
           <div style="position:absolute;top:12px;right:12px;z-index:3;">
             <span id="wireBrandBadge" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);color:#0F172A;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;box-shadow:0 4px 12px rgba(0,0,0,0.25);">
               <?= htmlspecialchars($gw['brandBadge'] ?? '🌐 GOOGLE') ?>
@@ -554,7 +554,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Selected Regional Story Card -->
       <div class="kc-wire-card-grid" style="background:#fff;border:1px solid #E2E8F0;border-radius:1rem;padding:1.5rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
         <div id="regVisualContainer" class="kc-reg-visual">
-          <img id="regImg" src="<?= htmlspecialchars($dw['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars(!empty($dw['title']) ? $dw['title'] : 'Regional Tech Wire Story') ?>" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
+          <img id="regImg" src="<?= htmlspecialchars($dw['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars(!empty($dw['title']) ? $dw['title'] : 'Regional Tech Wire Story') ?>" width="600" height="340" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" onerror="this.onerror=null;this.src='assets/img/hero_img.webp';">
           <div style="position:absolute;top:12px;right:12px;z-index:3;">
             <span id="regBrandBadge" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);color:#065F46;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;box-shadow:0 4px 12px rgba(0,0,0,0.25);">
               <?= htmlspecialchars($dw['brandBadge'] ?? '🇵🇰 DAWN TECH') ?>
