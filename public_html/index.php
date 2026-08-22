@@ -141,264 +141,579 @@ include __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- 3. SERVICES SECTION: CLEAN HEADING (NO 'CORE'), 4 LEFT & 4 RIGHT, SIDE ICONS, COMPACT HEIGHT, NORMAL SIZES -->
-<section class="w-full bg-[#E5E7EB] py-12 lg:py-16 border-b border-gray-300">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center">
+<!-- 3. SERVICES SECTION: WHAT WE PROVIDE (PREMIUM ENTERPRISE UPGRADE) -->
+<section class="w-full bg-[#F8FAFC] py-14 lg:py-20 border-b border-gray-200 relative overflow-hidden" id="what-we-provide-section">
+  
+  <!-- Subtle Ambient Background Accents for Depth -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+  <div class="absolute bottom-0 left-0 w-80 h-80 bg-blue-50/40 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center relative z-10">
     
-    <!-- Clean Heading (Core removed) -->
-    <div class="flex flex-col items-center text-center mb-10">
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1A1A1A]">
+    <!-- Section Heading & Subtitle -->
+    <div class="flex flex-col items-center text-center mb-12 max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-[#0052FF] text-[11px] font-bold uppercase tracking-widest mb-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#0052FF]"></span>
+        OUR SPECIALIZATIONS
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-[2.6rem] font-bold tracking-tight text-[#0F172A] leading-tight">
         What We Provide
       </h2>
-      <p class="text-sm sm:text-base text-gray-700 max-w-2xl mt-2 font-normal">
+      <p class="text-sm sm:text-base text-[#475569] mt-3 font-normal leading-relaxed max-w-2xl">
         Eight specialized engineering domains tailored for mission-critical enterprise scale, cloud modernization, and high availability.
       </p>
     </div>
 
-    <!-- 4 Left & 4 Right with Wider Horizontal Gap (gap-8 lg:gap-12) -->
-    <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
+    <!-- 2 Columns × 4 Rows Desktop Grid -->
+    <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
       
-      <!-- LEFT COLUMN (4 Services) -->
-      <div class="flex flex-col gap-4">
-        
-        <!-- Service 1: Software Development -->
-        <div class="group bg-white border border-gray-200 hover:border-blue-300 p-5 rounded-none flex items-start gap-4 hover:shadow-md transition-all duration-200">
-          <div class="p-2.5 bg-blue-50 border border-blue-100/80 rounded-none shrink-0 group-hover:bg-blue-100 transition-colors">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
-          </div>
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5">
-                Software Development
-              </h3>
-              <p class="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-                Custom web and mobile applications engineered for reliability, built with modern maintainable architecture.
-              </p>
-            </div>
-            <a href="services#software-development" class="mt-2.5 text-xs font-semibold text-blue-600 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Learn more <span>&rarr;</span>
-            </a>
-          </div>
+      <!-- Card 1: Software Development -->
+      <div class="prov-card group">
+        <div class="prov-accent"></div>
+        <div class="prov-icon-wrap">
+          <svg class="w-5 h-5 text-[#0052FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6" />
+            <polyline points="8 6 2 12 8 18" />
+          </svg>
         </div>
-
-        <!-- Service 2: UI/UX Design -->
-        <div class="group bg-white border border-gray-200 hover:border-blue-300 p-5 rounded-none flex items-start gap-4 hover:shadow-md transition-all duration-200">
-          <div class="p-2.5 bg-blue-50 border border-blue-100/80 rounded-none shrink-0 group-hover:bg-blue-100 transition-colors">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          </div>
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5">
-                UI/UX Design
-              </h3>
-              <p class="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-                Interfaces designed around real user workflows, not just visual polish. Streamlined, accessible, and high-converting.
-              </p>
-            </div>
-            <a href="services#ui-ux" class="mt-2.5 text-xs font-semibold text-blue-600 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Learn more <span>&rarr;</span>
-            </a>
-          </div>
+        <div class="prov-content">
+          <h3 class="prov-title">
+            Software Development
+          </h3>
+          <p class="prov-desc">
+            Custom web and mobile applications engineered for reliability, built with modern maintainable architecture.
+          </p>
+          <a href="services#software-development" class="prov-link">
+            <span>Learn more</span>
+            <span class="prov-arrow">&rarr;</span>
+          </a>
         </div>
-
-        <!-- Service 3: Mobile Applications -->
-        <div class="group bg-white border border-gray-200 hover:border-blue-300 p-5 rounded-none flex items-start gap-4 hover:shadow-md transition-all duration-200">
-          <div class="p-2.5 bg-blue-50 border border-blue-100/80 rounded-none shrink-0 group-hover:bg-blue-100 transition-colors">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" /></svg>
-          </div>
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5">
-                Mobile Applications
-              </h3>
-              <p class="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-                High-performance iOS and Android applications crafted for native speed and intuitive mobile gestures.
-              </p>
-            </div>
-            <a href="services#mobile-applications" class="mt-2.5 text-xs font-semibold text-blue-600 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Learn more <span>&rarr;</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Service 4: Cloud Infrastructure -->
-        <div class="group bg-white border border-gray-200 hover:border-blue-300 p-5 rounded-none flex items-start gap-4 hover:shadow-md transition-all duration-200">
-          <div class="p-2.5 bg-blue-50 border border-blue-100/80 rounded-none shrink-0 group-hover:bg-blue-100 transition-colors">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg>
-          </div>
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5">
-                Cloud Infrastructure
-              </h3>
-              <p class="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-                Provisioning, CI/CD automated deployment, and hardening for infrastructure that scales with traffic.
-              </p>
-            </div>
-            <a href="services#cloud-infrastructure" class="mt-2.5 text-xs font-semibold text-blue-600 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Learn more <span>&rarr;</span>
-            </a>
-          </div>
-        </div>
-
       </div>
 
-      <!-- RIGHT COLUMN (4 Services) -->
-      <div class="flex flex-col gap-4">
-        
-        <!-- Service 5: Database Management -->
-        <div class="group bg-white border border-gray-200 hover:border-blue-300 p-5 rounded-none flex items-start gap-4 hover:shadow-md transition-all duration-200">
-          <div class="p-2.5 bg-blue-50 border border-blue-100/80 rounded-none shrink-0 group-hover:bg-blue-100 transition-colors">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></svg>
-          </div>
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5">
-                Database Management
-              </h3>
-              <p class="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-                Schema design, migrations, and ongoing management for high-concurrency relational and NoSQL databases.
-              </p>
-            </div>
-            <a href="services#database-management" class="mt-2.5 text-xs font-semibold text-blue-600 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Learn more <span>&rarr;</span>
-            </a>
-          </div>
+      <!-- Card 2: UI/UX Design -->
+      <div class="prov-card group">
+        <div class="prov-accent"></div>
+        <div class="prov-icon-wrap">
+          <svg class="w-5 h-5 text-[#0052FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+            <path d="M2 12h20"/>
+          </svg>
         </div>
-
-        <!-- Service 6: Cybersecurity & QA -->
-        <div class="group bg-white border border-gray-200 hover:border-blue-300 p-5 rounded-none flex items-start gap-4 hover:shadow-md transition-all duration-200">
-          <div class="p-2.5 bg-blue-50 border border-blue-100/80 rounded-none shrink-0 group-hover:bg-blue-100 transition-colors">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /></svg>
-          </div>
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5">
-                Cybersecurity & QA
-              </h3>
-              <p class="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-                Security audits, automated test suites, and compliance checks to keep your systems protected.
-              </p>
-            </div>
-            <a href="services#cybersecurity" class="mt-2.5 text-xs font-semibold text-blue-600 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Learn more <span>&rarr;</span>
-            </a>
-          </div>
+        <div class="prov-content">
+          <h3 class="prov-title">
+            UI/UX Design
+          </h3>
+          <p class="prov-desc">
+            Interfaces designed around real user workflows, not just visual polish. Streamlined, accessible, and high-converting.
+          </p>
+          <a href="services#ui-ux" class="prov-link">
+            <span>Learn more</span>
+            <span class="prov-arrow">&rarr;</span>
+          </a>
         </div>
+      </div>
 
-        <!-- Service 7: Artificial Intelligence (AI) -->
-        <div class="group bg-white border border-gray-200 hover:border-blue-300 p-5 rounded-none flex items-start gap-4 hover:shadow-md transition-all duration-200">
-          <div class="p-2.5 bg-blue-50 border border-blue-100/80 rounded-none shrink-0 group-hover:bg-blue-100 transition-colors">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2a4 4 0 0 0-4 4v1H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/></svg>
-          </div>
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5">
-                Artificial Intelligence (AI)
-              </h3>
-              <p class="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-                Private on-premise LLM fine-tuning, dense vector embeddings, and autonomous AI agent orchestration.
-              </p>
-            </div>
-            <a href="services#ai" class="mt-2.5 text-xs font-semibold text-blue-600 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Learn more <span>&rarr;</span>
-            </a>
-          </div>
+      <!-- Card 3: Mobile Applications -->
+      <div class="prov-card group">
+        <div class="prov-accent"></div>
+        <div class="prov-icon-wrap">
+          <svg class="w-5 h-5 text-[#0052FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+            <line x1="12" y1="18" x2="12.01" y2="18" />
+          </svg>
         </div>
-
-        <!-- Service 8: Digital Marketing & Branding -->
-        <div class="group bg-white border border-gray-200 hover:border-blue-300 p-5 rounded-none flex items-start gap-4 hover:shadow-md transition-all duration-200">
-          <div class="p-2.5 bg-blue-50 border border-blue-100/80 rounded-none shrink-0 group-hover:bg-blue-100 transition-colors">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-          </div>
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-1.5">
-                Digital Marketing & Branding
-              </h3>
-              <p class="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-                Strategic tech product positioning, high-conversion CRO landing pages, and enterprise search visibility.
-              </p>
-            </div>
-            <a href="services#marketing" class="mt-2.5 text-xs font-semibold text-blue-600 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Learn more <span>&rarr;</span>
-            </a>
-          </div>
+        <div class="prov-content">
+          <h3 class="prov-title">
+            Mobile Applications
+          </h3>
+          <p class="prov-desc">
+            High-performance iOS and Android applications crafted for native speed and intuitive mobile gestures.
+          </p>
+          <a href="services#mobile-applications" class="prov-link">
+            <span>Learn more</span>
+            <span class="prov-arrow">&rarr;</span>
+          </a>
         </div>
+      </div>
 
+      <!-- Card 4: Cloud Infrastructure -->
+      <div class="prov-card group">
+        <div class="prov-accent"></div>
+        <div class="prov-icon-wrap">
+          <svg class="w-5 h-5 text-[#0052FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+          </svg>
+        </div>
+        <div class="prov-content">
+          <h3 class="prov-title">
+            Cloud Infrastructure
+          </h3>
+          <p class="prov-desc">
+            Provisioning, CI/CD automated deployment, and hardening for infrastructure that scales with traffic.
+          </p>
+          <a href="services#cloud-infrastructure" class="prov-link">
+            <span>Learn more</span>
+            <span class="prov-arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 5: Database Management -->
+      <div class="prov-card group">
+        <div class="prov-accent"></div>
+        <div class="prov-icon-wrap">
+          <svg class="w-5 h-5 text-[#0052FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+          </svg>
+        </div>
+        <div class="prov-content">
+          <h3 class="prov-title">
+            Database Management
+          </h3>
+          <p class="prov-desc">
+            Schema design, migrations, and ongoing management for high-concurrency relational and NoSQL databases.
+          </p>
+          <a href="services#database-management" class="prov-link">
+            <span>Learn more</span>
+            <span class="prov-arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 6: Cybersecurity & QA -->
+      <div class="prov-card group">
+        <div class="prov-accent"></div>
+        <div class="prov-icon-wrap">
+          <svg class="w-5 h-5 text-[#0052FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+          </svg>
+        </div>
+        <div class="prov-content">
+          <h3 class="prov-title">
+            Cybersecurity & QA
+          </h3>
+          <p class="prov-desc">
+            Security audits, automated test suites, and compliance checks to keep your systems protected.
+          </p>
+          <a href="services#cybersecurity" class="prov-link">
+            <span>Learn more</span>
+            <span class="prov-arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 7: Artificial Intelligence (AI) -->
+      <div class="prov-card group">
+        <div class="prov-accent"></div>
+        <div class="prov-icon-wrap">
+          <svg class="w-5 h-5 text-[#0052FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a4 4 0 0 0-4 4v1H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/>
+            <circle cx="9" cy="13" r="1"/>
+            <circle cx="15" cy="13" r="1"/>
+          </svg>
+        </div>
+        <div class="prov-content">
+          <h3 class="prov-title">
+            Artificial Intelligence (AI)
+          </h3>
+          <p class="prov-desc">
+            Private on-premise LLM fine-tuning, dense vector embeddings, and autonomous AI agent orchestration.
+          </p>
+          <a href="services#ai" class="prov-link">
+            <span>Learn more</span>
+            <span class="prov-arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 8: Digital Marketing & Branding -->
+      <div class="prov-card group">
+        <div class="prov-accent"></div>
+        <div class="prov-icon-wrap">
+          <svg class="w-5 h-5 text-[#0052FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/>
+            <path d="m19 9-5 5-4-4-3 3"/>
+          </svg>
+        </div>
+        <div class="prov-content">
+          <h3 class="prov-title">
+            Digital Marketing & Branding
+          </h3>
+          <p class="prov-desc">
+            Strategic tech product positioning, high-conversion CRO landing pages, and enterprise search visibility.
+          </p>
+          <a href="services#marketing" class="prov-link">
+            <span>Learn more</span>
+            <span class="prov-arrow">&rarr;</span>
+          </a>
+        </div>
       </div>
 
     </div>
 
   </div>
+
+  <style>
+    /* ================= WHAT WE PROVIDE: SCOPED PREMIUM CARD STYLES ================= */
+    .prov-card {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.15rem;
+      background-color: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 1.5rem 1.6rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 2px 6px rgba(15, 23, 42, 0.02);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+      overflow: hidden;
+      box-sizing: border-box;
+      height: 100%;
+    }
+    .prov-card:hover {
+      transform: translateY(-3px);
+      border-color: #CBD5E1;
+      box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.06), 0 4px 8px -2px rgba(15, 23, 42, 0.03);
+    }
+    /* Subtle Brand Accent indicator at the top of the card */
+    .prov-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2.5px;
+      background: linear-gradient(90deg, #0052FF 0%, #38BDF8 60%, #FF6B00 100%);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+    .prov-card:hover .prov-accent {
+      opacity: 1;
+    }
+    /* Icon geometric container with subtle 3D depth - NEVER solid on hover */
+    .prov-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background-color: #F0F5FF;
+      border: 1px solid #D6E4FF;
+      box-shadow: 0 2px 5px rgba(0, 82, 255, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transition: border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+    .prov-card:hover .prov-icon-wrap {
+      border-color: #BFDBFE;
+      box-shadow: 0 3px 8px rgba(0, 82, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    /* Content Layout */
+    .prov-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .prov-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0F172A;
+      line-height: 1.35;
+      margin: 0 0 0.45rem;
+      letter-spacing: -0.01em;
+    }
+    .prov-desc {
+      font-size: 0.845rem;
+      line-height: 1.62;
+      color: #475569;
+      margin: 0 0 0.85rem;
+      font-weight: 400;
+    }
+    .prov-link {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #0052FF;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      width: fit-content;
+    }
+    .prov-arrow {
+      display: inline-block;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .prov-card:hover .prov-arrow {
+      transform: translateX(3px);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .prov-card, .prov-icon-wrap, .prov-arrow, .prov-accent {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
 </section>
 
 <!-- 4. HOW WE DELIVER SECTION (src/components/home/how-we-deliver) -->
 <section 
-  class="w-full py-12 lg:py-16 text-white relative overflow-hidden border-b border-gray-800"
-  style="background-color: #0F1420;"
+  class="w-full py-16 lg:py-24 text-white relative overflow-hidden border-b border-gray-800"
+  style="background-color: #0B1120;"
+  id="how-we-deliver-section"
 >
+  <!-- Ambient Orange Glow (matching Contact CTA section) -->
   <div 
     class="absolute inset-0 pointer-events-none"
-    style="background: radial-gradient(ellipse at 50% 15%, rgba(255, 107, 0, 0.15) 0%, rgba(255, 107, 0, 0.03) 50%, transparent 75%);"
-  ></div>
-  <div 
-    class="absolute inset-0 opacity-[0.08] pointer-events-none"
-    style="background-image: linear-gradient(to right, #FFFFFF 1px, transparent 1px), linear-gradient(to bottom, #FFFFFF 1px, transparent 1px); background-size: 36px 36px;"
+    style="background: radial-gradient(circle at 50% 20%, rgba(255, 107, 0, 0.17) 0%, rgba(255, 107, 0, 0.05) 45%, rgba(11, 17, 32, 0) 70%);"
   ></div>
 
   <div class="relative max-w-6xl mx-auto px-6 lg:px-12 flex flex-col items-center z-10">
-    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white uppercase text-center mb-2">
-      HOW WE DELIVER
-    </h2>
-    <p class="text-xs sm:text-sm text-gray-400 max-w-xl text-center mb-8 font-normal">
-      A transparent, four-phase delivery methodology designed to eliminate surprises and keep projects on track.
-    </p>
-
-    <!-- Tabs Navigation (Standard Equal Sized Buttons - Single Row) -->
-    <div class="flex items-center justify-center flex-wrap gap-3 mb-8 w-full max-w-4xl mx-auto">
-      <button class="how-tab-btn btn-tab-active whitespace-nowrap" data-target="del-req">
-        Team Requirement
-      </button>
-      <button class="how-tab-btn btn-tab-inactive whitespace-nowrap" data-target="del-onboard">
-        Onboarding
-      </button>
-      <button class="how-tab-btn btn-tab-inactive whitespace-nowrap" data-target="del-prod">
-        Productivity Phase
-      </button>
-      <button class="how-tab-btn btn-tab-inactive whitespace-nowrap" data-target="del-qc">
-        Quality Control
-      </button>
+    
+    <!-- Section Header -->
+    <div class="flex flex-col items-center text-center mb-10 max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF6B00] text-[11px] font-bold uppercase tracking-widest mb-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#FF6B00]"></span>
+        ENGINEERING METHODOLOGY
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white uppercase text-center mb-3">
+        HOW WE DELIVER
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-400 max-w-xl text-center font-normal leading-relaxed">
+        A transparent, four-phase delivery methodology designed to eliminate surprises and keep projects on track.
+      </p>
     </div>
 
-    <!-- Active Tab Box (Centered Content) -->
-    <div class="w-full bg-[#161D2E] border border-gray-800 rounded-none p-6 sm:p-8 relative min-h-[160px] flex flex-col justify-center text-center">
-      <div id="del-req" class="del-pane">
-        <h3 class="text-lg sm:text-xl font-bold text-white mb-2 text-center">Team Requirement</h3>
-        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal text-center max-w-2xl mx-auto">
-          Define your technical stack, domain scope, and seniority expectations. We match verified senior software engineers tailored precisely to your architecture.
-        </p>
-      </div>
-      <div id="del-onboard" class="del-pane hidden">
-        <h3 class="text-lg sm:text-xl font-bold text-white mb-2 text-center">Rapid Onboarding &amp; Setup</h3>
-        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal text-center max-w-2xl mx-auto">
-          Sprint kickoff, repo provisioning, secure access integration, and architectural alignment within 48 hours without friction.
-        </p>
-      </div>
-      <div id="del-prod" class="del-pane hidden">
-        <h3 class="text-lg sm:text-xl font-bold text-white mb-2 text-center">Full Velocity Execution</h3>
-        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal text-center max-w-2xl mx-auto">
-          Daily async syncs, sprint milestone tracking, clean PR reviews, and automated CI/CD deployment pipelines operating at enterprise velocity.
-        </p>
-      </div>
-      <div id="del-qc" class="del-pane hidden">
-        <h3 class="text-lg sm:text-xl font-bold text-white mb-2 text-center">Continuous Quality Control</h3>
-        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal text-center max-w-2xl mx-auto">
-          End-to-end automated testing, security audits, performance profiling, and milestone sign-offs ensuring production-grade stability.
-        </p>
+    <!-- 4-Phase Workflow Navigation Tabs -->
+    <div class="w-full max-w-4xl mx-auto mb-8">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 p-1.5 bg-[#0E1526] border border-[#1E293B] rounded-xl">
+        <button class="how-tab-btn btn-tab-active" data-target="del-req">
+          <span class="tab-num">01</span>
+          <span class="tab-label">Team Requirement</span>
+        </button>
+        <button class="how-tab-btn btn-tab-inactive" data-target="del-onboard">
+          <span class="tab-num">02</span>
+          <span class="tab-label">Onboarding</span>
+        </button>
+        <button class="how-tab-btn btn-tab-inactive" data-target="del-prod">
+          <span class="tab-num">03</span>
+          <span class="tab-label">Productivity Phase</span>
+        </button>
+        <button class="how-tab-btn btn-tab-inactive" data-target="del-qc">
+          <span class="tab-num">04</span>
+          <span class="tab-label">Quality Control</span>
+        </button>
       </div>
     </div>
+
+    <!-- Active Tab Box (Engineered Dark Navy Card with Internal Grid matching Contact card) -->
+    <div class="del-main-panel w-full relative bg-[#131C31]/90 border border-[#1E293B] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-col justify-center overflow-hidden shadow-2xl">
+      
+      <!-- Internal Technical Grid (matching Contact section card) -->
+      <div 
+        class="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style="background-image: linear-gradient(to right, #FFFFFF 1px, transparent 1px), linear-gradient(to bottom, #FFFFFF 1px, transparent 1px); background-size: 24px 24px;"
+      ></div>
+      <div class="absolute w-64 h-64 bg-orange-500/15 rounded-none blur-3xl pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+
+      <!-- Phase 1 Content -->
+      <div id="del-req" class="del-pane relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 flex flex-col items-start text-left">
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/30 text-[#FF6B00] text-[11px] font-mono font-bold uppercase tracking-wider mb-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#FF6B00]"></span>
+              PHASE 01
+            </div>
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3">
+              Team Requirement
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
+              Define your technical stack, domain scope, and seniority expectations. We match verified senior software engineers tailored precisely to your architecture.
+            </p>
+          </div>
+          <div class="lg:col-span-5 w-full flex flex-col justify-center divide-y divide-gray-800/80">
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">01</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Define technical stack &amp; domain scope</span>
+            </div>
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">02</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Evaluate seniority expectations</span>
+            </div>
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">03</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Match verified senior software engineers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2 Content -->
+      <div id="del-onboard" class="del-pane hidden relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 flex flex-col items-start text-left">
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/30 text-[#FF6B00] text-[11px] font-mono font-bold uppercase tracking-wider mb-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#FF6B00]"></span>
+              PHASE 02
+            </div>
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3">
+              Rapid Onboarding &amp; Setup
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
+              Sprint kickoff, repo provisioning, secure access integration, and architectural alignment within 48 hours without friction.
+            </p>
+          </div>
+          <div class="lg:col-span-5 w-full flex flex-col justify-center divide-y divide-gray-800/80">
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">01</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Sprint kickoff &amp; repo provisioning</span>
+            </div>
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">02</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Secure access integration</span>
+            </div>
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">03</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Architectural alignment within 48 hours</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3 Content -->
+      <div id="del-prod" class="del-pane hidden relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 flex flex-col items-start text-left">
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/30 text-[#FF6B00] text-[11px] font-mono font-bold uppercase tracking-wider mb-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#FF6B00]"></span>
+              PHASE 03
+            </div>
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3">
+              Full Velocity Execution
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
+              Daily async syncs, sprint milestone tracking, clean PR reviews, and automated CI/CD deployment pipelines operating at enterprise velocity.
+            </p>
+          </div>
+          <div class="lg:col-span-5 w-full flex flex-col justify-center divide-y divide-gray-800/80">
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">01</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Daily async syncs &amp; milestone tracking</span>
+            </div>
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">02</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Clean PR code reviews</span>
+            </div>
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">03</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Automated CI/CD deployment pipelines</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 4 Content -->
+      <div id="del-qc" class="del-pane hidden relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 flex flex-col items-start text-left">
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/30 text-[#FF6B00] text-[11px] font-mono font-bold uppercase tracking-wider mb-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#FF6B00]"></span>
+              PHASE 04
+            </div>
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3">
+              Continuous Quality Control
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
+              End-to-end automated testing, security audits, performance profiling, and milestone sign-offs ensuring production-grade stability.
+            </p>
+          </div>
+          <div class="lg:col-span-5 w-full flex flex-col justify-center divide-y divide-gray-800/80">
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">01</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">End-to-end automated testing</span>
+            </div>
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">02</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Security audits &amp; performance profiling</span>
+            </div>
+            <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
+              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">03</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-medium">Production-grade milestone sign-offs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
+
+  <style>
+    /* ================= HOW WE DELIVER: SCOPED STYLES ================= */
+    #how-we-deliver-section .del-main-panel {
+      background-color: rgba(19, 28, 49, 0.95) !important;
+      border: 1px solid #1E293B !important;
+      border-radius: 16px !important;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6) !important;
+    }
+    #how-we-deliver-section .how-tab-btn {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      font-size: 12.5px !important;
+      font-weight: 600 !important;
+      line-height: 1 !important;
+      height: 42px !important;
+      min-height: 42px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      padding: 0 10px !important;
+      border-radius: 8px !important;
+      cursor: pointer !important;
+      text-align: center !important;
+      white-space: nowrap !important;
+      transition: all 0.2s ease !important;
+      box-sizing: border-box !important;
+    }
+    #how-we-deliver-section .tab-num {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0.7;
+    }
+    #how-we-deliver-section .btn-tab-active {
+      background-color: #FF6B00 !important;
+      color: #FFFFFF !important;
+      border: 1px solid #FF6B00 !important;
+      box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3) !important;
+    }
+    #how-we-deliver-section .btn-tab-inactive {
+      background-color: transparent !important;
+      color: #94A3B8 !important;
+      border: 1px solid transparent !important;
+    }
+    #how-we-deliver-section .btn-tab-inactive:hover {
+      background-color: rgba(255, 255, 255, 0.04) !important;
+      color: #FFFFFF !important;
+    }
+    #how-we-deliver-section .del-pane {
+      animation: delPaneFade 0.22s ease-out;
+    }
+    @keyframes delPaneFade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #how-we-deliver-section .del-pane {
+        animation: none !important;
+      }
+    }
+  </style>
 </section>
 
 <!-- 5. WHY CHOOSE US SECTION (src/components/home/why-choose-us) -->
