@@ -1011,29 +1011,50 @@ $isDirectExecution = (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['S
                       (php_sapi_name() === 'cli' && isset($argv[0]) && realpath($argv[0]) === __FILE__);
 
 if ($isDirectExecution) {
-    // Check cache freshness (30-minute auto-refresh TTL)
-    $force = isset($_GET['refresh']) || isset($_GET['force']);
+    // Pure Cache-Only Delivery: Never trigger synchronous multi-provider sync during frontend requests
     $cachedData = null;
-    $cacheMaxAge = 1800; // 30 minutes
 
-    if (file_exists($cacheFile)) {
-        $mtime = @filemtime($cacheFile) ?: 0;
-        $isStale = (time() - $mtime) > $cacheMaxAge;
+    if (file_exists($cacheFile) && is_readable($cacheFile)) {
         $raw = @file_get_contents($cacheFile);
         if ($raw) {
-            $cachedData = @json_decode($raw, true);
-        }
-        if ($isStale) {
-            $force = true;
+            $decoded = @json_decode($raw, true);
+            if (is_array($decoded) && (!empty($decoded['brand_wires']) || !empty($decoded['regional_wires']) || !empty($decoded['breaking_news']))) {
+                $cachedData = $decoded;
+            }
         }
     }
 
-    if (!$cachedData || $force) {
-        $cachedData = sync_all_verified_feeds($force);
+    // Safe compatible empty fallback if cache is missing, empty, or unparseable
+    if (!$cachedData) {
+        $cachedData = [
+            'status'            => 'empty',
+            'timestamp'         => gmdate('Y-m-d\TH:i:s\Z'),
+            'gate_status'       => 'CENTRAL_GATE_IDLE',
+            'provider_statuses' => [],
+            'counts'            => [
+                'pakistani_articles'     => 0,
+                'international_articles' => 0,
+                'providers'              => [
+                    'google'    => 0,
+                    'apple'     => 0,
+                    'nvidia'    => 0,
+                    'anthropic' => 0,
+                    'openai'    => 0,
+                    'meta'      => 0,
+                    'microsoft' => 0,
+                    'intel'     => 0
+                ]
+            ],
+            'brand_wires'       => [],
+            'regional_wires'    => [],
+            'regional_items'    => [],
+            'breaking_news'     => []
+        ];
     }
 
     if (php_sapi_name() !== 'cli') {
-        echo json_encode($cachedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        exit;
+        header('Content-Type: application/json; charset=utf-8');
     }
+    echo json_encode($cachedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    exit;
 }
