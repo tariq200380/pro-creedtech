@@ -1,9 +1,12 @@
 <?php
-$page_title = "Enterprise Knowledge Center & Tech Intelligence | Creed Tech";
-$page_description = "Curated technical research, engineering blueprints, system architecture patterns, and enterprise technology analysis from Creed Tech.";
-$active_page = "knowledge-center";
-
-include __DIR__ . '/includes/header.php';
+/**
+ * Canonical Route: Knowledge Center is the unified authoritative intelligence & news hub
+ */
+if (php_sapi_name() !== 'cli' && !headers_sent()) {
+    header("Location: /knowledge-center", true, 301);
+}
+require __DIR__ . '/knowledge-center.php';
+exit;
 ?>
 
 <div style="width:100%;background:#FAFAFC;color:#111827;font-family:sans-serif;text-align:left;">

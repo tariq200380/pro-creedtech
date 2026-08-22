@@ -47,10 +47,34 @@ fclose($fp);
 
 if (php_sapi_name() === 'cli') {
     echo "[CRON SUCCESS] Live news feeds and images successfully synchronized at " . date('Y-m-d H:i:s') . "\n";
+    echo "--------------------------------------------------------------------------------\n";
+    echo "INTERNATIONAL WIRES (8 Providers):\n";
+    $wires = $result['brand_wires'] ?? [];
+    $statuses = $result['provider_statuses'] ?? [];
+    foreach (['google', 'apple', 'nvidia', 'anthropic', 'openai', 'meta', 'microsoft', 'intel'] as $p) {
+        $item = $wires[$p] ?? [];
+        $diag = $statuses[$p] ?? [];
+        $st = is_array($diag) ? ($diag['status'] ?? 'VERIFIED') : $diag;
+        $title = $item['title'] ?? 'No article';
+        $date = $item['date'] ?? 'No date';
+        echo sprintf("  %-10s [%-14s] %s (%s)\n", strtoupper($p), $st, $title, $date);
+    }
+    echo "--------------------------------------------------------------------------------\n";
+    echo "REGIONAL PAKISTAN WIRES (4 Providers):\n";
+    $regWires = $result['regional_wires'] ?? [];
+    foreach (['dawn', 'brecorder', 'propakistani', 'tribune'] as $rp) {
+        $rItem = $regWires[$rp] ?? [];
+        $rTitle = $rItem['title'] ?? 'No article';
+        $rDate = $rItem['date'] ?? 'No date';
+        echo sprintf("  %-12s %s (%s)\n", strtoupper($rp), $rTitle, $rDate);
+    }
+    echo "--------------------------------------------------------------------------------\n";
 } else {
     echo json_encode([
-        'status'    => 'success',
-        'timestamp' => date('Y-m-d H:i:s'),
-        'message'   => 'Live news feeds and images successfully synchronized.'
+        'status'            => 'success',
+        'timestamp'         => date('Y-m-d H:i:s'),
+        'message'           => 'Live news feeds and images successfully synchronized.',
+        'provider_statuses' => $result['provider_statuses'] ?? [],
+        'counts'            => $result['counts'] ?? []
     ], JSON_PRETTY_PRINT);
 }

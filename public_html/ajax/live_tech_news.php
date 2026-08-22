@@ -357,8 +357,80 @@ function normalize_canonical_news_url($url) {
 
 /**
  * Ingest feed with strict Central NewsValidationGate verification & stable image retention
+/**
+ * Scrape dynamic Anthropic research and news articles from official pages
  */
-function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
+function collect_anthropic_candidates() {
+    $pages = ['https://www.anthropic.com/research', 'https://www.anthropic.com/news'];
+    $candidates = [];
+    $seen = [];
+
+    foreach ($pages as $pUrl) {
+        $ch = curl_init($pUrl);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 8,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+        ]);
+        $html = curl_exec($ch);
+        curl_close($ch);
+
+        if (!$html) continue;
+
+        if (preg_match_all("/<a[^>]+href=[\x22\x27](\/(?:research|news)\/[a-zA-Z0-9_-]+)[\x22\x27][^>]*>/i", $html, $m)) {
+            foreach ($m[1] as $path) {
+                if (isset($seen[$path]) || $path === '/research' || $path === '/news' || strpos($path, 'team') !== false) continue;
+                $seen[$path] = true;
+                $fullUrl = 'https://www.anthropic.com' . $path;
+
+                $ch2 = curl_init($fullUrl);
+                curl_setopt_array($ch2, [
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_TIMEOUT        => 6,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                ]);
+                $artHtml = curl_exec($ch2);
+                curl_close($ch2);
+
+                if (!$artHtml) continue;
+
+                preg_match("/<meta[^>]+property=[\x22\x27]og:image[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i", $artHtml, $mOgImg);
+                preg_match("/<meta[^>]+property=[\x22\x27]og:title[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i", $artHtml, $mOgTitle);
+                preg_match("/<meta[^>]+property=[\x22\x27]og:description[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i", $artHtml, $mOgDesc);
+                preg_match("/(?:datetime=[\x22\x27]([^\x22\x27]+)[\x22\x27]|>([A-Za-z]+ \d{1,2}, \d{4})<)/i", $artHtml, $mDate);
+
+                $title   = !empty($mOgTitle[1]) ? trim(html_entity_decode($mOgTitle[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : '';
+                $desc    = !empty($mOgDesc[1]) ? trim(html_entity_decode($mOgDesc[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : '';
+                $img     = !empty($mOgImg[1]) ? trim(html_entity_decode($mOgImg[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : '';
+                $dateRaw = !empty($mDate[1]) ? $mDate[1] : (!empty($mDate[2]) ? $mDate[2] : '');
+                $timestamp = NewsValidationGate::parseProviderDate($dateRaw);
+
+                if (!empty($title) && $timestamp) {
+                    $candidates[] = [
+                        'title'        => $title,
+                        'link'         => $fullUrl,
+                        'guid'         => $fullUrl,
+                        'pubDateRaw'   => $dateRaw,
+                        'pubTimestamp' => $timestamp,
+                        'descRaw'      => $desc,
+                        'itemRaw'      => $artHtml,
+                        'ogImg'        => $img
+                    ];
+                }
+                if (count($candidates) >= 12) break 2;
+            }
+        }
+    }
+    return $candidates;
+}
+
+/**
+ * Gate and Ingest Feed: Ingests, parses, sorts candidates newest-first,
+ * validates visual assets, and prevents downgrades.
+ */
+function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = [], $existingArticle = null) {
     $url          = $feedConfig['url'];
     $providerKey  = $feedConfig['provider'];
     $sourceName   = $feedConfig['source_name'];
@@ -371,189 +443,126 @@ function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
     $customHash   = $feedConfig['custom_hash'] ?? null;
     $visualType   = $feedConfig['visual_type'] ?? VISUAL_SOURCE_IMAGE;
 
-    $rawContent = null;
-    if (function_exists('curl_init')) {
-        $ch = curl_init();
-        curl_setopt_array($ch, [
-            CURLOPT_URL            => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT        => 10,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/126.0.0.0',
-            CURLOPT_SSL_VERIFYPEER => true
-        ]);
-        $rawContent = curl_exec($ch);
-        curl_close($ch);
-    }
-    // Direct Anthropic Research/News Handler (bypasses generic RSS aggregators)
+    $parsedCandidates = [];
+    $fetchSuccess = false;
+
     if ($providerKey === 'anthropic') {
-        $ch = curl_init('https://www.anthropic.com/research');
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_TIMEOUT        => 8,
-            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/126.0.0.0'
-        ]);
-        $antHtml = curl_exec($ch);
-        curl_close($ch);
+        $parsedCandidates = collect_anthropic_candidates();
+        $fetchSuccess = !empty($parsedCandidates);
+    } else {
+        $rawContent = null;
+        if (function_exists('curl_init')) {
+            $ch = curl_init();
+            curl_setopt_array($ch, [
+                CURLOPT_URL            => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT        => 10,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/126.0.0.0',
+                CURLOPT_SSL_VERIFYPEER => true
+            ]);
+            $rawContent = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            if ($httpCode === 200 && !empty($rawContent)) {
+                $fetchSuccess = true;
+            }
+        }
 
-        if ($antHtml && preg_match_all("/<a[^>]+href=[\x22\x27](\/research\/[a-zA-Z0-9_-]+)[\x22\x27][^>]*>(.*?)<\/a>/is", $antHtml, $antMatches)) {
-            for ($i = 0; $i < count($antMatches[1]); $i++) {
-                $antPath = $antMatches[1][$i];
-                if (strpos($antPath, 'team') !== false) continue;
-                $antUrl = 'https://www.anthropic.com' . $antPath;
-                $normAntUrl = normalize_canonical_news_url($antUrl);
+        if ($rawContent) {
+            $rawItems = preg_split('/<item[\s>]|<entry[\s>]/i', $rawContent);
+            array_shift($rawItems);
 
-                $existingHero = $verifiedHeroMap[$normAntUrl] ?? null;
-                $localPath = null;
-                $imgHash = null;
-                $imgSrc = null;
-
-                if ($existingHero && !empty($existingHero['local_image_path']) && strpos($existingHero['local_image_path'], '_headline_') === false) {
-                    $diskFile = __DIR__ . '/../' . $existingHero['local_image_path'];
-                    if (file_exists($diskFile) && filesize($diskFile) > 0) {
-                        $localPath = $existingHero['local_image_path'];
-                        $imgHash   = $existingHero['image_hash'] ?? hash_file('sha256', $diskFile);
-                        $imgSrc    = $existingHero['source_image_url'] ?? null;
-                    }
+            foreach ($rawItems as $itemRaw) {
+                $title = '';
+                if (preg_match('/<title[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/is', $itemRaw, $m)) {
+                    $title = trim(strip_tags($m[1]));
                 }
-                
-                $ch2 = curl_init($antUrl);
-                curl_setopt_array($ch2, [
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_TIMEOUT        => 8,
-                    CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                ]);
-                $artHtml = curl_exec($ch2);
-                curl_close($ch2);
 
-                if ($artHtml) {
-                    preg_match("/<meta[^>]+property=[\x22\x27]og:image[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i", $artHtml, $mOgImg);
-                    preg_match("/<meta[^>]+property=[\x22\x27]og:title[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i", $artHtml, $mOgTitle);
-                    preg_match("/<meta[^>]+property=[\x22\x27]og:description[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i", $artHtml, $mOgDesc);
-                    
-                    $title = !empty($mOgTitle[1]) ? trim(html_entity_decode($mOgTitle[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : 'Anthropic Frontier AI Research Update';
-                    $desc  = !empty($mOgDesc[1]) ? trim(html_entity_decode($mOgDesc[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')) : 'Anthropic research shares latest developments in frontier artificial intelligence and reasoning systems.';
-                    if (!$imgSrc) {
-                        $imgSrc = !empty($mOgImg[1]) ? trim($mOgImg[1]) : null;
-                    }
-                    
-                    $candidate = [
-                        'provider'              => 'anthropic',
-                        'external_article_id'   => $antUrl,
-                        'title'                 => $title,
-                        'summary'               => $desc,
-                        'source_name'           => 'Anthropic Research',
-                        'source_url'            => $antUrl,
-                        'source_image_url'      => $imgSrc,
-                        'local_image_path'      => $localPath,
-                        'image_hash'            => $imgHash,
-                        'screenshot_hash'       => $imgHash,
-                        'visual_type'           => VISUAL_SOURCE_IMAGE,
-                        'provider_published_at' => date('Y-m-d H:i:s', strtotime('-19 hours')),
-                        'category'              => $category,
-                        'brand_badge'           => $brandBadge,
-                        'wire_type'             => $wireType,
-                        'wire_key'              => $wireKey,
-                        'status'                => STATUS_FETCHED
-                    ];
-                    $gateResult = NewsValidationGate::processAndPublishCandidate($candidate, $uploadDir);
-                    if ($gateResult['published']) {
-                        $record = $gateResult['record'];
-                        $record['caption_tag'] = 'ANTHROPIC OFFICIAL WIRE';
-                        $record['caption']     = '📷 ' . $record['title'];
-                        $record['date']        = format_provider_relative_time($record['provider_published_at']) . ' • Anthropic Research (Live Wire)';
-                        $record['wire_type']   = $wireType;
-                        $record['wire_key']    = $wireKey;
-                        upsert_verified_news_db($record);
-                        return [$record];
-                    }
+                $link = '';
+                if (preg_match('/<link[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/link>/is', $itemRaw, $m)) {
+                    $link = trim($m[1]);
+                } elseif (preg_match('/<link[^>]+href=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
+                    $link = trim($m[1]);
                 }
+
+                $guid = '';
+                if (preg_match('/<guid[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/guid>/is', $itemRaw, $m)) {
+                    $guid = trim($m[1]);
+                } elseif (preg_match('/<id[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/id>/is', $itemRaw, $m)) {
+                    $guid = trim($m[1]);
+                }
+                if (empty($guid)) $guid = $link;
+
+                $pubDateRaw = '';
+                if (preg_match('/<pubDate>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/pubDate>/is', $itemRaw, $m)) {
+                    $pubDateRaw = trim($m[1]);
+                } elseif (preg_match('/<updated>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/updated>/is', $itemRaw, $m)) {
+                    $pubDateRaw = trim($m[1]);
+                } elseif (preg_match('/<published>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/published>/is', $itemRaw, $m)) {
+                    $pubDateRaw = trim($m[1]);
+                }
+
+                $descRaw = '';
+                if (preg_match('/<description[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/description>/is', $itemRaw, $m)) {
+                    $descRaw = $m[1];
+                } elseif (preg_match('/<summary[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/summary>/is', $itemRaw, $m)) {
+                    $descRaw = $m[1];
+                } elseif (preg_match('/<content:encoded[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/content:encoded>/is', $itemRaw, $m)) {
+                    $descRaw = $m[1];
+                }
+
+                if (empty($title) || empty($link)) continue;
+
+                $pubTimestamp = NewsValidationGate::parseProviderDate($pubDateRaw);
+
+                $parsedCandidates[] = [
+                    'title'        => $title,
+                    'link'         => $link,
+                    'guid'         => $guid,
+                    'pubDateRaw'   => $pubDateRaw,
+                    'pubTimestamp' => $pubTimestamp ?: 0,
+                    'descRaw'      => $descRaw,
+                    'itemRaw'      => $itemRaw
+                ];
             }
         }
     }
 
-    if (!$rawContent) {
-        return [];
-    }
-
-    $rawItems = preg_split('/<item[\s>]|<entry[\s>]/i', $rawContent);
-    array_shift($rawItems);
-
-    $parsedCandidates = [];
-
-    foreach ($rawItems as $itemRaw) {
-        $title = '';
-        if (preg_match('/<title[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/is', $itemRaw, $m)) {
-            $title = trim(strip_tags($m[1]));
-        }
-
-        $link = '';
-        if (preg_match('/<link[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/link>/is', $itemRaw, $m)) {
-            $link = trim($m[1]);
-        } elseif (preg_match('/<link[^>]+href=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
-            $link = trim($m[1]);
-        }
-
-        $guid = '';
-        if (preg_match('/<guid[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/guid>/is', $itemRaw, $m)) {
-            $guid = trim($m[1]);
-        } elseif (preg_match('/<id[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/id>/is', $itemRaw, $m)) {
-            $guid = trim($m[1]);
-        }
-        if (empty($guid)) $guid = $link;
-
-        $pubDateRaw = '';
-        if (preg_match('/<pubDate>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/pubDate>/is', $itemRaw, $m)) {
-            $pubDateRaw = trim($m[1]);
-        } elseif (preg_match('/<updated>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/updated>/is', $itemRaw, $m)) {
-            $pubDateRaw = trim($m[1]);
-        } elseif (preg_match('/<published>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/published>/is', $itemRaw, $m)) {
-            $pubDateRaw = trim($m[1]);
-        }
-
-        $descRaw = '';
-        if (preg_match('/<description[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/description>/is', $itemRaw, $m)) {
-            $descRaw = $m[1];
-        } elseif (preg_match('/<summary[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/summary>/is', $itemRaw, $m)) {
-            $descRaw = $m[1];
-        } elseif (preg_match('/<content:encoded[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/content:encoded>/is', $itemRaw, $m)) {
-            $descRaw = $m[1];
-        }
-
-        if (empty($title) || empty($link)) continue;
-
-        $pubTimestamp = NewsValidationGate::parseProviderDate($pubDateRaw);
-
-        $parsedCandidates[] = [
-            'title'        => $title,
-            'link'         => $link,
-            'guid'         => $guid,
-            'pubDateRaw'   => $pubDateRaw,
-            'pubTimestamp' => $pubTimestamp ?: 0,
-            'descRaw'      => $descRaw,
-            'itemRaw'      => $itemRaw
-        ];
-    }
-
-    // Sort parsed feed candidates by actual publication timestamp descending (newest first)
+    // Sort parsed feed candidates strictly by publication timestamp descending (newest first)
     usort($parsedCandidates, function($a, $b) {
-        if ($a['pubTimestamp'] === $b['pubTimestamp']) {
-            return 0;
-        }
-        return ($a['pubTimestamp'] > $b['pubTimestamp']) ? -1 : 1;
+        return ($b['pubTimestamp'] <=> $a['pubTimestamp']);
     });
 
+    $sourceNewestTimestamp = !empty($parsedCandidates[0]['pubTimestamp']) ? gmdate('Y-m-d\TH:i:s\Z', $parsedCandidates[0]['pubTimestamp']) : null;
+    $sourceNewestTitle = !empty($parsedCandidates[0]['title']) ? $parsedCandidates[0]['title'] : null;
+
+    $existingTimestamp = 0;
+    if (!empty($existingArticle['provider_published_at'])) {
+        $existingTimestamp = NewsValidationGate::parseProviderDate($existingArticle['provider_published_at']) ?: 0;
+    } elseif (!empty($existingArticle['date'])) {
+        $existingTimestamp = NewsValidationGate::parseProviderDate($existingArticle['date']) ?: 0;
+    }
+
     $verifiedItems = [];
+    $lastRejectionReason = '';
+    $selectedStatus = 'STALE_FALLBACK';
+    $selectedTimestamp = null;
 
     foreach ($parsedCandidates as $candItem) {
         $title      = $candItem['title'];
         $link       = $candItem['link'];
         $guid       = $candItem['guid'];
         $pubDateRaw = $candItem['pubDateRaw'];
+        $pubTimestamp = $candItem['pubTimestamp'];
         $descRaw    = $candItem['descRaw'];
         $itemRaw    = $candItem['itemRaw'];
+
+        // Guard against downgrading a newer cached article with an older article
+        if ($existingTimestamp > 0 && $pubTimestamp > 0 && $pubTimestamp < ($existingTimestamp - 3600)) {
+            $lastRejectionReason = "Candidate published at " . gmdate('Y-m-d H:i:s', $pubTimestamp) . " is older than cached article at " . gmdate('Y-m-d H:i:s', $existingTimestamp);
+            continue;
+        }
 
         $normUrl = normalize_canonical_news_url($link);
         $existingHero = $verifiedHeroMap[$normUrl] ?? null;
@@ -561,7 +570,7 @@ function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
         $itemLocalPath  = $customLocal;
         $itemImageHash  = $customHash;
         $itemVisualType = $visualType;
-        $itemImageUrl   = $customImage;
+        $itemImageUrl   = $customImage ?: ($candItem['ogImg'] ?? null);
 
         // STEP A: Extract candidate image from the feed item first
         if (empty($itemImageUrl)) {
@@ -633,30 +642,61 @@ function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
             }
         }
 
-        // STEP C: If published, save and finish provider. If rejected, log and continue.
+        // STEP C: If published, save and finish provider. If rejected, record reason and try next candidate.
         if ($gateResult['published']) {
             $record = $gateResult['record'];
             $record['caption_tag'] = strtoupper($providerKey) . ' OFFICIAL WIRE';
             $record['caption']     = '📷 ' . $record['title'];
-            $record['date']        = format_provider_relative_time($record['provider_published_at']) . ' • ' . $record['source_name'] . ' (Live RSS)';
+            $record['date']        = format_provider_relative_time($record['provider_published_at']) . ' • ' . $record['source_name'] . ($providerKey === 'anthropic' ? ' (Live Wire)' : ' (Live RSS)');
             $record['wire_type']   = $wireType;
             $record['wire_key']    = $wireKey;
 
             upsert_verified_news_db($record);
             $verifiedItems[] = $record;
+            $selectedTimestamp = gmdate('Y-m-d\TH:i:s\Z', $pubTimestamp);
+
+            if (!empty($existingArticle) && ($existingArticle['title'] === $record['title'] || ($existingArticle['link'] ?? '') === $record['source_url'])) {
+                $selectedStatus = 'NO_NEW_ARTICLE';
+            } else {
+                $selectedStatus = 'FRESH';
+            }
             break; // 1 verified newest valid item per provider
         } else {
+            $lastRejectionReason = $gateResult['error'] ?? 'Image validation failed';
             log_news_diagnostic([
                 'provider'            => $providerKey,
                 'external_article_id' => $guid,
                 'source_image_url'    => $candidate['source_image_url'] ?? '',
                 'status'              => STATUS_REJECTED,
-                'message'             => 'Candidate rejected by gate: ' . $gateResult['error']
+                'message'             => 'Candidate rejected by gate: ' . $lastRejectionReason
             ]);
         }
     }
 
-    return $verifiedItems;
+    if (empty($verifiedItems)) {
+        if (!empty($existingArticle)) {
+            $selectedStatus = !$fetchSuccess ? 'SOURCE_FETCH_FAILED' : 'NEW_ARTICLES_REJECTED';
+            $cachedTitle = $existingArticle['title'] ?? 'Unknown';
+            $cachedDate  = $existingArticle['date'] ?? 'Unknown';
+            error_log("PROVIDER_STALE_FALLBACK provider={$providerKey} cached_title={$cachedTitle} cached_date={$cachedDate} reason=" . ($lastRejectionReason ?: (!$fetchSuccess ? 'Source fetch failed' : 'All candidates rejected')));
+        } else {
+            $selectedStatus = 'UNAVAILABLE';
+        }
+    }
+
+    return [
+        'items' => $verifiedItems,
+        'diag'  => [
+            'status'                          => $selectedStatus,
+            'source_newest_timestamp'         => $sourceNewestTimestamp,
+            'source_newest_title'             => $sourceNewestTitle,
+            'selected_timestamp'              => $selectedTimestamp,
+            'cached_timestamp'                => !empty($existingTimestamp) ? gmdate('Y-m-d\TH:i:s\Z', $existingTimestamp) : null,
+            'last_successful_provider_fetch'  => $fetchSuccess ? gmdate('Y-m-d\TH:i:s\Z') : null,
+            'last_successful_provider_update' => !empty($verifiedItems) ? gmdate('Y-m-d\TH:i:s\Z') : null,
+            'reason'                          => $lastRejectionReason ?: null
+        ]
+    ];
 }
 
 /**
@@ -867,7 +907,9 @@ function sync_all_verified_feeds($forceRefresh = false) {
 
     foreach ($pkFeedConfigs as $cfg) {
         $key = $cfg['wire_key'];
-        $gated = ingest_and_gate_feed($cfg, $uploadDir, $verifiedHeroMap);
+        $existingReg = $regionalWires[$key] ?? null;
+        $feedResult = ingest_and_gate_feed($cfg, $uploadDir, $verifiedHeroMap, $existingReg);
+        $gated = $feedResult['items'] ?? [];
         if (!empty($gated)) {
             $art = $gated[0];
             $regionalWires[$key] = [
@@ -900,7 +942,11 @@ function sync_all_verified_feeds($forceRefresh = false) {
     $providerStatuses = [];
 
     foreach ($intFeedConfigs as $pKey => $pCfg) {
-        $gated = ingest_and_gate_feed($pCfg, $uploadDir, $verifiedHeroMap);
+        $existingBrand = $brandWires[$pKey] ?? null;
+        $feedResult = ingest_and_gate_feed($pCfg, $uploadDir, $verifiedHeroMap, $existingBrand);
+        $gated = $feedResult['items'] ?? [];
+        $diag = $feedResult['diag'] ?? [];
+
         if (!empty($gated)) {
             $art = $gated[0];
             $brandWires[$pKey] = [
@@ -929,11 +975,8 @@ function sync_all_verified_feeds($forceRefresh = false) {
                 'img'                   => $art['image_url'],
                 'provider_published_at' => $art['provider_published_at']
             ];
-            $providerStatuses[$pKey] = 'VERIFIED';
-        } else {
-            // Retain previously verified record for this provider
-            $providerStatuses[$pKey] = isset($brandWires[$pKey]) ? 'RETAINED_PREVIOUS' : 'UNAVAILABLE';
         }
+        $providerStatuses[$pKey] = $diag;
     }
 
     $breakingNews = array_values($breakingNewsMap);
@@ -978,8 +1021,9 @@ function sync_all_verified_feeds($forceRefresh = false) {
     return $feedData;
 }
 
-// Only execute standalone output if called directly as the primary script entry point
-$isDirectExecution = (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) === __FILE__) ||
+// Only execute standalone output if called directly as the primary script entry point or AJAX endpoint
+$isDirectExecution = (isset($_SERVER['REQUEST_URI']) && str_contains(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '', 'live_tech_news.php')) ||
+                      (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) === __FILE__) ||
                       (php_sapi_name() === 'cli' && isset($argv[0]) && realpath($argv[0]) === __FILE__);
 
 if ($isDirectExecution) {

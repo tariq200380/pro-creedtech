@@ -67,7 +67,7 @@ class NewsValidationGate {
         'cdn.sanity.io', 'www-cdn.anthropic.com', 'www.anthropic.com', 'anthropic.com',
         'images.ctfassets.net', 'openaicom-cdn.azureedge.net', 'openai.com', 'www.openai.com', 'cdn.openai.com',
         'about.fb.com', 'about.meta.com', 'scontent.xx.fbcdn.net', 'facebook.com',
-        'blogs.microsoft.com', 'news.microsoft.com', 'devblogs.microsoft.com', 'www.microsoft.com', 'microsoft.com', 'blogs.windows.com', 'windows.com',
+        'blogs.microsoft.com', 'news.microsoft.com', 'devblogs.microsoft.com', 'www.microsoft.com', 'microsoft.com', 'blogs.windows.com', 'windows.com', 'winblogs.thesourcemediaassets.com', 'thesourcemediaassets.com', 'assets.msn.com', 'img-prod-cms-rt-microsoft-com.akamaized.net',
         'newsroom.intel.com', 'www.intel.com', 'intel.com',
         'i.dawn.com', 'www.dawn.com', 'dawn.com',
         'i.brecorder.com', 'www.brecorder.com', 'brecorder.com',

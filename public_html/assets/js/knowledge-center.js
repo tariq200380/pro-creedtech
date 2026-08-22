@@ -279,12 +279,13 @@ function renderSidebarNavigator() {
 
   list.innerHTML = ARTICLES_STORE.map(function(art) {
     var isActive = (art.id === CURRENT_ACTIVE_ARTICLE_ID);
+    var catName = (art.category ? art.category.split('&')[0] : 'GENERAL').trim();
     return '<button onclick="openDynamicArticle(' + art.id + ', event)" class="kc-sidebar-item' + (isActive ? ' active' : '') + '">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;gap:4px;">' +
-        '<span style="font-size:9.5px;font-weight:800;color:#0052FF;text-transform:uppercase;">' + (art.category.split('&')[0]) + '</span>' +
-        '<span style="font-size:10.5px;color:#94A3B8;">' + art.read_time + '</span>' +
+        '<span style="font-size:9.5px;font-weight:800;color:#0052FF;text-transform:uppercase;">' + catName + '</span>' +
+        '<span style="font-size:10.5px;color:#94A3B8;">' + (art.read_time || '') + '</span>' +
       '</div>' +
-      '<h5 style="font-size:12px;font-weight:700;color:#0F172A;margin:2px 0 0;line-height:1.35;text-align:left;">' + art.title + '</h5>' +
+      '<h5 style="font-size:12px;font-weight:700;color:#0F172A;margin:2px 0 0;line-height:1.35;text-align:left;">' + (art.title || '') + '</h5>' +
     '</button>';
   }).join('');
 }
@@ -1310,6 +1311,26 @@ function handleEventRegister(e) {
   closeEventModal();
 }
 
+// Sidebar Breaking Brand Wires Renderer
+function updateSidebarBrandWires() {
+  var container = document.getElementById('sidebarBrandWiresList');
+  if (!container || !WIRE_DATA || Object.keys(WIRE_DATA).length === 0) return;
+  var sbIcons = { google: '🌐', anthropic: '🧠', openai: '🤖', nvidia: '⚡', microsoft: '🪟', meta: '♾️', apple: '🍎', intel: '🔷' };
+  var html = '';
+  ['google', 'anthropic', 'openai', 'nvidia', 'microsoft'].forEach(function(k) {
+    var item = WIRE_DATA[k];
+    if (!item) return;
+    var icon = sbIcons[k] || '⚡';
+    var title = item.title || k.toUpperCase();
+    var cat = item.cat || item.category || (k.toUpperCase() + ' WIRE');
+    html += '<button type="button" onclick="selectWireBrand(\'' + k + '\')" class="kc-sidebar-item" style="border:none;padding:8px 10px;text-align:left;width:100%;cursor:pointer;">' +
+      '<span style="color:#0052FF;font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">' + icon + ' ' + title.replace(/"/g, '&quot;') + '</span>' +
+      '<span style="font-size:10.5px;color:#64748B;display:block;">' + cat.replace(/"/g, '&quot;') + '</span>' +
+    '</button>';
+  });
+  if (html) container.innerHTML = html;
+}
+
 // Fetch Live Tech Feeds API (Continuous Live Background Polling)
 async function fetchLiveNewsAPI() {
   try {
@@ -1320,6 +1341,7 @@ async function fetchLiveNewsAPI() {
       if (data.brand_wires && Object.keys(data.brand_wires).length > 0) {
         WIRE_DATA = data.brand_wires;
         selectWireBrand(currentWireBrand);
+        updateSidebarBrandWires();
       }
       if (data.regional_wires && Object.keys(data.regional_wires).length > 0) {
         REGIONAL_DATA = data.regional_wires;
@@ -1334,9 +1356,10 @@ async function fetchLiveNewsAPI() {
   }
 }
 
-// DOM Ready
-document.addEventListener('DOMContentLoaded', function() {
+// Resilient DOM Ready Initializer
+function initKnowledgeCenter() {
   renderSidebarNavigator();
+  updateSidebarBrandWires();
   initDeckCards();
   startDeckAutoRotate();
 
@@ -1396,7 +1419,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Initial live news fetch
+  // Initial live news render & fetch
+  if (WIRE_DATA && Object.keys(WIRE_DATA).length > 0) {
+    selectWireBrand(currentWireBrand);
+  }
   fetchLiveNewsAPI();
 
   // Real-time Background Auto-Update: Polls live API every 60 seconds automatically
@@ -1407,4 +1433,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (targetId) {
     openDynamicArticle(parseInt(targetId));
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initKnowledgeCenter);
+} else {
+  initKnowledgeCenter();
+}

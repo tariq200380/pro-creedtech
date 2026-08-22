@@ -619,19 +619,19 @@ include __DIR__ . '/includes/header.php';
               <div style="font-size:11px;font-weight:800;color:#EF4444;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">
                 ⚡ BREAKING BRAND WIRES
               </div>
-              <div style="display:flex;flex-direction:column;gap:6px;">
-                <button onclick="selectWireBrand('google')" class="kc-sidebar-item" style="border:none;padding:8px 10px;">
-                  <span style="color:#0052FF;font-weight:700;font-size:12px;">🌐 Google Willow Chip</span>
-                  <span style="font-size:10.5px;color:#64748B;">105 Qubits Milestone</span>
+              <div style="display:flex;flex-direction:column;gap:6px;" id="sidebarBrandWiresList">
+                <?php 
+                  $sbBrands = ['google' => '🌐', 'anthropic' => '🧠', 'openai' => '🤖', 'nvidia' => '⚡', 'microsoft' => '🪟'];
+                  foreach ($sbBrands as $sbKey => $sbIcon):
+                    $sbItem = $brandWires[$sbKey] ?? [];
+                    $sbTitle = $sbItem['title'] ?? ucfirst($sbKey);
+                    $sbCat = $sbItem['cat'] ?? ($sbItem['source'] ?? (strtoupper($sbKey) . ' WIRE'));
+                ?>
+                <button type="button" onclick="selectWireBrand('<?= $sbKey ?>')" class="kc-sidebar-item" style="border:none;padding:8px 10px;text-align:left;width:100%;cursor:pointer;">
+                  <span style="color:#0052FF;font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;"><?= $sbIcon ?> <?= htmlspecialchars($sbTitle) ?></span>
+                  <span style="font-size:10.5px;color:#64748B;display:block;"><?= htmlspecialchars($sbCat) ?></span>
                 </button>
-                <button onclick="selectWireBrand('openai')" class="kc-sidebar-item" style="border:none;padding:8px 10px;">
-                  <span style="color:#059669;font-weight:700;font-size:12px;">🤖 OpenAI Strawberry</span>
-                  <span style="font-size:10.5px;color:#64748B;">Neural Inference</span>
-                </button>
-                <button onclick="selectWireBrand('nvidia')" class="kc-sidebar-item" style="border:none;padding:8px 10px;">
-                  <span style="color:#D97706;font-weight:700;font-size:12px;">⚡ NVIDIA B200</span>
-                  <span style="font-size:10.5px;color:#64748B;">NVLink 5 Superchips</span>
-                </button>
+                <?php endforeach; ?>
               </div>
             </div>
           </aside>
@@ -1423,6 +1423,6 @@ window.CREED_KC_INIT = {
   regionalData: <?= json_encode(!empty($regionalWires) ? $regionalWires : new stdClass(), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>
 };
 </script>
-<script src="assets/js/knowledge-center.js" defer></script>
+<script src="assets/js/knowledge-center.js?v=<?= @filemtime(__DIR__ . '/assets/js/knowledge-center.js') ?>" defer></script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
