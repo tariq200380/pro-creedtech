@@ -132,7 +132,6 @@ if (!isset($og_image) || empty($og_image)) {
   <!-- Local Production Stylesheets with Automatic Cache Busting -->
   <link rel="stylesheet" href="<?= creed_asset_url('assets/css/tailwind.min.css') ?>">
   <link rel="stylesheet" href="<?= creed_asset_url('assets/vendor/bootstrap-icons/bootstrap-icons.min.css') ?>">
-  <link rel="stylesheet" href="<?= creed_asset_url('assets/vendor/sweetalert2/sweetalert2.min.css') ?>">
   
   <!-- Bulletproof Button & Component Styles (Immune to Tailwind class gaps) -->
   <style>

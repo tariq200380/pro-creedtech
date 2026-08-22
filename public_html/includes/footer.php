@@ -206,8 +206,12 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
 
       <!-- FooterSubLegalBar.tsx -->
       <div class="flex flex-col sm:flex-row items-center justify-between border-t border-[#2A2A2A] pt-6 mt-8">
-        <div class="text-xs text-[#F4F6F8]/60 mb-4 sm:mb-0 text-center sm:text-left">
-          <?= htmlspecialchars($copyrightText) ?> • Designed & Developed by <span class="font-semibold text-white">CREED TECH</span>
+        <div class="text-xs text-[#F4F6F8]/60 mb-4 sm:mb-0 text-center sm:text-left flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1">
+          <span><?= htmlspecialchars($copyrightText) ?> • Designed & Developed by <span class="font-semibold text-white">CREED TECH</span></span>
+          <span class="hidden sm:inline text-gray-600">|</span>
+          <a href="privacy-policy" class="hover:text-white hover:underline transition-colors">Privacy Policy</a>
+          <span class="text-gray-600">•</span>
+          <a href="terms" class="hover:text-white hover:underline transition-colors">Terms &amp; Conditions</a>
         </div>
         
         <!-- 4 Equal-Sized Clickable Security Badges (2 Left & 2 Right on Mobile, Horizontal Row on Desktop) -->
@@ -242,8 +246,6 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
     </div>
   </footer>
 
-  <!-- Local Production SweetAlert2 Bundle with Automatic Cache Busting -->
-  <script src="<?= creed_asset_url('assets/vendor/sweetalert2/sweetalert2.all.min.js') ?>" defer></script>
   <script>
     // Newsletter Submission
     const newsForm = document.getElementById("nextJsNewsletterForm");
@@ -258,21 +260,19 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
         try {
           const res = await fetch("ajax/newsletter.php", { method: "POST", body: formData });
           const data = await res.json();
-          Swal.fire({
-            icon: data.success ? "success" : "error",
+          showCustomAlert({
             title: data.success ? "Subscribed!" : "Notice",
-            text: data.message || "✓ Successfully subscribed to insights!",
-            timer: 3000,
-            showConfirmButton: false
+            message: data.message || "✓ Successfully subscribed to insights!",
+            type: data.success ? "success" : "warning",
+            buttonText: "Continue"
           });
           if (data.success) newsForm.reset();
         } catch (err) {
-          Swal.fire({
-            icon: "success",
+          showCustomAlert({
             title: "Subscribed!",
-            text: "✓ Successfully subscribed to insights!",
-            timer: 3000,
-            showConfirmButton: false
+            message: "✓ Successfully subscribed to insights!",
+            type: "success",
+            buttonText: "Continue"
           });
           newsForm.reset();
         } finally {
