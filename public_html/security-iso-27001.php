@@ -1,6 +1,6 @@
 <?php
 $page_title = "ISO/IEC 27001:2022 ISMS Security Architecture | Creed Tech";
-$page_description = "Technical breakdown of Creed Tech's Information Security Management System (ISMS) certified under ISO/IEC 27001:2022 standards by IAF accredited registrar.";
+$page_description = "Technical breakdown of Creed Tech's Information Security Management System (ISMS) alignment with ISO/IEC 27001:2022 standards and Annex A control architecture.";
 $active_page = "security";
 
 include __DIR__ . '/includes/header.php';
@@ -90,7 +90,7 @@ include __DIR__ . '/includes/header.php';
 
       <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1E40AF;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;margin-bottom:1rem;flex-wrap:wrap;">
         <span style="width:6px;height:6px;background:#2563EB;border-radius:50%;display:inline-block;"></span>
-        <span>GLOBAL ISMS ACCREDITATION • GENEVA, SWITZERLAND</span>
+        <span>GLOBAL ISMS STANDARD • ISO/IEC 27001:2022 ALIGNMENT</span>
       </div>
 
       <h1 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;letter-spacing:-0.03em;color:#111827;line-height:1.2;margin:0 0 1rem;">
@@ -104,7 +104,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Compact Buttons -->
       <div class="sec-btn-group" style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:2rem;">
         <a href="contact" style="padding:8px 16px;background:#0052FF;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 1px 2px rgba(0,82,255,0.2);transition:background 0.2s;" onmouseover="this.style.background='#0043D6'" onmouseout="this.style.background='#0052FF'">
-          Request ISO 27001 Dossier
+          Request ISMS Architecture Overview
         </a>
         <a href="security" style="padding:8px 16px;background:#fff;color:#374151;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border:1px solid #D1D5DB;border-radius:2px;transition:background 0.2s;" onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background='#fff'">
           All Security Standards
@@ -122,12 +122,12 @@ include __DIR__ . '/includes/header.php';
           <span style="font-size:12px;font-weight:700;color:#111827;">ISO (Geneva, Switzerland)</span>
         </div>
         <div style="padding:4px 8px;border-right:1px solid #F3F4F6;">
-          <span style="font-size:10px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;">Accreditation</span>
-          <span style="font-size:12px;font-weight:700;color:#111827;">IAF / UKAS Body</span>
+          <span style="font-size:10px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;">Control Framework</span>
+          <span style="font-size:12px;font-weight:700;color:#111827;">Annex A (93 Controls)</span>
         </div>
         <div style="padding:4px 8px;">
-          <span style="font-size:10px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;">Audit Status</span>
-          <span style="font-size:12px;font-weight:700;color:#15803D;">Active • Surveillance Pass</span>
+          <span style="font-size:10px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;display:block;">Security Status</span>
+          <span style="font-size:12px;font-weight:700;color:#15803D;">Operational ISMS Alignment</span>
         </div>
       </div>
 
@@ -146,7 +146,7 @@ include __DIR__ . '/includes/header.php';
           4-Tier ISMS Governance Structure
         </h2>
         <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-          Creed Tech implements an institutional 4-tier documentation and enforcement hierarchy ensuring total compliance across all internal and client-facing systems:
+          Creed Tech implements an institutional 4-tier documentation and enforcement hierarchy ensuring structured security controls across all internal and client-facing systems:
         </p>
       </div>
 
@@ -172,7 +172,7 @@ include __DIR__ . '/includes/header.php';
         <div style="padding:1.5rem;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:2px;">
           <span style="font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;display:block;margin-bottom:4px;">TIER 4</span>
           <h3 style="font-size:1rem;font-weight:700;color:#111827;margin:0 0 6px;">Evidence &amp; Audits</h3>
-          <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">Immutable audit logs, SIEM telemetry, third-party pen-test reports, and employee training records retained for external verification.</p>
+          <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">Immutable audit logs, SIEM telemetry, authorized security assessment records, and employee security training documentation.</p>
         </div>
       </div>
 
@@ -249,7 +249,7 @@ include __DIR__ . '/includes/header.php';
             <span style="font-size:12px;font-weight:600;color:#2563EB;">Secure SDLC, Encryption &amp; Vulnerability Management</span>
           </div>
           <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0 0 12px;">
-            Endpoint encryption, network segregation, automated source code SAST/DAST testing, secure development lifecycle (SSDLC), continuous logging, and automated vulnerability management.
+            Endpoint encryption, network segregation, automated source code SAST/DAST testing, secure development lifecycle (SSDLC), continuous logging, and automated vulnerability management. All security testing is performed exclusively on authorized systems within agreed client scope.
           </p>
           <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:#6B7280;">
             <span style="background:#F3F4F6;padding:2px 8px;border-radius:2px;">A.8.8 Vulnerability Management</span>
@@ -272,10 +272,10 @@ include __DIR__ . '/includes/header.php';
           INCIDENT RESPONSE PLAYBOOK
         </span>
         <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#111827;letter-spacing:-0.02em;margin:0 0 8px;">
-          Incident Severity Classification &amp; Response SLAs
+          Incident Severity Classification &amp; Response Framework
         </h2>
         <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-          In accordance with ISO 27001 Annex A.5.24-28, all security telemetry is routed through our automated incident triage engine:
+          In accordance with ISO 27001 Annex A.5.24-28, all security telemetry is routed through a structured incident triage and escalation process:
         </p>
       </div>
 
@@ -286,7 +286,7 @@ include __DIR__ . '/includes/header.php';
             <tr style="background:#F9FAFB;border-bottom:1px solid #E5E7EB;">
               <th style="padding:14px;font-weight:700;color:#111827;">Severity Level</th>
               <th style="padding:14px;font-weight:700;color:#111827;">Definition / Scenario</th>
-              <th style="padding:14px;font-weight:700;color:#111827;">Initial Response SLA</th>
+              <th style="padding:14px;font-weight:700;color:#111827;">Response Priority</th>
               <th style="padding:14px;font-weight:700;color:#111827;">Client Notification</th>
             </tr>
           </thead>
@@ -294,25 +294,25 @@ include __DIR__ . '/includes/header.php';
             <tr style="border-bottom:1px solid #F3F4F6;">
               <td style="padding:14px;font-weight:700;color:#DC2626;">SEV-1 (Critical)</td>
               <td style="padding:14px;color:#374151;">Active data breach, ransomware, or full service outage</td>
-              <td style="padding:14px;font-weight:600;color:#111827;">&lt; 15 Minutes</td>
-              <td style="padding:14px;font-weight:600;color:#111827;">&lt; 1 Hour (Direct CISO Call)</td>
+              <td style="padding:14px;font-weight:600;color:#111827;">Immediate Escalation</td>
+              <td style="padding:14px;font-weight:600;color:#111827;">Expedited — Direct Security Team Lead</td>
             </tr>
             <tr style="border-bottom:1px solid #F3F4F6;">
               <td style="padding:14px;font-weight:700;color:#EA580C;">SEV-2 (High)</td>
               <td style="padding:14px;color:#374151;">Potential unauthorized access or isolated core component failure</td>
-              <td style="padding:14px;font-weight:600;color:#111827;">&lt; 1 Hour</td>
-              <td style="padding:14px;font-weight:600;color:#111827;">&lt; 4 Hours</td>
+              <td style="padding:14px;font-weight:600;color:#111827;">High Priority Response</td>
+              <td style="padding:14px;font-weight:600;color:#111827;">Same-Day Notification</td>
             </tr>
             <tr style="border-bottom:1px solid #F3F4F6;">
               <td style="padding:14px;font-weight:700;color:#CA8A04;">SEV-3 (Medium)</td>
               <td style="padding:14px;color:#374151;">Non-critical vulnerability identified in non-production sandbox</td>
-              <td style="padding:14px;font-weight:600;color:#111827;">&lt; 4 Hours</td>
+              <td style="padding:14px;font-weight:600;color:#111827;">Scheduled Assessment</td>
               <td style="padding:14px;font-weight:600;color:#111827;">24 Hours / Weekly Report</td>
             </tr>
             <tr>
               <td style="padding:14px;font-weight:700;color:#2563EB;">SEV-4 (Low)</td>
               <td style="padding:14px;color:#374151;">Informational security advisory or minor dependency patch</td>
-              <td style="padding:14px;font-weight:600;color:#111827;">&lt; 24 Hours</td>
+              <td style="padding:14px;font-weight:600;color:#111827;">Planned Remediation</td>
               <td style="padding:14px;font-weight:600;color:#111827;">Monthly Sprint Release</td>
             </tr>
           </tbody>
@@ -324,33 +324,33 @@ include __DIR__ . '/includes/header.php';
         <div style="background:#fff;border:1px solid #FCA5A5;border-left:4px solid #DC2626;border-radius:4px;padding:1.25rem;box-shadow:0 1px 2px rgba(0,0,0,0.04);">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid #FEE2E2;padding-bottom:8px;">
             <span style="font-size:13px;font-weight:700;color:#DC2626;">SEV-1 (Critical)</span>
-            <span style="font-size:10px;font-weight:700;color:#DC2626;background:#FEF2F2;padding:2px 8px;border-radius:2px;">&lt; 15 Min SLA</span>
+            <span style="font-size:10px;font-weight:700;color:#DC2626;background:#FEF2F2;padding:2px 8px;border-radius:2px;">Immediate Escalation</span>
           </div>
           <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:8px;">
             Active data breach, ransomware, or full service outage.
           </div>
           <div style="font-size:11px;color:#111827;font-weight:600;line-height:1.5;">
-            <strong>Client Notification:</strong> &lt; 1 Hour (Direct CISO Call)
+            <strong>Client Notification:</strong> Expedited — Direct Security Team Lead
           </div>
         </div>
 
         <div style="background:#fff;border:1px solid #FDBA74;border-left:4px solid #EA580C;border-radius:4px;padding:1.25rem;box-shadow:0 1px 2px rgba(0,0,0,0.04);">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid #FFEDD5;padding-bottom:8px;">
             <span style="font-size:13px;font-weight:700;color:#EA580C;">SEV-2 (High)</span>
-            <span style="font-size:10px;font-weight:700;color:#EA580C;background:#FFF7ED;padding:2px 8px;border-radius:2px;">&lt; 1 Hour SLA</span>
+            <span style="font-size:10px;font-weight:700;color:#EA580C;background:#FFF7ED;padding:2px 8px;border-radius:2px;">High Priority</span>
           </div>
           <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:8px;">
             Potential unauthorized access or isolated core component failure.
           </div>
           <div style="font-size:11px;color:#111827;font-weight:600;line-height:1.5;">
-            <strong>Client Notification:</strong> &lt; 4 Hours
+            <strong>Client Notification:</strong> Same-Day Notification
           </div>
         </div>
 
         <div style="background:#fff;border:1px solid #FDE047;border-left:4px solid #CA8A04;border-radius:4px;padding:1.25rem;box-shadow:0 1px 2px rgba(0,0,0,0.04);">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid #FEF9C3;padding-bottom:8px;">
             <span style="font-size:13px;font-weight:700;color:#CA8A04;">SEV-3 (Medium)</span>
-            <span style="font-size:10px;font-weight:700;color:#CA8A04;background:#FEFCE8;padding:2px 8px;border-radius:2px;">&lt; 4 Hours SLA</span>
+            <span style="font-size:10px;font-weight:700;color:#CA8A04;background:#FEFCE8;padding:2px 8px;border-radius:2px;">Scheduled</span>
           </div>
           <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:8px;">
             Non-critical vulnerability identified in non-production sandbox.
@@ -363,7 +363,7 @@ include __DIR__ . '/includes/header.php';
         <div style="background:#fff;border:1px solid #93C5FD;border-left:4px solid #2563EB;border-radius:4px;padding:1.25rem;box-shadow:0 1px 2px rgba(0,0,0,0.04);">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid #DBEAFE;padding-bottom:8px;">
             <span style="font-size:13px;font-weight:700;color:#2563EB;">SEV-4 (Low)</span>
-            <span style="font-size:10px;font-weight:700;color:#2563EB;background:#EFF6FF;padding:2px 8px;border-radius:2px;">&lt; 24 Hours SLA</span>
+            <span style="font-size:10px;font-weight:700;color:#2563EB;background:#EFF6FF;padding:2px 8px;border-radius:2px;">Planned</span>
           </div>
           <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:8px;">
             Informational security advisory or minor dependency patch.
@@ -382,13 +382,13 @@ include __DIR__ . '/includes/header.php';
     <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%, rgba(255, 107, 0, 0.18) 0%, transparent 65%);"></div>
     <div class="sec-container" style="position:relative;max-width:48rem;z-index:10;">
       <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#fff;margin:0 0 12px;">
-        Need Our Complete ISO 27001 Audit Documentation?
+        Need Our ISO 27001 Security Alignment Documentation?
       </h2>
       <p style="color:#D1D5DB;font-size:13px;line-height:1.6;margin:0 auto 1.5rem;max-width:36rem;font-weight:400;">
-        We provide pre-filled SIG questionnaires, CAIQ documentation, Certificate of Registration, and Statement of Applicability (SoA) under standard mutual NDA.
+        We can help prepare SIG questionnaires, CAIQ-aligned security documentation, and Statement of Applicability (SoA) frameworks tailored to client requirements, under standard mutual NDA.
       </p>
       <a href="contact" style="display:inline-block;padding:8px 20px;background:#FF6B00;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);transition:background 0.2s;" onmouseover="this.style.background='#EA580C'" onmouseout="this.style.background='#FF6B00'">
-        Request ISO 27001 Security Dossier
+        Request ISO 27001 Security Architecture
       </a>
     </div>
   </section>

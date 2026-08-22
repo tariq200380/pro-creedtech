@@ -1,9 +1,9 @@
 <?php
-$page_title = "AICPA SOC 2 Type II Audited Controls & Architecture | Creed Tech";
-$page_description = "In-depth overview of AICPA SOC 2 Type II Trust Services Criteria (Security, Availability, Confidentiality) and Creed Tech operational enforcement.";
+$page_title = "AICPA SOC 2 Type II Security Controls & Architecture | Creed Tech";
+$page_description = "Overview of AICPA SOC 2 Type II Trust Services Criteria (Security, Availability, Confidentiality) and Creed Tech's secure operational engineering.";
 $active_page = "security";
 
-include __DIR__ . '/includes/header.php';
+include dirname(__DIR__) . '/includes/header.php';
 ?>
 
 <style>
@@ -79,22 +79,22 @@ include __DIR__ . '/includes/header.php';
         <!-- Left Col -->
         <div>
           <span style="display:inline-block;padding:2px 10px;background:#172554;border:1px solid #1E40AF;color:#93C5FD;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:2px;margin-bottom:12px;flex-wrap:wrap;">
-            AICPA SSAE 18 CRITERIA • DURHAM, NC &amp; NYC, USA
+            AICPA TRUST SERVICES CRITERIA • SOC 2 TYPE II ALIGNMENT
           </span>
 
           <h1 style="font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-0.03em;color:#fff;line-height:1.2;margin:0 0 1rem;">
             SOC 2 Type II <br />
-            <span style="color:#0052FF;">Audited Trust Services Controls</span>
+            <span style="color:#0052FF;">Trust Services Security Controls</span>
           </h1>
 
           <p style="font-size:13px;color:#D1D5DB;line-height:1.7;font-weight:400;max-width:36rem;margin:0 0 1.5rem;">
-            The American Institute of CPAs (AICPA, USA) establishes the definitive benchmark for SaaS security. Creed Tech operates under continuous 12-month live observation testing Security, Availability (99.99%), and Confidentiality.
+            The American Institute of CPAs (AICPA, USA) establishes the definitive benchmark for SaaS security. Creed Tech engineers systems aligned with continuous operational controls across Security, Availability, and Confidentiality.
           </p>
 
           <!-- Compact Buttons -->
           <div class="sec-btn-group" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <a href="contact" style="padding:8px 16px;background:#0052FF;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 1px 2px rgba(0,82,255,0.2);transition:background 0.2s;" onmouseover="this.style.background='#0043D6'" onmouseout="this.style.background='#0052FF'">
-              Request SOC 2 Type II Report
+              Request SOC 2 Readiness Documentation
             </a>
             <a href="security" style="padding:8px 16px;background:#1E293B;color:#E2E8F0;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border:1px solid #334155;border-radius:2px;transition:background 0.2s;" onmouseover="this.style.background='#334155'" onmouseout="this.style.background='#1E293B'">
               All Security Standards
@@ -110,26 +110,26 @@ include __DIR__ . '/includes/header.php';
               <span style="font-size:12px;font-weight:700;color:#E5E7EB;">AICPA SSAE 18 / AT-C 205</span>
             </div>
             <span style="font-size:10px;font-family:monospace;color:#4ADE80;background:rgba(20,83,45,0.8);padding:2px 8px;border-radius:2px;border:1px solid #166534;">
-              UNQUALIFIED CLEAN OPINION
+              TRUST CRITERIA ALIGNED
             </span>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:8px;font-size:11px;font-family:monospace;">
             <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(31,41,55,0.6);">
-              <span style="color:#9CA3AF;font-family:sans-serif;">Audit Standard:</span>
-              <span style="color:#fff;">SOC 2 Type II (12-Month)</span>
+              <span style="color:#9CA3AF;font-family:sans-serif;">Framework Standard:</span>
+              <span style="color:#fff;">SOC 2 Type II Alignment</span>
             </div>
             <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(31,41,55,0.6);">
-              <span style="color:#9CA3AF;font-family:sans-serif;">Audited Criteria:</span>
+              <span style="color:#9CA3AF;font-family:sans-serif;">Control Criteria:</span>
               <span style="color:#93C5FD;">Security, Availability, Confidentiality</span>
             </div>
             <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(31,41,55,0.6);">
-              <span style="color:#9CA3AF;font-family:sans-serif;">Exceptions Found:</span>
-              <span style="color:#4ADE80;font-weight:700;">0 Material Exceptions</span>
+              <span style="color:#9CA3AF;font-family:sans-serif;">Operational Rigor:</span>
+              <span style="color:#4ADE80;font-weight:700;">Continuous Control Monitoring</span>
             </div>
             <div style="display:flex;justify-content:space-between;padding:4px 0;">
-              <span style="color:#9CA3AF;font-family:sans-serif;">Auditor:</span>
-              <span style="color:#D1D5DB;">Independent Certified CPA Firm</span>
+              <span style="color:#9CA3AF;font-family:sans-serif;">Control Model:</span>
+              <span style="color:#D1D5DB;">AICPA SSAE 18 Aligned Controls</span>
             </div>
           </div>
         </div>
@@ -148,10 +148,10 @@ include __DIR__ . '/includes/header.php';
           AUDIT RIGOR
         </span>
         <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#111827;letter-spacing:-0.02em;margin:0 0 8px;">
-          Why SOC 2 Type II is the True Enterprise Benchmark
+          Why Type II Operational Rigor Matters for Enterprise SaaS
         </h2>
         <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-          Many software vendors settle for a basic Type I snapshot. Creed Tech undergoes the comprehensive Type II audit:
+          Many software vendors design for a point-in-time snapshot. Creed Tech designs for continuous Type II operational effectiveness:
         </p>
       </div>
 
@@ -167,13 +167,13 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <div style="padding:1.75rem;background:#fff;border:2px solid #0052FF;border-radius:2px;box-shadow:0 4px 6px -1px rgba(0,82,255,0.1);">
-          <span style="font-size:11px;font-weight:700;color:#0052FF;text-transform:uppercase;display:block;margin-bottom:4px;">SOC 2 TYPE II (CREED TECH STANDARD)</span>
+          <span style="font-size:11px;font-weight:700;color:#0052FF;text-transform:uppercase;display:block;margin-bottom:4px;">SOC 2 TYPE II OPERATIONAL MODEL</span>
           <h3 style="font-size:1.15rem;font-weight:700;color:#111827;margin:0 0 8px;">12-Month Live Operational Proof</h3>
           <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0 0 12px;">
-            Independent CPA auditors test random operational samples over a continuous 12-month window: verifying every code PR, deployment log, access revocation, and disaster recovery drill.
+            We engineer continuous controls across daily development: verifying every code PR, logging deployments, automating access revocations, and executing regular disaster recovery drills.
           </p>
           <span style="display:inline-block;padding:2px 10px;background:#F0FDF4;color:#15803D;font-size:12px;font-weight:600;border:1px solid #BBF7D0;border-radius:2px;">
-            12-Month Proven Operating Effectiveness
+            Continuous Control Effectiveness
           </span>
         </div>
 
@@ -191,10 +191,10 @@ include __DIR__ . '/includes/header.php';
           TRUST CRITERIA BREAKDOWN
         </span>
         <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#111827;letter-spacing:-0.02em;margin:0 0 8px;">
-          AICPA Common Criteria (CC1-CC9) Enforcement
+          AICPA Common Criteria (CC1-CC9) Implementation
         </h2>
         <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-          How Creed Tech implements and proves compliance across the 9 core control categories:
+          How Creed Tech implements security safeguards across the 9 core control categories:
         </p>
       </div>
 
@@ -228,7 +228,7 @@ include __DIR__ . '/includes/header.php';
           <span style="font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;display:block;margin-bottom:4px;">CC7</span>
           <h3 style="font-size:1rem;font-weight:700;color:#111827;margin:0 0 6px;">System Operations &amp; Incident Mgmt</h3>
           <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">
-            Immutable audit logging, anti-malware telemetry, file integrity monitoring (FIM), and guaranteed sub-15 minute critical incident response.
+            Immutable audit logging, anti-malware telemetry, file integrity monitoring (FIM), and structured incident detection and escalation for critical events.
           </p>
         </div>
 
@@ -261,14 +261,14 @@ include __DIR__ . '/includes/header.php';
         Undergoing Enterprise Vendor Risk Assessment?
       </h2>
       <p style="color:#D1D5DB;font-size:13px;line-height:1.6;margin:0 auto 1.5rem;max-width:36rem;font-weight:400;">
-        We provide pre-filled SIG Core questionnaires, CAIQ documentation, and our full independent SOC 2 Type II audit report under standard mutual NDA.
+        We can help prepare SIG Core questionnaires, CAIQ-aligned security documentation, and detailed SOC 2 control mapping frameworks tailored to client requirements, under standard mutual NDA.
       </p>
       <a href="contact" style="display:inline-block;padding:8px 20px;background:#FF6B00;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);transition:background 0.2s;" onmouseover="this.style.background='#EA580C'" onmouseout="this.style.background='#FF6B00'">
-        Request SOC 2 Type II Audit Report
+        Request SOC 2 Security Mapping
       </a>
     </div>
   </section>
 
 </div>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<?php include dirname(__DIR__) . '/includes/footer.php'; ?>

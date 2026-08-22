@@ -1,9 +1,9 @@
 <?php
 $page_title = "Enterprise Trust & Security Center | Creed Tech";
-$page_description = "Explore Creed Tech's real-time security posture, independent audit reports, global compliance certifications (ISO 27001, GDPR, SOC 2, PCI-DSS), and data governance architecture.";
+$page_description = "Explore Creed Tech's security engineering architecture, enterprise trust models, compliance readiness (ISO 27001, GDPR, SOC 2, PCI-DSS), and data governance safeguards.";
 $active_page = "security";
 
-include __DIR__ . '/includes/header.php';
+include dirname(__DIR__) . '/includes/header.php';
 ?>
 
 <style>
@@ -95,13 +95,13 @@ include __DIR__ . '/includes/header.php';
       </h1>
 
       <p style="font-size:clamp(0.875rem,1.5vw,1rem);color:#4B5563;line-height:1.7;font-weight:400;max-width:48rem;margin:0 auto 1.5rem;">
-        At Creed Tech, security is deeply engineered into our infrastructure, software development lifecycles, and corporate governance. Explore our independently certified compliance standards, real-time posture metrics, and technical protection models.
+        At Creed Tech, security is deeply engineered into our infrastructure, software development lifecycles, and corporate governance. Explore our standards-aligned security architecture, operational posture metrics, and technical protection models engineered for enterprise compliance.
       </p>
 
       <!-- Compact Action Buttons -->
       <div class="sec-btn-group" style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:2rem;">
         <a href="contact" style="padding:8px 16px;background:#0052FF;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 1px 2px rgba(0,82,255,0.2);transition:background 0.2s;" onmouseover="this.style.background='#0043D6'" onmouseout="this.style.background='#0052FF'">
-          Request Complete Audit Dossier
+          Request Security Architecture Overview
         </a>
         <a href="#frameworks" style="padding:8px 16px;background:#fff;color:#374151;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border:1px solid #D1D5DB;border-radius:2px;transition:background 0.2s;" onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background='#fff'">
           Explore 4 Compliance Frameworks ↓
@@ -117,23 +117,23 @@ include __DIR__ . '/includes/header.php';
       <div class="sec-metric-grid">
       
       <div style="display:flex;flex-direction:column;align-items:center;">
-        <span style="font-size:1.75rem;font-weight:600;color:#fff;margin-bottom:4px;">99.99%</span>
-        <span style="font-size:11px;color:#9CA3AF;font-weight:500;">Guaranteed System Uptime SLA</span>
+        <span style="font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-0.01em;">High Availability</span>
+        <span style="font-size:11px;color:#9CA3AF;font-weight:500;">Resilient Cloud Architecture</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;">
-        <span style="font-size:1.75rem;font-weight:600;color:#fff;margin-bottom:4px;">0</span>
-        <span style="font-size:11px;color:#9CA3AF;font-weight:500;">Data Breaches in Company History</span>
+        <span style="font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-0.01em;">Zero-Trust</span>
+        <span style="font-size:11px;color:#9CA3AF;font-weight:500;">Proactive Risk Mitigation</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;">
-        <span style="font-size:1.75rem;font-weight:600;color:#fff;margin-bottom:4px;">24/7/365</span>
-        <span style="font-size:11px;color:#9CA3AF;font-weight:500;">Continuous Automated SIEM Monitoring</span>
+        <span style="font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-0.01em;">Centralized SIEM</span>
+        <span style="font-size:11px;color:#9CA3AF;font-weight:500;">Security Telemetry &amp; Alerting</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;">
-        <span style="font-size:1.75rem;font-weight:600;color:#fff;margin-bottom:4px;">&lt;15 Min</span>
-        <span style="font-size:11px;color:#9CA3AF;font-weight:500;">Critical Incident MTTR Response</span>
+        <span style="font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-0.01em;">Rapid Triage</span>
+        <span style="font-size:11px;color:#9CA3AF;font-weight:500;">Structured Incident Playbooks</span>
       </div>
 
     </div>
@@ -145,13 +145,13 @@ include __DIR__ . '/includes/header.php';
       
       <div style="max-width:48rem;margin-bottom:2.5rem;text-align:left;">
         <span style="font-size:12px;font-weight:700;color:#0052FF;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">
-          INDEPENDENT CERTIFICATIONS
+          STANDARDS ALIGNMENT
         </span>
         <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#111827;letter-spacing:-0.02em;margin:0 0 8px;">
-          Certified Global Compliance Frameworks
+          Enterprise Compliance &amp; Security Frameworks
         </h2>
         <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-          Click on any framework below to inspect its governing authority, statutory requirements, audit lifecycle, and Creed Tech's client implementation architecture:
+          Click on any framework below to inspect its governing authority, statutory requirements, and Creed Tech's client implementation architecture:
         </p>
       </div>
 
@@ -161,17 +161,17 @@ include __DIR__ . '/includes/header.php';
         <a href="security-iso-27001" style="display:flex;flex-direction:column;justify-content:space-between;padding:1.75rem;background:#fff;border:1px solid #DBEAFE;border-radius:2px;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.05);transition:all 0.3s;" onmouseover="this.style.borderColor='#0052FF';this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='#DBEAFE';this.style.boxShadow='0 1px 2px rgba(0,0,0,0.05)'">
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-              <span style="font-size:10px;font-weight:700;color:#374151;background:#F3F4F6;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;">ACTIVE CERTIFIED</span>
+              <span style="font-size:10px;font-weight:700;color:#374151;background:#F3F4F6;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;">FRAMEWORK ALIGNED</span>
               <span style="font-size:12px;font-weight:600;color:#0052FF;">View Architecture →</span>
             </div>
             <h3 style="font-size:1.25rem;font-weight:700;color:#111827;margin:0 0 4px;">ISO/IEC 27001:2022</h3>
             <span style="font-size:11px;font-weight:600;color:#6B7280;display:block;margin-bottom:8px;">ISO &amp; IEC • Geneva, Switzerland</span>
             <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">
-              Independently audited governance covering all 93 Annex A controls, software engineering lifecycle, physical facilities, and enterprise risk management.
+              Comprehensive security governance aligned with all 93 Annex A controls, secure engineering lifecycle, access controls, and risk management.
             </p>
           </div>
           <div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #F3F4F6;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#9CA3AF;">
-            <span>Audited &amp; Verified</span>
+            <span>Standards Aligned</span>
             <span style="font-weight:600;color:#374151;">Explore Full Breakdown</span>
           </div>
         </a>
@@ -180,17 +180,17 @@ include __DIR__ . '/includes/header.php';
         <a href="security-gdpr" style="display:flex;flex-direction:column;justify-content:space-between;padding:1.75rem;background:#fff;border:1px solid #FDE68A;border-radius:2px;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.05);transition:all 0.3s;" onmouseover="this.style.borderColor='#F59E0B';this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='#FDE68A';this.style.boxShadow='0 1px 2px rgba(0,0,0,0.05)'">
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-              <span style="font-size:10px;font-weight:700;color:#374151;background:#F3F4F6;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;">ARTICLE 28 COMPLIANT</span>
+              <span style="font-size:10px;font-weight:700;color:#374151;background:#F3F4F6;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;">PRIVACY BY DESIGN</span>
               <span style="font-size:12px;font-weight:600;color:#0052FF;">View Architecture →</span>
             </div>
             <h3 style="font-size:1.25rem;font-weight:700;color:#111827;margin:0 0 4px;">EU GDPR Regulation (EU) 2016/679</h3>
             <span style="font-size:11px;font-weight:600;color:#6B7280;display:block;margin-bottom:8px;">European Data Protection Board • Brussels, Belgium</span>
             <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">
-              Legally binding Article 28 Data Processing Agreements (DPAs), sovereign EU data residency (Frankfurt/Dublin), automated DSAR erasure, and Privacy by Design.
+              Structured Article 28 Data Processing Agreement (DPA) templates, European data residency architecture, automated DSAR workflows, and Privacy by Design.
             </p>
           </div>
           <div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #F3F4F6;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#9CA3AF;">
-            <span>Audited &amp; Verified</span>
+            <span>Privacy Aligned</span>
             <span style="font-weight:600;color:#374151;">Explore Full Breakdown</span>
           </div>
         </a>
@@ -199,17 +199,17 @@ include __DIR__ . '/includes/header.php';
         <a href="security-soc-2" style="display:flex;flex-direction:column;justify-content:space-between;padding:1.75rem;background:#fff;border:1px solid #BBF7D0;border-radius:2px;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.05);transition:all 0.3s;" onmouseover="this.style.borderColor='#16A34A';this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='#BBF7D0';this.style.boxShadow='0 1px 2px rgba(0,0,0,0.05)'">
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-              <span style="font-size:10px;font-weight:700;color:#374151;background:#F3F4F6;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;">UNQUALIFIED CLEAN OPINION</span>
+              <span style="font-size:10px;font-weight:700;color:#374151;background:#F3F4F6;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;">TRUST SERVICES READY</span>
               <span style="font-size:12px;font-weight:600;color:#0052FF;">View Architecture →</span>
             </div>
             <h3 style="font-size:1.25rem;font-weight:700;color:#111827;margin:0 0 4px;">AICPA SOC 2 Type II</h3>
             <span style="font-size:11px;font-weight:600;color:#6B7280;display:block;margin-bottom:8px;">American Institute of CPAs • USA</span>
             <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">
-              Continuous 12-month live observation audit conducted by an independent CPA firm certifying Security, Availability (99.99%), and Confidentiality.
+              Engineered to meet AICPA SOC 2 Type II Trust Services Criteria across Security, Availability, and Confidentiality controls.
             </p>
           </div>
           <div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #F3F4F6;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#9CA3AF;">
-            <span>Audited &amp; Verified</span>
+            <span>Framework Aligned</span>
             <span style="font-weight:600;color:#374151;">Explore Full Breakdown</span>
           </div>
         </a>
@@ -218,17 +218,17 @@ include __DIR__ . '/includes/header.php';
         <a href="security-pci-dss" style="display:flex;flex-direction:column;justify-content:space-between;padding:1.75rem;background:#fff;border:1px solid #C7D2FE;border-radius:2px;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.05);transition:all 0.3s;" onmouseover="this.style.borderColor='#4F46E5';this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='#C7D2FE';this.style.boxShadow='0 1px 2px rgba(0,0,0,0.05)'">
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-              <span style="font-size:10px;font-weight:700;color:#374151;background:#F3F4F6;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;">LEVEL 1 TOKENIZED</span>
+              <span style="font-size:10px;font-weight:700;color:#374151;background:#F3F4F6;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:0.05em;">SCOPE REDUCED</span>
               <span style="font-size:12px;font-weight:600;color:#0052FF;">View Architecture →</span>
             </div>
             <h3 style="font-size:1.25rem;font-weight:700;color:#111827;margin:0 0 4px;">PCI-DSS Version 4.0</h3>
             <span style="font-size:11px;font-weight:600;color:#6B7280;display:block;margin-bottom:8px;">PCI Security Standards Council • Wakefield, MA, USA</span>
             <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">
-              Zero-PAN client-side tokenization and vault-isolated Cardholder Data Environments (CDE) reducing client PCI audit scope by over 90%.
+              Client-side payment tokenization and isolated architectures designed to minimize cardholder data environment (CDE) scope under PCI-DSS v4.0.
             </p>
           </div>
           <div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #F3F4F6;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#9CA3AF;">
-            <span>Audited &amp; Verified</span>
+            <span>Scope Optimized</span>
             <span style="font-weight:600;color:#374151;">Explore Full Breakdown</span>
           </div>
         </a>
@@ -265,13 +265,13 @@ include __DIR__ . '/includes/header.php';
         <div style="padding:1.5rem;background:#fff;border:1px solid #E5E7EB;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
           <span style="font-size:12px;font-weight:700;color:#0052FF;display:block;margin-bottom:4px;">02</span>
           <h3 style="font-size:1rem;font-weight:700;color:#111827;margin:0 0 8px;">Cryptographic Protection</h3>
-          <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">AES-256 GCM encryption at rest with KMS envelope keys, TLS 1.3 in transit with strict HSTS, and FIPS 140-2 Level 3 HSM key custody.</p>
+          <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">AES-256 GCM encryption at rest with envelope key management, TLS 1.3 in transit with strict HSTS, and secure key custody via cloud-managed KMS services.</p>
         </div>
 
         <div style="padding:1.5rem;background:#fff;border:1px solid #E5E7EB;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
           <span style="font-size:12px;font-weight:700;color:#0052FF;display:block;margin-bottom:4px;">03</span>
           <h3 style="font-size:1rem;font-weight:700;color:#111827;margin:0 0 8px;">Secure Development Lifecycle (SSDLC)</h3>
-          <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">Automated CI/CD SAST/DAST vulnerability scanning, mandatory peer code review, signed GPG commits, and third-party penetration testing.</p>
+          <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">CI/CD SAST/DAST vulnerability scanning, structured peer code review, version-controlled source management, and authorized penetration testing within agreed client scope.</p>
         </div>
 
         <div style="padding:1.5rem;background:#fff;border:1px solid #E5E7EB;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
@@ -297,7 +297,7 @@ include __DIR__ . '/includes/header.php';
           Audited Enterprise Sub-Processors
         </h2>
         <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-          In compliance with ISO 27001 (A.5.19) and GDPR (Article 28), all third-party vendors undergo mandatory annual security screening:
+          Following ISO 27001 (A.5.19) and GDPR (Article 28) supplier governance guidelines, all infrastructure sub-processors undergo rigorous security evaluation:
         </p>
       </div>
 
@@ -419,7 +419,7 @@ include __DIR__ . '/includes/header.php';
         Have Custom Vendor Security or Procurement Inquiries?
       </h2>
       <p style="color:#D1D5DB;font-size:13px;line-height:1.6;margin:0 auto 1.5rem;max-width:36rem;font-weight:400;">
-        Our CISO and compliance team provide complete audit dossiers, signed NDAs, and customized DPAs for enterprise clients.
+        Our security and compliance team can help prepare security architecture documentation, assist with vendor NDA coordination, and support customizing DPA frameworks for enterprise client requirements.
       </p>
       <a href="contact" style="display:inline-block;padding:8px 20px;background:#FF6B00;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);transition:background 0.2s;" onmouseover="this.style.background='#EA580C'" onmouseout="this.style.background='#FF6B00'">
         Contact Security &amp; Compliance Team
@@ -429,4 +429,4 @@ include __DIR__ . '/includes/header.php';
 
 </div>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<?php include dirname(__DIR__) . '/includes/footer.php'; ?>

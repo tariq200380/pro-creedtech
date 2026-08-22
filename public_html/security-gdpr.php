@@ -1,6 +1,6 @@
 <?php
 $page_title = "EU GDPR Regulation (EU) 2016/679 Compliance & DPA | Creed Tech";
-$page_description = "Learn about European Data Protection Board (EDPB) mandates, GDPR legal bases, and how Creed Tech protects client user privacy under EU law.";
+$page_description = "Overview of European Data Protection Board (EDPB) principles, GDPR legal bases, and how Creed Tech implements privacy-by-design engineering.";
 $active_page = "security";
 
 include __DIR__ . '/includes/header.php';
@@ -83,17 +83,17 @@ include __DIR__ . '/includes/header.php';
 
           <h1 style="font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-0.03em;color:#111827;line-height:1.2;margin:0 0 1rem;">
             European Union GDPR <br />
-            <span style="color:#0052FF;">Data Privacy &amp; Human Rights Law</span>
+            <span style="color:#0052FF;">Data Privacy &amp; Governance Architecture</span>
           </h1>
 
           <p style="font-size:13px;color:#4B5563;line-height:1.7;font-weight:400;max-width:36rem;margin:0 0 1.5rem;">
-            Enacted by the European Parliament, the GDPR mandates sovereign privacy by design. Creed Tech executes legally binding Article 28 Data Processing Agreements (DPAs) and guarantees 100% sovereign EU cloud storage.
+            Enacted by the European Parliament, the GDPR mandates sovereign privacy by design. Creed Tech provides structured Article 28 Data Processing Agreement (DPA) templates and architects dedicated European cloud infrastructure with sovereign data residency.
           </p>
 
           <!-- Action Buttons -->
           <div class="sec-btn-group" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:1.25rem;">
             <a href="contact" style="padding:8px 16px;background:#0052FF;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 1px 2px rgba(0,82,255,0.2);transition:background 0.2s;" onmouseover="this.style.background='#0043D6'" onmouseout="this.style.background='#0052FF'">
-              Sign Data Processing Agreement (DPA)
+              Request DPA &amp; Privacy Overview
             </a>
             <a href="security" style="padding:8px 16px;background:#fff;color:#374151;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border:1px solid #D1D5DB;border-radius:2px;transition:background 0.2s;" onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background='#fff'">
               All Security Standards
@@ -103,7 +103,7 @@ include __DIR__ . '/includes/header.php';
           <div style="display:flex;align-items:center;gap:1rem;font-size:11px;color:#6B7280;font-weight:500;flex-wrap:wrap;">
             <span style="display:flex;align-items:center;gap:6px;color:#15803D;font-weight:700;">
               <span style="width:6px;height:6px;background:#10B981;border-radius:2px;display:inline-block;"></span>
-              <span>Sovereign Frankfurt &amp; Dublin DCs</span>
+              <span>European Cloud Region Deployment Options</span>
             </span>
             <span>•</span>
             <span>Standard Contractual Clauses (SCC)</span>
@@ -226,7 +226,7 @@ include __DIR__ . '/includes/header.php';
           The 8 Data Subject Rights We Architect for Clients
         </h2>
         <p style="font-size:13px;color:#4B5563;line-height:1.6;font-weight:400;margin:0;">
-          Every software platform engineered by Creed Tech includes native code modules to execute all 8 statutory user privacy requests without manual database intervention:
+          Our software architectures are engineered with modular privacy controls supporting all 8 statutory user privacy workflows:
         </p>
       </div>
 
@@ -284,7 +284,7 @@ include __DIR__ . '/includes/header.php';
         <div style="padding:1.5rem;background:#fff;border:1px solid #E5E7EB;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
           <h3 style="font-size:1rem;font-weight:700;color:#0052FF;margin:0 0 6px;">Article 22: Automated Decision-Making &amp; Profiling</h3>
           <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">
-            Algorithmic transparency controls guaranteeing human review, rationale disclosure, and contestation mechanisms for automated decisions.
+            Algorithmic transparency controls supporting human review, rationale disclosure, and contestation mechanisms for automated decisions.
           </p>
         </div>
 
@@ -301,10 +301,10 @@ include __DIR__ . '/includes/header.php';
         Need a Signed DPA &amp; Data Protection Impact Assessment (DPIA)?
       </h2>
       <p style="color:#D1D5DB;font-size:13px;line-height:1.6;margin:0 auto 1.5rem;max-width:36rem;font-weight:400;">
-        Our Data Protection Officer executes Standard Contractual Clauses (SCCs) and custom DPAs for enterprise clients within 24 hours.
+        Our privacy and compliance team can help prepare Standard Contractual Clauses (SCC) frameworks and support developing customized DPA documentation tailored to client data processing requirements.
       </p>
       <a href="contact" style="display:inline-block;padding:8px 20px;background:#FF6B00;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);transition:background 0.2s;" onmouseover="this.style.background='#EA580C'" onmouseout="this.style.background='#FF6B00'">
-        Contact Data Protection Officer (DPO)
+        Contact Data Privacy Team
       </a>
     </div>
   </section>

@@ -598,7 +598,7 @@ if (!isset($og_image) || empty($og_image)) {
           linkUrl: "portfolio"
         },
         {
-          text: "SOC 2 Type II and ISO 27001 Certified Dedicated Engineering Pods Available.",
+          text: "SOC 2 Type II and ISO 27001 Aligned Dedicated Engineering Pods Available.",
           linkText: "Security Center",
           linkUrl: "security"
         },

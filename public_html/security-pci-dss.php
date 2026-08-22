@@ -1,6 +1,6 @@
 <?php
-$page_title = "PCI SSC PCI-DSS v4.0 Level 1 Payment Architecture | Creed Tech";
-$page_description = "Comprehensive guide to PCI Security Standards Council (Wakefield, MA, USA), the 12 PCI-DSS requirements, and Creed Tech's scope-reducing fintech architectures.";
+$page_title = "PCI-DSS v4.0 Payment Architecture & Scope Reduction | Creed Tech";
+$page_description = "Guide to PCI Security Standards Council (PCI SSC) requirements and Creed Tech's tokenized, scope-reducing payment architectures.";
 $active_page = "security";
 
 include __DIR__ . '/includes/header.php';
@@ -78,13 +78,13 @@ include __DIR__ . '/includes/header.php';
           </h1>
 
           <p style="font-size:13px;color:#4B5563;line-height:1.7;font-weight:400;max-width:36rem;margin:0 0 1.5rem;">
-            Founded by Visa, MasterCard, Amex, Discover, and JCB, the PCI SSC enforces global payment card security. Creed Tech architects client-side tokenization flows that eliminate raw PAN exposure and reduce your PCI audit burden by over 90%.
+            Founded by major payment brands, the PCI SSC establishes global payment card security standards. Creed Tech architects client-side tokenization flows that isolate cardholder data and streamline PCI assessment scope.
           </p>
 
           <!-- Compact Buttons -->
           <div class="sec-btn-group" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <a href="contact" style="padding:8px 16px;background:#0052FF;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 1px 2px rgba(0,82,255,0.2);transition:background 0.2s;" onmouseover="this.style.background='#0043D6'" onmouseout="this.style.background='#0052FF'">
-              Consult Payment Architect
+              Consult Payment Systems Architect
             </a>
             <a href="security" style="padding:8px 16px;background:#fff;color:#374151;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border:1px solid #D1D5DB;border-radius:2px;transition:background 0.2s;" onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background='#fff'">
               All Security Standards
@@ -189,7 +189,7 @@ include __DIR__ . '/includes/header.php';
           <span style="font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;display:block;margin-bottom:4px;">GOAL 6 • SECURITY POLICY</span>
           <h3 style="font-size:1rem;font-weight:700;color:#111827;margin:0 0 6px;">Req 11 &amp; 12: ASV Scans &amp; Policies</h3>
           <p style="font-size:12px;color:#4B5563;line-height:1.6;margin:0;">
-            Conduct quarterly external ASV vulnerability scans, annual third-party penetration testing, and maintain formal governance policies.
+            Conduct quarterly vulnerability scans, authorized penetration testing within agreed client scope, and maintain formal security policies.
           </p>
         </div>
 
@@ -206,7 +206,7 @@ include __DIR__ . '/includes/header.php';
         Building an E-Commerce Checkout or FinTech Payment Engine?
       </h2>
       <p style="color:#D1D5DB;font-size:13px;line-height:1.6;margin:0 auto 1.5rem;max-width:36rem;font-weight:400;">
-        Our certified payment architects design tokenized, scope-reduced checkout flows that pass PCI audits effortlessly.
+        Our payment systems architects design tokenized, scope-reduced checkout flows that simplify PCI-DSS compliance audits.
       </p>
       <a href="contact" style="display:inline-block;padding:8px 20px;background:#FF6B00;color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);transition:background 0.2s;" onmouseover="this.style.background='#EA580C'" onmouseout="this.style.background='#FF6B00'">
         Start FinTech Architecture
