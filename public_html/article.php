@@ -159,6 +159,7 @@ require_once __DIR__ . '/includes/db.php';
       <div class="row" style="background:none; border:none;">
                     
               <?php 
+              $connect = creed_db();
               if ($connect instanceof mysqli) {
                 $res = mysqli_query($connect, "SELECT * FROM article ORDER by id DESC");
                 while ($row = mysqli_fetch_array($res)) {

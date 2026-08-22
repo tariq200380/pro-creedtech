@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rating = min(5, max(1, $rating));
 
     // 1. Insert to MySQL with is_approved = 0 (PENDING - never auto-approved)
+    $connect = creed_db();
     if ($connect instanceof mysqli) {
         try {
             $stmt = mysqli_prepare($connect, "INSERT INTO client_reviews (author_name, author_role, company, avatar_url, quote, rating, is_approved) VALUES (?, ?, ?, ?, ?, ?, 0)");

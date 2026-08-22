@@ -60,6 +60,7 @@ if (!$exists) {
 }
 
 // Also insert to DB if connected
+$connect = creed_db();
 if ($connect instanceof mysqli) {
     try {
         $stmt = mysqli_prepare($connect, "INSERT IGNORE INTO newsletter_subscribers (email, source, status) VALUES (?, ?, 'active')");

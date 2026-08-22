@@ -187,6 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_submit'])) {
     }
 
     if (empty($error)) {
+        $connect = creed_db();
         if ($newImageName !== null) {
             if ($connect instanceof mysqli) {
                 $deleteimage = '';
@@ -270,6 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_submit'])) {
 $image = '';
 $title = '';
 $detail = '';
+$connect = creed_db();
 if ($connect instanceof mysqli) {
     $stmtFetch = mysqli_prepare($connect, "SELECT * FROM `blog` WHERE `id` = ? LIMIT 1");
     if ($stmtFetch) {

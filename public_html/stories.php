@@ -33,6 +33,7 @@ require_once __DIR__ . '/includes/db.php';
       <h1 class="text-center" style="color: #0B21E1; margin-bottom: 30px;"><b>Stories Management</b></h1>
       <div class="row">
         <?php 
+        $connect = creed_db();
         if ($connect instanceof mysqli) {
           $res = mysqli_query($connect, "SELECT * FROM `stories` ORDER by id DESC");
           if ($res) {

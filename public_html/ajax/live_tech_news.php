@@ -53,7 +53,7 @@ function log_news_diagnostic($entry) {
  * Upsert verified article record in MySQL database
  */
 function upsert_verified_news_db($article) {
-    global $conn;
+    $conn = creed_db();
     if (!isset($conn) || !$conn instanceof mysqli) {
         return false;
     }

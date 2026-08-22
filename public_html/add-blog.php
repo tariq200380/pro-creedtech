@@ -182,6 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_submit'])) {
     }
 
     if (empty($error)) {
+        $connect = creed_db();
         if ($connect instanceof mysqli) {
             $stmt = mysqli_prepare($connect, "INSERT INTO `blog` (`blog_image`, `title`, `category`, `detail`) VALUES (?, ?, ?, ?)");
             if ($stmt) {

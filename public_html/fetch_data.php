@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['action'])) {
 
 $output = '';
 
+$connect = creed_db();
 if ($connect instanceof mysqli) {
     $categories = [];
     if (!empty($_POST['category']) && is_array($_POST['category'])) {

@@ -105,6 +105,7 @@ array_unshift($inquiries, $newInquiry);
 file_put_contents($dataFile, json_encode($inquiries, JSON_PRETTY_PRINT));
 
 // Store in DB if available
+$connect = creed_db();
 if (!empty($connect)) {
     try {
         @$connect->query("CREATE TABLE IF NOT EXISTS contact_inquiries (

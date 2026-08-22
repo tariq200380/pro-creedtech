@@ -126,10 +126,11 @@ function clear_login_rate_limit($email, $ip = null) {
  * Fetch Admin User from database or secure local store
  */
 function get_or_init_admin_user($email) {
-    global $connect, $adminStoreFile;
+    global $adminStoreFile;
     $email = strtolower(trim($email));
 
     // Try database first if available
+    $connect = creed_db();
     if ($connect instanceof mysqli) {
         // Check if admin exists in database
         $stmt = @mysqli_prepare($connect, "SELECT `id`, `email`, `password_hash`, `role`, `status` FROM `admin_users` WHERE `email` = ? AND `status` = 'ACTIVE' LIMIT 1");
@@ -189,6 +190,7 @@ function authenticate_admin($email, $password) {
     $algo = defined('PASSWORD_ARGON2ID') ? PASSWORD_ARGON2ID : PASSWORD_DEFAULT;
     if (password_needs_rehash($admin['password_hash'], $algo)) {
         $newHash = password_hash($password, $algo);
+        $connect = creed_db();
         if ($connect instanceof mysqli) {
             $stmt = @mysqli_prepare($connect, "UPDATE `admin_users` SET `password_hash` = ? WHERE `id` = ?");
             if ($stmt) {

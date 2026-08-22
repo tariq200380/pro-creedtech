@@ -22,6 +22,7 @@ if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
 
 $id = validate_int_id($_POST['id'] ?? 0);
 
+$connect = creed_db();
 if ($id && $connect instanceof mysqli) {
     $folder = __DIR__ . "/uploads/";
     $stmt = mysqli_prepare($connect, "SELECT `blog_image` FROM `article` WHERE `id` = ? LIMIT 1");

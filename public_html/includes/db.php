@@ -11,48 +11,89 @@ if (!defined('DB_USER')) define('DB_USER', creed_env('DB_USER', 'root'));
 if (!defined('DB_PASS')) define('DB_PASS', creed_env('DB_PASS', ''));
 if (!defined('DB_NAME')) define('DB_NAME', creed_env('DB_NAME', 'creed_tech'));
 
-// Suppress raw error display for visitors, log instead
-mysqli_report(MYSQLI_REPORT_OFF);
-
-// Safe connection reuse to prevent multiple socket probes and redundant connections per request
+// Global handles for legacy backward compatibility
 global $connect, $conn;
 
-if (!isset($connect) || !$connect instanceof mysqli || !@mysqli_ping($connect)) {
-    $connect = false;
+/**
+ * Lazy Database Connection Singleton
+ *
+ * Establishes a database connection ONLY when called.
+ * Returns a mysqli connection instance or false on failure.
+ *
+ * @return mysqli|false
+ */
+function creed_db() {
+    static $connection = null;
+    static $attempted = false;
+
+    if ($connection instanceof mysqli) {
+        if (@mysqli_ping($connection)) {
+            return $connection;
+        }
+        $connection = null;
+        $attempted = false;
+    }
+
+    if ($attempted) {
+        return $connection ?: false;
+    }
+    $attempted = true;
+
+    // Suppress raw error display for visitors, log instead
+    mysqli_report(MYSQLI_REPORT_OFF);
+
+    // Fast socket probe before blocking mysqli connection attempt (0.03s timeout)
     $probe = @stream_socket_client('tcp://' . DB_HOST . ':' . DB_PORT, $errno, $errstr, 0.03, STREAM_CLIENT_CONNECT);
     if ($probe) {
         fclose($probe);
-        $connect = mysqli_init();
-        if ($connect) {
-            mysqli_options($connect, MYSQLI_OPT_CONNECT_TIMEOUT, 1);
-            $connSuccess = @mysqli_real_connect($connect, DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
-            if (!$connSuccess) {
-                $connect = false;
-                error_log("Database connection error: " . mysqli_connect_error());
+        $connObj = mysqli_init();
+        if ($connObj) {
+            mysqli_options($connObj, MYSQLI_OPT_CONNECT_TIMEOUT, 1);
+            $connSuccess = @mysqli_real_connect($connObj, DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+            if ($connSuccess) {
+                mysqli_set_charset($connObj, "utf8mb4");
+                $connection = $connObj;
             } else {
-                mysqli_set_charset($connect, "utf8mb4");
+                $connection = false;
+                error_log("Database connection error: " . mysqli_connect_error());
             }
         }
+    } else {
+        $connection = false;
     }
+
+    // Keep global variables synchronized if code accesses $connect or $conn
+    global $connect, $conn;
+    $connect = $connection;
+    $conn = $connection;
+
+    return $connection;
 }
-$conn = &$connect;
+
+/**
+ * Backward compatibility alias for creed_db()
+ */
+function creed_get_db_connection() {
+    return creed_db();
+}
 
 /**
  * Helper to safely fetch rows with prepared statements
  */
 function creed_query($sql, $params = [], $types = "") {
-    global $connect;
-    if (!$connect) return [];
+    $db = creed_db();
+    if (!$db) return [];
     
     if (empty($params)) {
-        $stmt = @mysqli_prepare($connect, $sql);
+        $stmt = @mysqli_prepare($db, $sql);
         if (!$stmt) {
-            $result = @mysqli_query($connect, $sql);
+            $result = @mysqli_query($db, $sql);
             if (!$result) return [];
             $rows = [];
             while ($row = mysqli_fetch_assoc($result)) {
                 $rows[] = $row;
             }
+            mysqli_free_result($result);
             return $rows;
         }
         @mysqli_stmt_execute($stmt);
@@ -69,7 +110,7 @@ function creed_query($sql, $params = [], $types = "") {
         return $rows;
     }
     
-    $stmt = @mysqli_prepare($connect, $sql);
+    $stmt = @mysqli_prepare($db, $sql);
     if (!$stmt) return [];
     
     if (!empty($types) && !empty($params)) {
@@ -95,10 +136,10 @@ function creed_query($sql, $params = [], $types = "") {
  * Helper for INSERT/UPDATE/DELETE queries
  */
 function creed_execute($sql, $params = [], $types = "") {
-    global $connect;
-    if (!$connect) return false;
+    $db = creed_db();
+    if (!$db) return false;
     
-    $stmt = @mysqli_prepare($connect, $sql);
+    $stmt = @mysqli_prepare($db, $sql);
     if (!$stmt) return false;
     
     if (!empty($types) && !empty($params)) {

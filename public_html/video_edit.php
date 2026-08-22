@@ -181,6 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_submit'])) {
     }
 
     if (empty($error)) {
+        $connect = creed_db();
         if ($connect instanceof mysqli) {
             if ($newImageName !== null) {
                 $deleteimage = '';
@@ -253,6 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_submit'])) {
 $image = '';
 $title = '';
 $detail = '';
+$connect = creed_db();
 if ($connect instanceof mysqli && $id > 0) {
     $stmtFetch = mysqli_prepare($connect, "SELECT * FROM `video` WHERE `id` = ? LIMIT 1");
     if ($stmtFetch) {
