@@ -221,173 +221,120 @@ function is_unwanted_article_asset_url($url) {
 }
 
 /**
- * Extract genuine article hero image applying strict priority:
- * 
- * PRIORITY 1: Valid canonical og:image
- * PRIORITY 2: Valid twitter:image
- * PRIORITY 3: Valid JSON-LD Structured Data image / ImageObject
- * PRIORITY 4: Valid RSS XML enclosure / media:content / image tag
- * PRIORITY 5: Valid article-specific picture / source srcset / hero-classed image
- * PRIORITY 6: Generic article-body image (fallback only)
+ * Extract image candidate from RSS XML item (Step A)
  */
-function extract_real_article_hero_image($itemRaw, $articleUrl, $customImage = null) {
-    if (!empty($customImage)) {
-        return resolve_article_absolute_url($customImage, $articleUrl);
-    }
+function extract_feed_item_image($itemRaw, $articleUrl) {
+    if (empty($itemRaw)) return null;
 
     $candidates = [];
-    $orderIndex = 0;
 
-    // Attempt deep fetch of article page HTML if URL is valid
+    // 1. <enclosure url="...">
+    if (preg_match('/<enclosure[^>]+url=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $itemRaw, $m)) {
+        $candidates[] = $m[1];
+    }
+    // 2. <link rel="enclosure" href="...">
+    if (preg_match('/<link[^>]+(?:rel=[\x22\x27]enclosure[\x22\x27][^>]+href=[\x22\x27]([^\x22\x27]+)[\x22\x27]|href=[\x22\x27]([^\x22\x27]+)[\x22\x27][^>]+rel=[\x22\x27]enclosure[\x22\x27])/i', $itemRaw, $m)) {
+        $candidates[] = !empty($m[1]) ? $m[1] : $m[2];
+    }
+    // 3. <media:content url="..."> or <media:thumbnail url="...">
+    if (preg_match('/<media:(?:content|thumbnail)[^>]+url=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $itemRaw, $m)) {
+        $candidates[] = $m[1];
+    }
+    // 4. <image><url>...</url></image> or <image src="...">
+    if (preg_match('/<image[^>]*>(?:<url>([^<]+)<\/url>|[^<]*src=[\x22\x27]([^\x22\x27]+)[\x22\x27])/is', $itemRaw, $m)) {
+        $candidates[] = !empty($m[1]) ? trim($m[1]) : trim($m[2]);
+    }
+    // 5. <img src="..."> in item description / content
+    if (preg_match('/<img[^>]+src=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $itemRaw, $m)) {
+        $candidates[] = $m[1];
+    }
+
+    foreach ($candidates as $cand) {
+        $cand = trim(html_entity_decode($cand, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        $abs = resolve_article_absolute_url($cand, $articleUrl);
+        if (!empty($abs) && filter_var($abs, FILTER_VALIDATE_URL) && !is_unwanted_article_asset_url($abs)) {
+            return $abs;
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Extract image candidate from article page metadata (Step B fallback)
+ * Priority: 1. og:image:secure_url -> 2. og:image -> 3. twitter:image -> 4. twitter:image:src
+ */
+function extract_article_page_meta_image($articleUrl) {
+    if (empty($articleUrl) || !filter_var($articleUrl, FILTER_VALIDATE_URL)) {
+        return null;
+    }
+
+    $host = parse_url($articleUrl, PHP_URL_HOST);
+    if (empty($host) || !NewsValidationGate::isSafeRemoteHost($host)) {
+        return null;
+    }
+
     $pageHtml = null;
-    if (!empty($articleUrl) && filter_var($articleUrl, FILTER_VALIDATE_URL) && NewsValidationGate::isSafeRemoteHost(parse_url($articleUrl, PHP_URL_HOST))) {
-        if (function_exists('curl_init')) {
-            $ch = curl_init();
-            curl_setopt_array($ch, [
-                CURLOPT_URL            => $articleUrl,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_MAXREDIRS      => 4,
-                CURLOPT_TIMEOUT        => 8,
-                CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                CURLOPT_SSL_VERIFYPEER => true
-            ]);
-            $pageHtml = curl_exec($ch);
-            curl_close($ch);
-        }
+    if (function_exists('curl_init')) {
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => $articleUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS      => 4,
+            CURLOPT_TIMEOUT        => 10,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+            CURLOPT_HTTPHEADER     => [
+                'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language: en-US,en;q=0.9'
+            ],
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2
+        ]);
+        $pageHtml = curl_exec($ch);
+        curl_close($ch);
     }
 
-    if ($pageHtml) {
-        // Priority 1: Canonical og:image
-        if (preg_match('/<meta[^>]+property=[\x22\x27]og:image[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $pageHtml, $m)) {
-            if (!is_unwanted_article_asset_url($m[1])) {
-                $candidates[] = ['priority' => 1, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'og:image'];
-            }
-        } elseif (preg_match('/<meta[^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27][^>]+property=[\x22\x27]og:image[\x22\x27]/i', $pageHtml, $m)) {
-            if (!is_unwanted_article_asset_url($m[1])) {
-                $candidates[] = ['priority' => 1, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'og:image'];
-            }
-        }
-
-        // Priority 2: twitter:image
-        if (preg_match('/<meta[^>]+name=[\x22\x27]twitter:image[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $pageHtml, $m)) {
-            if (!is_unwanted_article_asset_url($m[1])) {
-                $candidates[] = ['priority' => 2, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'twitter:image'];
-            }
-        } elseif (preg_match('/<meta[^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27][^>]+name=[\x22\x27]twitter:image[\x22\x27]/i', $pageHtml, $m)) {
-            if (!is_unwanted_article_asset_url($m[1])) {
-                $candidates[] = ['priority' => 2, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'twitter:image'];
-            }
-        }
-
-        // Priority 3: JSON-LD Structured Data Image / ImageObject
-        if (preg_match_all('/<script[^>]+type=[\x22\x27]application\/ld\+json[\x22\x27][^>]*>(.*?)<\/script>/is', $pageHtml, $jsonLdMatches)) {
-            foreach ($jsonLdMatches[1] as $jStr) {
-                $jData = json_decode(trim($jStr), true);
-                if ($jData) {
-                    if (isset($jData['image'])) {
-                        $imgVal = $jData['image'];
-                        if (is_string($imgVal) && !empty($imgVal) && !is_unwanted_article_asset_url($imgVal)) {
-                            $candidates[] = ['priority' => 3, 'order' => $orderIndex++, 'url' => $imgVal, 'type' => 'jsonld:image'];
-                        } elseif (is_array($imgVal)) {
-                            if (isset($imgVal['url']) && is_string($imgVal['url']) && !is_unwanted_article_asset_url($imgVal['url'])) {
-                                $candidates[] = ['priority' => 3, 'order' => $orderIndex++, 'url' => $imgVal['url'], 'type' => 'jsonld:image.url'];
-                            } elseif (isset($imgVal[0])) {
-                                $first = is_string($imgVal[0]) ? $imgVal[0] : ($imgVal[0]['url'] ?? '');
-                                if (!empty($first) && !is_unwanted_article_asset_url($first)) {
-                                    $candidates[] = ['priority' => 3, 'order' => $orderIndex++, 'url' => $first, 'type' => 'jsonld:image[0]'];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    if (empty($pageHtml)) {
+        return null;
     }
 
-    // Priority 4: RSS XML Enclosure / Media tag
-    if (!empty($itemRaw)) {
-        if (preg_match('/<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']enclosure["\']/i', $itemRaw, $m)) {
-            if (!is_unwanted_article_asset_url($m[1])) {
-                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'rss:link_enclosure'];
-            }
-        } elseif (preg_match('/<link[^>]+rel=["\']enclosure["\'][^>]+href=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
-            if (!is_unwanted_article_asset_url($m[1])) {
-                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'rss:link_enclosure'];
-            }
-        } elseif (preg_match('/<media:content[^>]+url=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
-            if (!is_unwanted_article_asset_url($m[1])) {
-                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'rss:media_content'];
-            }
-        } elseif (preg_match('/<enclosure[^>]+url=["\']([^"\']+)["\']/i', $itemRaw, $m)) {
-            if (!is_unwanted_article_asset_url($m[1])) {
-                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $m[1], 'type' => 'rss:enclosure'];
-            }
-        } elseif (preg_match('/<image[^>]*>(.*?)<\/image>/is', $itemRaw, $imgTagMatch)) {
-            if (preg_match('/src=["\']([^"\']+)["\']/i', $imgTagMatch[1], $srcM)) {
-                if (!is_unwanted_article_asset_url($srcM[1])) {
-                    $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $srcM[1], 'type' => 'rss:image_src'];
-                }
-            }
-        } elseif (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $itemRaw, $imgM)) {
-            if (!is_unwanted_article_asset_url($imgM[1])) {
-                $candidates[] = ['priority' => 4, 'order' => $orderIndex++, 'url' => $imgM[1], 'type' => 'rss:img_src'];
-            }
+    $metaCandidates = [];
+
+    // Helper regex to match a meta tag with specific property/name
+    $matchMeta = function($propName, $html) {
+        if (preg_match('/<meta[^>]+(?:property|name)=[\x22\x27]' . preg_quote($propName, '/') . '[\x22\x27][^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $html, $m)) {
+            return $m[1];
         }
-    }
-
-    if ($pageHtml) {
-        // Priority 5: <picture> <source srcset="..."> / <img> inside <picture> / Hero-classed <img>
-        if (preg_match_all('/<picture[^>]*>(.*?)<\/picture>/is', $pageHtml, $picMatches)) {
-            foreach ($picMatches[1] as $picInner) {
-                if (preg_match('/<source[^>]+srcset=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $picInner, $srcSetM)) {
-                    $best = parse_best_from_srcset($srcSetM[1], $articleUrl);
-                    if ($best && !is_unwanted_article_asset_url($best)) {
-                        $candidates[] = ['priority' => 5, 'order' => $orderIndex++, 'url' => $best, 'type' => 'picture:source_srcset'];
-                    }
-                }
-                if (preg_match('/<img[^>]+src=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $picInner, $imgM)) {
-                    if (!is_unwanted_article_asset_url($imgM[1])) {
-                        $candidates[] = ['priority' => 5, 'order' => $orderIndex++, 'url' => $imgM[1], 'type' => 'picture:img_src'];
-                    }
-                }
-            }
+        if (preg_match('/<meta[^>]+content=[\x22\x27]([^\x22\x27]+)[\x22\x27][^>]+(?:property|name)=[\x22\x27]' . preg_quote($propName, '/') . '[\x22\x27]/i', $html, $m)) {
+            return $m[1];
         }
+        return null;
+    };
 
-        // Priority 5 & 6: <img> elements in page body (Hero classed = 5, Generic body = 6)
-        if (preg_match_all('/<img[^>]+>/i', $pageHtml, $imgMatches)) {
-            foreach ($imgMatches[0] as $imgTag) {
-                $isHero = preg_match('/(?:hero|featured|lead|cover|article-img|banner|main-image|story-image|data-nimg=[\x22\x27]fill[\x22\x27]|class=[\x22\x27][^\x22\x27]*object-cover)/i', $imgTag);
+    // Priority 1: og:image:secure_url
+    $ogSec = $matchMeta('og:image:secure_url', $pageHtml);
+    if ($ogSec) $metaCandidates[] = ['url' => $ogSec, 'type' => 'og:image:secure_url'];
 
-                $urlCandidate = null;
-                if (preg_match('/srcset=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $imgTag, $setM)) {
-                    $urlCandidate = parse_best_from_srcset($setM[1], $articleUrl);
-                }
-                if (!$urlCandidate && preg_match('/src=[\x22\x27]([^\x22\x27]+)[\x22\x27]/i', $imgTag, $srcM)) {
-                    $urlCandidate = $srcM[1];
-                }
+    // Priority 2: og:image
+    $ogImg = $matchMeta('og:image', $pageHtml);
+    if ($ogImg) $metaCandidates[] = ['url' => $ogImg, 'type' => 'og:image'];
 
-                if ($urlCandidate && !is_unwanted_article_asset_url($urlCandidate)) {
-                    $prio = $isHero ? 5 : 6;
-                    $candidates[] = ['priority' => $prio, 'order' => $orderIndex++, 'url' => $urlCandidate, 'type' => ($isHero ? 'html:hero_img' : 'html:body_img')];
-                }
-            }
-        }
-    }
+    // Priority 3: twitter:image
+    $twImg = $matchMeta('twitter:image', $pageHtml);
+    if ($twImg) $metaCandidates[] = ['url' => $twImg, 'type' => 'twitter:image'];
 
-    // Sort by priority ascending, then by DOM order ascending
-    usort($candidates, function($a, $b) {
-        if ($a['priority'] === $b['priority']) {
-            return $a['order'] <=> $b['order'];
-        }
-        return $a['priority'] <=> $b['priority'];
-    });
+    // Priority 4: twitter:image:src
+    $twSrc = $matchMeta('twitter:image:src', $pageHtml);
+    if ($twSrc) $metaCandidates[] = ['url' => $twSrc, 'type' => 'twitter:image:src'];
 
-    foreach ($candidates as $c) {
-        $rawUrl = $c['url'];
+    foreach ($metaCandidates as $cand) {
+        $rawUrl = trim(html_entity_decode($cand['url'], ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         $absUrl = resolve_article_absolute_url($rawUrl, $articleUrl);
-        if (empty($absUrl) || !filter_var($absUrl, FILTER_VALIDATE_URL)) continue;
-        return $absUrl;
+        if (!empty($absUrl) && filter_var($absUrl, FILTER_VALIDATE_URL) && !is_unwanted_article_asset_url($absUrl)) {
+            return $absUrl;
+        }
     }
 
     return null;
@@ -608,10 +555,6 @@ function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
         $descRaw    = $candItem['descRaw'];
         $itemRaw    = $candItem['itemRaw'];
 
-        // Stable Image Retention Check:
-        // Always extract the canonical hero image from the article to ensure freshness.
-        // If this canonical image was already downloaded and cryptographically verified on disk,
-        // reuse the existing local file to save bandwidth; otherwise download and verify the fresh image.
         $normUrl = normalize_canonical_news_url($link);
         $existingHero = $verifiedHeroMap[$normUrl] ?? null;
 
@@ -620,10 +563,15 @@ function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
         $itemVisualType = $visualType;
         $itemImageUrl   = $customImage;
 
+        // STEP A: Extract candidate image from the feed item first
         if (empty($itemImageUrl)) {
-            $itemImageUrl = extract_real_article_hero_image($itemRaw, $link, $customImage);
+            $feedImgCandidate = extract_feed_item_image($itemRaw, $link);
+            if (!empty($feedImgCandidate)) {
+                $itemImageUrl = $feedImgCandidate;
+            }
         }
 
+        // Check if existing verified hero on disk matches this article and image URL
         if (!empty($itemImageUrl) && $existingHero && !empty($existingHero['local_image_path']) && strpos($existingHero['local_image_path'], '_headline_') === false) {
             if (!empty($existingHero['source_image_url']) && $existingHero['source_image_url'] === $itemImageUrl) {
                 $diskFile = __DIR__ . '/../' . $existingHero['local_image_path'];
@@ -661,8 +609,31 @@ function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
             'status'                => STATUS_FETCHED
         ];
 
-        // Central Publication Gate Evaluation
+        // Central Publication Gate Evaluation for Step A
         $gateResult = NewsValidationGate::processAndPublishCandidate($candidate, $uploadDir);
+
+        // STEP B: If Step A failed (no feed image or download/validation failed), try Article Page OG Image Fallback
+        if (!$gateResult['published'] && empty($customImage)) {
+            $ogImgCandidate = extract_article_page_meta_image($link);
+            if (!empty($ogImgCandidate) && $ogImgCandidate !== $itemImageUrl) {
+                $candidate['source_image_url'] = $ogImgCandidate;
+                $candidate['local_image_path'] = null;
+                $candidate['image_hash']       = null;
+
+                // Re-check if this OG image matches existing disk cache for this article
+                if ($existingHero && !empty($existingHero['local_image_path']) && !empty($existingHero['source_image_url']) && $existingHero['source_image_url'] === $ogImgCandidate) {
+                    $diskFile = __DIR__ . '/../' . $existingHero['local_image_path'];
+                    if (file_exists($diskFile) && filesize($diskFile) > 0) {
+                        $candidate['local_image_path'] = $existingHero['local_image_path'];
+                        $candidate['image_hash']       = $existingHero['image_hash'] ?? hash_file('sha256', $diskFile);
+                    }
+                }
+
+                $gateResult = NewsValidationGate::processAndPublishCandidate($candidate, $uploadDir);
+            }
+        }
+
+        // STEP C: If published, save and finish provider. If rejected, log and continue.
         if ($gateResult['published']) {
             $record = $gateResult['record'];
             $record['caption_tag'] = strtoupper($providerKey) . ' OFFICIAL WIRE';
@@ -678,6 +649,7 @@ function ingest_and_gate_feed($feedConfig, $uploadDir, $verifiedHeroMap = []) {
             log_news_diagnostic([
                 'provider'            => $providerKey,
                 'external_article_id' => $guid,
+                'source_image_url'    => $candidate['source_image_url'] ?? '',
                 'status'              => STATUS_REJECTED,
                 'message'             => 'Candidate rejected by gate: ' . $gateResult['error']
             ]);

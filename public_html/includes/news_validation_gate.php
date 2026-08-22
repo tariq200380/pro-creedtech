@@ -45,27 +45,27 @@ class NewsValidationGate {
     // Approved Canonical Source Domains
     public static $approvedSourceDomains = [
         'blog.google',
-        'www.apple.com', 'apple.com',
-        'blogs.nvidia.com',
+        'www.apple.com', 'apple.com', 'newsroom.apple.com',
+        'blogs.nvidia.com', 'nvidianews.nvidia.com',
         'www.anthropic.com', 'anthropic.com',
-        'openai.com',
+        'openai.com', 'www.openai.com',
         'about.fb.com', 'about.meta.com', 'engineering.fb.com',
-        'blogs.microsoft.com', 'news.microsoft.com', 'microsoft.com', 'blogs.windows.com', 'windows.com',
+        'blogs.microsoft.com', 'news.microsoft.com', 'microsoft.com', 'blogs.windows.com', 'windows.com', 'www.microsoft.com',
         'newsroom.intel.com', 'intel.com', 'www.intel.com',
         'news.google.com',
         'www.dawn.com', 'dawn.com',
         'www.brecorder.com', 'brecorder.com',
-        'propakistani.pk',
-        'tribune.com.pk'
+        'propakistani.pk', 'www.propakistani.pk',
+        'tribune.com.pk', 'www.tribune.com.pk'
     ];
 
     // Approved Image CDN Domains
     public static $approvedImageDomains = [
-        'storage.googleapis.com', 'lh3.googleusercontent.com', 'blog.google',
-        'www.apple.com', 'apple.com',
-        'blogs.nvidia.com', 'images.nvidia.com',
+        'storage.googleapis.com', 'lh3.googleusercontent.com', 'lh4.googleusercontent.com', 'lh5.googleusercontent.com', 'lh6.googleusercontent.com', 'blog.google',
+        'www.apple.com', 'apple.com', 'newsroom.apple.com',
+        'blogs.nvidia.com', 'images.nvidia.com', 'nvidianews.nvidia.com',
         'cdn.sanity.io', 'www-cdn.anthropic.com', 'www.anthropic.com', 'anthropic.com',
-        'images.ctfassets.net', 'openaicom-cdn.azureedge.net', 'openai.com', 'www.openai.com',
+        'images.ctfassets.net', 'openaicom-cdn.azureedge.net', 'openai.com', 'www.openai.com', 'cdn.openai.com',
         'about.fb.com', 'about.meta.com', 'scontent.xx.fbcdn.net', 'facebook.com',
         'blogs.microsoft.com', 'news.microsoft.com', 'devblogs.microsoft.com', 'www.microsoft.com', 'microsoft.com', 'blogs.windows.com', 'windows.com',
         'newsroom.intel.com', 'www.intel.com', 'intel.com',
@@ -259,13 +259,9 @@ class NewsValidationGate {
             }
         }
 
-        // If no source image URL is provided, trigger Check 7: Automated Verified Headline Card Generator
+        // If no source image URL is provided, return validation failure so caller can attempt Step B fallback
         if (empty($sourceImageUrl) || !filter_var($sourceImageUrl, FILTER_VALIDATE_URL)) {
-            $headlineRes = self::generateHeadlineCardVisual($candidate, $uploadDir);
-            if ($headlineRes['valid']) {
-                return $headlineRes;
-            }
-            return ['valid' => false, 'error' => 'No valid original source image URL provided and headline card generation failed: ' . ($headlineRes['error'] ?? '')];
+            return ['valid' => false, 'error' => 'No valid original source image URL provided'];
         }
         if (preg_match('/(unsplash\.com|assets\/img|placeholder|stock|mock)/i', $sourceImageUrl)) {
             return ['valid' => false, 'error' => 'Forbidden fallback or generic image URL detected'];
@@ -298,6 +294,7 @@ class NewsValidationGate {
         $imageContent = null;
         $httpStatus   = 0;
         $mimeType     = 'unknown';
+        $effectiveUrl = null;
 
         if (function_exists('curl_init')) {
             $ch = curl_init();
@@ -306,28 +303,58 @@ class NewsValidationGate {
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_MAXREDIRS      => 4,
-                CURLOPT_TIMEOUT        => 8,
-                CURLOPT_CONNECTTIMEOUT => 4,
-                CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CreedTechNewsValidator/1.0',
+                CURLOPT_TIMEOUT        => 12,
+                CURLOPT_CONNECTTIMEOUT => 6,
+                CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                CURLOPT_HTTPHEADER     => [
+                    'Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+                    'Accept-Language: en-US,en;q=0.9',
+                    'Sec-Fetch-Dest: image',
+                    'Sec-Fetch-Mode: no-cors',
+                    'Sec-Fetch-Site: cross-site'
+                ],
                 CURLOPT_SSL_VERIFYPEER => true,
                 CURLOPT_SSL_VERIFYHOST => 2
             ]);
             $imageContent = curl_exec($ch);
             $httpStatus   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $mimeType     = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+            $effectiveUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
             curl_close($ch);
         } else {
             $imageContent = @file_get_contents($sourceImageUrl);
             $httpStatus   = $imageContent ? 200 : 500;
         }
 
-        // If download failed or returned invalid response, trigger Check 7: Automated Headline Card Generator
-        if ($httpStatus !== 200 || empty($imageContent)) {
-            $headlineRes = self::generateHeadlineCardVisual($candidate, $uploadDir);
-            if ($headlineRes['valid']) {
-                return $headlineRes;
+        // Validate redirect destination if location was followed
+        if (!empty($effectiveUrl) && $effectiveUrl !== $sourceImageUrl) {
+            $effParsed = parse_url($effectiveUrl);
+            $effScheme = strtolower($effParsed['scheme'] ?? '');
+            $effHost   = strtolower($effParsed['host'] ?? '');
+
+            if ($effScheme !== 'https' && $effScheme !== 'http') {
+                return ['valid' => false, 'error' => "Redirected image URL scheme invalid: '$effScheme'"];
             }
-            return ['valid' => false, 'error' => "Failed to download source image (HTTP $httpStatus) and headline generation failed: " . ($headlineRes['error'] ?? '')];
+
+            $effHostAllowed = false;
+            foreach (self::$approvedImageDomains as $d) {
+                if ($effHost === $d || str_ends_with($effHost, '.' . $d)) {
+                    $effHostAllowed = true;
+                    break;
+                }
+            }
+            if (!$effHostAllowed) {
+                return ['valid' => false, 'error' => "Redirected image host '$effHost' is not in approved CDN allowlist"];
+            }
+
+            if (!self::isSafeRemoteHost($effHost)) {
+                return ['valid' => false, 'error' => "SSRF blocked for redirected image host '$effHost'"];
+            }
+        }
+
+        // Check download success
+        if ($httpStatus !== 200 || empty($imageContent)) {
+            return ['valid' => false, 'error' => "Failed to download source image (HTTP $httpStatus)"];
         }
 
         $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -343,24 +370,19 @@ class NewsValidationGate {
         ];
 
         if (!array_key_exists($detectedMime, $allowedMimes)) {
-            $headlineRes = self::generateHeadlineCardVisual($candidate, $uploadDir);
-            if ($headlineRes['valid']) {
-                return $headlineRes;
-            }
             return ['valid' => false, 'error' => "Disallowed image MIME type: '$detectedMime'"];
         }
 
-        // Validate image dimensions: reject tiny navigation icons and logos under 250x150
+        // Validate image dimensions: reject tiny icons and navigation assets
         $imgSize = @getimagesizefromstring($imageContent);
         if ($imgSize !== false) {
             $w = $imgSize[0] ?? 0;
             $h = $imgSize[1] ?? 0;
-            if ($w > 0 && $h > 0 && ($w < 250 || $h < 150)) {
-                $headlineRes = self::generateHeadlineCardVisual($candidate, $uploadDir);
-                if ($headlineRes['valid']) {
-                    return $headlineRes;
-                }
+            if ($w > 0 && $h > 0 && ($w < 200 || $h < 100)) {
+                return ['valid' => false, 'error' => "Image dimensions too small: {$w}x{$h} (min 200x100)"];
             }
+        } elseif (strlen($imageContent) < 512) {
+            return ['valid' => false, 'error' => 'Image content length too small'];
         }
 
         $ext = $allowedMimes[$detectedMime];

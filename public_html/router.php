@@ -5,9 +5,12 @@
 
 require_once __DIR__ . '/includes/security_headers.php';
 
-// Dynamic response gzip compression for PHP development server
+// Dynamic response gzip compression for PHP development server (PHP pages only — static assets handled separately in section 4)
 $acceptEnc = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
-if (str_contains($acceptEnc, 'gzip') && extension_loaded('zlib') && php_sapi_name() === 'cli-server') {
+$_requestedExt = strtolower(pathinfo(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/', PATHINFO_EXTENSION));
+$_staticExts = ['css', 'js', 'mjs', 'svg', 'json', 'xml', 'txt', 'webp', 'avif', 'png', 'jpg', 'jpeg', 'gif', 'ico', 'woff2', 'woff', 'ttf', 'eot', 'otf'];
+$_isStaticAsset = in_array($_requestedExt, $_staticExts, true);
+if (!$_isStaticAsset && str_contains($acceptEnc, 'gzip') && extension_loaded('zlib') && php_sapi_name() === 'cli-server') {
     ob_start();
     register_shutdown_function(function() {
         if (ob_get_level() > 0) {
@@ -24,6 +27,7 @@ if (str_contains($acceptEnc, 'gzip') && extension_loaded('zlib') && php_sapi_nam
         }
     });
 }
+unset($_requestedExt, $_staticExts, $_isStaticAsset);
 
 $uri = $_SERVER['REQUEST_URI'] ?? '/';
 $path = parse_url($uri, PHP_URL_PATH) ?? '/';
