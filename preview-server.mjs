@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const publicDir = path.join(__dirname, 'public_html');
 
-const PHP_EXE = 'C:\\php\\php.exe';
+const PHP_EXE = process.env.PHP_EXE || (process.platform === 'win32' ? 'C:\\php\\php.exe' : 'php');
 const PHP_PORT = 8088;
 const PROXY_PORT = 3000;
 

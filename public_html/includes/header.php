@@ -238,49 +238,6 @@ if (!isset($og_image) || empty($og_image)) {
       color: #FFFFFF !important;
     }
 
-    .how-tab-btn {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      font-size: 13px !important;
-      font-weight: 600 !important;
-      line-height: 1 !important;
-      height: 42px !important;
-      min-height: 42px !important;
-      width: 100% !important;
-      min-width: 175px !important;
-      padding: 0 16px !important;
-      border-radius: 6px !important;
-      cursor: pointer !important;
-      border: 1px solid transparent !important;
-      text-align: center !important;
-      white-space: nowrap !important;
-      transition: all 0.2s ease-in-out !important;
-      box-sizing: border-box !important;
-    }
-    @media (min-width: 640px) {
-      .how-tab-btn {
-        width: 185px !important;
-      }
-    }
-
-    .btn-tab-active {
-      background-color: #FF6B00 !important;
-      color: #FFFFFF !important;
-      border-color: #FF6B00 !important;
-      box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3) !important;
-    }
-    .btn-tab-inactive {
-      background-color: #1A2234 !important;
-      color: #D1D5DB !important;
-      border-color: #2D3748 !important;
-    }
-    .btn-tab-inactive:hover {
-      background-color: #232E46 !important;
-      color: #FFFFFF !important;
-      border-color: #4A5568 !important;
-    }
-
     /* Unbreakable 100% Continuous Seamless Horizontal Marquee */
     @keyframes infinitePartnerScroll {
       0% { transform: translate3d(0, 0, 0); }

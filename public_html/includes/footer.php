@@ -206,16 +206,9 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
 
       <!-- FooterSubLegalBar.tsx -->
       <div class="flex flex-col sm:flex-row items-center justify-between border-t border-[#2A2A2A] pt-6 mt-8">
-        <div class="text-xs text-[#F4F6F8]/60 mb-4 sm:mb-0 text-center sm:text-left flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1">
-          <span><?= htmlspecialchars($copyrightText) ?> • Designed & Developed by <span class="font-semibold text-white">CREED TECH</span></span>
-          <span class="hidden sm:inline text-gray-600">|</span>
-          <a href="privacy-policy" class="hover:text-white hover:underline transition-colors">Privacy Policy</a>
-          <span class="text-gray-600">•</span>
-          <a href="terms" class="hover:text-white hover:underline transition-colors">Terms &amp; Conditions</a>
-        </div>
         
-        <!-- 4 Equal-Sized Clickable Security Badges (2 Left & 2 Right on Mobile, Horizontal Row on Desktop) -->
-        <div class="grid grid-cols-2 sm:flex sm:flex-row sm:items-center justify-center gap-3 w-full sm:w-auto">
+        <!-- 4 Equal-Sized Clickable Security Badges (Order 1 on Mobile: 2x2 grid, Order 2 on Desktop: horizontal row) -->
+        <div class="order-1 sm:order-2 grid grid-cols-2 sm:flex sm:flex-row sm:items-center justify-center gap-3 w-full sm:w-auto mb-6 sm:mb-0">
           <a 
             href="security-iso-27001"
             class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-semibold rounded-none bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-all duration-300 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
@@ -241,6 +234,16 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
             PCI-DSS
           </a>
         </div>
+
+        <!-- Copyright & Legal Links (Order 2 on Mobile with divider above, Order 1 on Desktop) -->
+        <div class="order-2 sm:order-1 text-xs text-[#F4F6F8]/60 text-center sm:text-left flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 w-full sm:w-auto pt-6 sm:pt-0 border-t border-[#2A2A2A] sm:border-t-0">
+          <span><?= htmlspecialchars($copyrightText) ?> • Designed & Developed by <span class="font-semibold text-white">CREED TECH</span></span>
+          <span class="hidden sm:inline text-gray-600">|</span>
+          <a href="privacy-policy" class="hover:text-white hover:underline transition-colors">Privacy Policy</a>
+          <span class="text-gray-600">•</span>
+          <a href="terms" class="hover:text-white hover:underline transition-colors">Terms &amp; Conditions</a>
+        </div>
+
       </div>
 
     </div>
