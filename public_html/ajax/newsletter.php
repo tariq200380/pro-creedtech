@@ -2,6 +2,7 @@
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/security_helpers.php';
+require_once __DIR__ . '/../includes/csrf.php';
 
 // Rate Limiting Protection (Max 5 submissions per 60 seconds per IP)
 $rateLimit = check_form_rate_limit('newsletter_form', 5, 60);
@@ -15,13 +16,36 @@ if (!$rateLimit['allowed']) {
     exit;
 }
 
-$raw = file_get_contents('php://input');
-$data = json_decode($raw, true) ?? $_POST;
+$raw = @file_get_contents('php://input');
+$data = @json_decode($raw, true) ?: $_POST;
 
-$email = trim($data['email'] ?? '');
-$source = trim($data['source'] ?? 'Global Footer');
+// 1. CSRF Token Verification
+$submittedCsrf = $data['csrf_token'] ?? $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+if (!validate_csrf_token($submittedCsrf)) {
+    http_response_code(403);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Invalid or missing security token. Please refresh the page and try again.'
+    ]);
+    exit;
+}
+
+// 2. Honeypot Anti-Bot Verification
+$honeypot = trim((string)($data['company_website'] ?? ($_POST['company_website'] ?? '')));
+if (!empty($honeypot)) {
+    // Silently ignore automated bot submission without storing spam
+    echo json_encode([
+        'success' => true,
+        'message' => '✓ Successfully subscribed to enterprise tech insights!'
+    ]);
+    exit;
+}
+
+$email = trim((string)($data['email'] ?? ($_POST['email'] ?? '')));
+$source = trim((string)($data['source'] ?? ($_POST['source'] ?? 'Global Footer')));
 
 if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
     echo json_encode([
         'success' => false,
         'message' => 'Please provide a valid email address.'

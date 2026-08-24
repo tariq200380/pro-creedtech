@@ -3,6 +3,7 @@
  * Creed Tech - Global Footer with Dynamic Settings Integration
  */
 require_once __DIR__ . '/security_helpers.php';
+require_once __DIR__ . '/csrf.php';
 $siteSettings = creed_get_site_settings();
 $footerConfig = $siteSettings['footer'] ?? [];
 $generalConfig = $siteSettings['general'] ?? [];
@@ -60,10 +61,10 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
         
         <!-- Text -->
         <div class="w-full md:w-1/2 flex flex-col text-left">
-          <h3 class="text-xl md:text-2xl font-bold text-[#1A1A1A] mb-2">
+          <h2 class="text-xl md:text-2xl font-medium text-[#1A1A1A] mb-2">
             Subscribe to Enterprise Insights
-          </h3>
-          <p class="text-sm text-[#1A1A1A]/70 leading-relaxed max-w-md">
+          </h2>
+          <p class="text-sm text-[#1A1A1A]/70 leading-relaxed max-w-md font-normal">
             Get quarterly whitepapers, architectural blueprints, and technology benchmarks directly to your inbox.
           </p>
         </div>
@@ -74,12 +75,17 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
         <!-- Form -->
         <div class="w-full md:w-1/2 flex flex-col">
           <form id="nextJsNewsletterForm" class="flex flex-col sm:flex-row gap-3 w-full">
+            <?= csrf_field() ?>
+            <!-- Honeypot anti-bot verification -->
+            <div style="display:none !important; position:absolute; left:-9999px; width:0; height:0; overflow:hidden;" aria-hidden="true">
+              <input type="text" name="company_website" tabindex="-1" autocomplete="off" value="" />
+            </div>
             <input
               type="email"
               name="email"
               placeholder="Enter your work email"
               required
-              class="bg-[#F4F6F8] border border-[#E5E8EB] text-[#1A1A1A] text-sm rounded-none px-4 py-2.5 focus:outline-none focus:border-[#0052FF] placeholder-[#888888] w-full transition-colors h-[42px]"
+              class="bg-[#F4F6F8] border border-[#E5E8EB] text-[#1A1A1A] text-sm rounded-[4px] px-4 py-2.5 focus:outline-none focus:border-[#0052FF] placeholder-[#888888] w-full transition-colors h-[42px]"
             />
             <button
               type="submit"
@@ -106,11 +112,11 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
         
         <!-- FooterBrandInfo.tsx -->
         <div class="col-span-2 md:col-span-1 flex flex-col text-left">
-          <h2 class="text-xl font-bold h-6 flex items-center mb-6 tracking-tight">
+          <p class="text-xl font-medium h-6 flex items-center mb-6 tracking-tight">
             <span class="text-[#F4F6F8]">CREED</span>
             <span class="text-[#FF6A00]"> TECH</span>
-          </h2>
-          <div class="text-sm text-[#F4F6F8]/80 leading-relaxed flex flex-col justify-between h-auto md:h-[290px] space-y-3.5 md:space-y-0">
+          </p>
+          <div class="text-sm text-[#F4F6F8]/80 leading-relaxed flex flex-col justify-between h-auto md:h-[290px] space-y-3.5 md:space-y-0 font-normal">
             <p><?= htmlspecialchars($brandP1) ?></p>
             <p><?= htmlspecialchars($brandP2) ?></p>
             <p><?= htmlspecialchars($brandP3) ?></p>
@@ -119,9 +125,9 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
 
         <!-- FooterLinksGroup.tsx (Useful Links - Left Column on Mobile) -->
         <div class="col-span-1 md:col-span-1 flex flex-col text-left">
-          <h3 class="text-xs font-bold uppercase tracking-widest text-white h-6 flex items-center mb-6">
+          <p class="text-xs font-medium uppercase tracking-widest text-white h-6 flex items-center mb-6">
             Useful Links
-          </h3>
+          </p>
           <ul class="flex flex-col space-y-3.5">
             <?php foreach ($usefulLinks as $uLink): 
               $uRawUrl = $uLink['url'] ?? '#';
@@ -134,9 +140,9 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
 
         <!-- FooterLinksGroup.tsx (Our Services - Right Column on Mobile) -->
         <div class="col-span-1 md:col-span-1 flex flex-col text-left">
-          <h3 class="text-xs font-bold uppercase tracking-widest text-white h-6 flex items-center mb-6">
+          <p class="text-xs font-medium uppercase tracking-widest text-white h-6 flex items-center mb-6">
             Our Services
-          </h3>
+          </p>
           <ul class="flex flex-col space-y-3.5">
             <?php foreach ($servicesLinks as $sLink): ?>
             <li class="h-6 flex items-center"><a href="<?= htmlspecialchars($sLink['url'] ?? '#') ?>" class="text-sm leading-6 text-[#F4F6F8]/80 hover:text-white transition-colors"><?= htmlspecialchars($sLink['label'] ?? '') ?></a></li>
@@ -146,16 +152,16 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
 
         <!-- FooterContactInfo.tsx (Contact Info) -->
         <div class="col-span-2 md:col-span-1 flex flex-col text-left">
-          <h3 class="text-xs font-bold text-white uppercase tracking-widest h-6 flex items-center mb-6">
+          <p class="text-xs font-medium text-white uppercase tracking-widest h-6 flex items-center mb-6">
             Contact
-          </h3>
+          </p>
           
-          <div class="text-sm leading-6 text-[#F4F6F8]/80 grid grid-cols-2 md:grid-cols-1 gap-x-6 gap-y-4">
+          <div class="text-sm leading-6 text-[#F4F6F8]/80 grid grid-cols-2 md:grid-cols-1 gap-x-6 gap-y-4 font-normal">
             
             <!-- LEFT on Mobile / BOTTOM on Desktop: PSEB badge + Social Links -->
             <div class="flex flex-col space-y-3.5 order-1 md:order-2">
               <div>
-                <span class="bg-[#0052FF]/20 text-white text-[11px] font-semibold px-2 py-0.5 rounded inline-block leading-normal">
+                <span class="bg-[#0052FF]/20 text-white text-[11px] font-medium px-2 py-0.5 rounded-[4px] inline-block leading-normal">
                   PSEB Registered
                 </span>
               </div>
@@ -211,37 +217,42 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
         <div class="order-1 sm:order-2 grid grid-cols-2 sm:flex sm:flex-row sm:items-center justify-center gap-3 w-full sm:w-auto mb-6 sm:mb-0">
           <a 
             href="security-iso-27001"
-            class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-semibold rounded-none bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-all duration-300 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
+            class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-medium rounded-[4px] bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-colors duration-150 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
           >
             ISO 27001
           </a>
           <a 
             href="security-gdpr"
-            class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-semibold rounded-none bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-all duration-300 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
+            class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-medium rounded-[4px] bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-colors duration-150 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
           >
             GDPR
           </a>
           <a 
             href="security-soc-2"
-            class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-semibold rounded-none bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-all duration-300 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
+            class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-medium rounded-[4px] bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-colors duration-150 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
           >
             SOC 2
           </a>
           <a 
             href="security-pci-dss"
-            class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-semibold rounded-none bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-all duration-300 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
+            class="w-full sm:w-28 h-8 flex items-center justify-center text-center text-xs font-medium rounded-[4px] bg-[#242424] text-[#F4F6F8]/90 border border-[#383838] transition-colors duration-150 hover:border-[#FF6B00] hover:text-[#FF6B00] hover:bg-[#FF6B00]/10 cursor-pointer select-none"
           >
             PCI-DSS
           </a>
         </div>
 
         <!-- Copyright & Legal Links (Order 2 on Mobile with divider above, Order 1 on Desktop) -->
-        <div class="order-2 sm:order-1 text-xs text-[#F4F6F8]/60 text-center sm:text-left flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 w-full sm:w-auto pt-6 sm:pt-0 border-t border-[#2A2A2A] sm:border-t-0">
-          <span><?= htmlspecialchars($copyrightText) ?> • Designed & Developed by <span class="font-semibold text-white">CREED TECH</span></span>
-          <span class="hidden sm:inline text-gray-600">|</span>
-          <a href="privacy-policy" class="hover:text-white hover:underline transition-colors">Privacy Policy</a>
-          <span class="text-gray-600">•</span>
-          <a href="terms" class="hover:text-white hover:underline transition-colors">Terms &amp; Conditions</a>
+        <div class="order-2 sm:order-1 text-xs text-[#F4F6F8]/60 w-full sm:w-auto flex flex-col sm:flex-row items-center justify-center sm:justify-start text-center sm:text-left pt-6 sm:pt-0 border-t border-[#2A2A2A] sm:border-t-0">
+          <div class="w-full sm:w-auto text-center sm:text-left">
+            <span><?= htmlspecialchars($copyrightText) ?> • Designed & Developed by</span>
+            <span class="block sm:inline w-full sm:w-auto text-center sm:text-left mt-2 mb-3 sm:my-0 sm:ml-1 font-medium text-white">CREED TECH</span>
+          </div>
+          <span class="hidden sm:inline text-gray-600 sm:mx-3">|</span>
+          <div class="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-x-3 text-center">
+            <a href="privacy-policy" class="hover:text-white hover:underline transition-colors">Privacy Policy</a>
+            <span class="text-gray-600">•</span>
+            <a href="terms" class="hover:text-white hover:underline transition-colors">Terms &amp; Conditions</a>
+          </div>
         </div>
 
       </div>

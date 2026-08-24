@@ -140,7 +140,11 @@ RewriteRule ^uploads/.*\.php$ - [F,L]
 # Dynamic XML Sitemap Route
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
-# Clean URL Routing
+# 5. Canonical 301 Permanent Redirects for Duplicate Homepage URLs (/index.php, /Home.php, /home.php -> /)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(index|Home|home)\.php [NC]
+RewriteRule ^(index|Home|home)\.php$ / [R=301,L,QSA]
+
+# 6. Clean URL Routing
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f

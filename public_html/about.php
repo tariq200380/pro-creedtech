@@ -425,7 +425,7 @@ include __DIR__ . '/includes/header.php';
         <!-- Set 1 -->
         <div class="flex items-center gap-14 sm:gap-20 shrink-0">
           <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-            <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+            <img src="partners/clutch.webp" alt="Clutch" class="h-7 w-auto object-contain" width="105" height="28" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
           </a>
           <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
             <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
@@ -444,7 +444,7 @@ include __DIR__ . '/includes/header.php';
         <!-- Set 2 -->
         <div class="flex items-center gap-14 sm:gap-20 shrink-0">
           <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-            <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+            <img src="partners/clutch.webp" alt="Clutch" class="h-7 w-auto object-contain" width="105" height="28" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
           </a>
           <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
             <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
@@ -463,7 +463,7 @@ include __DIR__ . '/includes/header.php';
         <!-- Set 3 -->
         <div class="flex items-center gap-14 sm:gap-20 shrink-0">
           <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-            <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+            <img src="partners/clutch.webp" alt="Clutch" class="h-7 w-auto object-contain" width="105" height="28" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
           </a>
           <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
             <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
@@ -482,7 +482,7 @@ include __DIR__ . '/includes/header.php';
         <!-- Set 4 -->
         <div class="flex items-center gap-14 sm:gap-20 shrink-0">
           <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-            <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+            <img src="partners/clutch.webp" alt="Clutch" class="h-7 w-auto object-contain" width="105" height="28" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
           </a>
           <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
             <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">

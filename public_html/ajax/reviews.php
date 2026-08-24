@@ -1,6 +1,8 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/security_helpers.php';
+require_once __DIR__ . '/../includes/csrf.php';
 
 $reviewsFile = __DIR__ . '/../data/reviews.json';
 if (!is_dir(dirname($reviewsFile))) {
@@ -13,15 +15,38 @@ if (file_exists($reviewsFile)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // 1. Rate Limiting Protection (Max 5 submissions per 60 seconds per IP)
+    $rateLimit = check_form_rate_limit('review_submission', 5, 60);
+    if (!$rateLimit['allowed']) {
+        http_response_code(429);
+        echo json_encode([
+            'success'     => false,
+            'message'     => 'Too many review submissions. Please wait ' . $rateLimit['retry_after'] . ' seconds before trying again.',
+            'retry_after' => $rateLimit['retry_after']
+        ]);
+        exit;
+    }
+
     $raw = @file_get_contents('php://input');
     $data = @json_decode($raw, true) ?: $_POST;
 
-    $authorName = trim((string)($data['authorName'] ?? ''));
-    $authorRole = trim((string)($data['authorRole'] ?? ''));
-    $location   = trim((string)($data['location'] ?? ''));
-    $quote      = trim((string)($data['quote'] ?? ''));
+    // 2. CSRF Token Verification
+    $submittedCsrf = $data['csrf_token'] ?? $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+    if (!validate_csrf_token($submittedCsrf)) {
+        http_response_code(403);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Invalid or missing security token. Please refresh the page and try again.'
+        ]);
+        exit;
+    }
+
+    $authorName = trim(strip_tags((string)($data['authorName'] ?? '')));
+    $authorRole = trim(strip_tags((string)($data['authorRole'] ?? '')));
+    $location   = trim(strip_tags((string)($data['location'] ?? '')));
+    $quote      = trim(strip_tags((string)($data['quote'] ?? '')));
     $rating     = intval($data['rating'] ?? 5);
-    $avatarUrl  = trim((string)($data['avatarUrl'] ?? ''));
+    $avatarUrl  = trim(strip_tags((string)($data['avatarUrl'] ?? '')));
 
     if (empty($authorName) || empty($quote)) {
         http_response_code(400);

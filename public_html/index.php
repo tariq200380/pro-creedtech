@@ -1,9 +1,13 @@
 <?php
 require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/csrf.php';
 
 $page_title = "CREED TECH | Enterprise IT Intelligence & Custom Software Engineering";
-$page_description = "Enterprise IT solutions, custom software engineering, AI workflow orchestration, cloud modernization, and real-time tech industry intelligence for high-growth enterprises worldwide.";
+$page_description = "Enterprise IT solutions, custom software engineering, AI workflow orchestration, cloud modernization, and real-time intelligence for high-growth enterprises.";
 $active_page = "home";
+$og_image_width = 849;
+$og_image_height = 384;
+$extra_head_tags = '<link rel="preload" as="image" href="hero-services-web-q90.webp" type="image/webp" fetchpriority="high">';
 
 include __DIR__ . '/includes/header.php';
 ?>
@@ -14,12 +18,12 @@ include __DIR__ . '/includes/header.php';
     
     <!-- LEFT — Text & CTA -->
     <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left shrink-0">
-      <h1 class="font-bold text-4xl sm:text-5xl text-[#1A1A1A] tracking-tight leading-[1.15]">
-        Your infrastructure, supercharged
+      <h1 class="font-normal text-4xl sm:text-5xl text-[#1A1A1A] tracking-tight leading-[1.15]">
+        Your infrastructure supercharged
       </h1>
 
-      <p class="text-base sm:text-lg text-[#3E3E3E] leading-relaxed mt-4 max-w-lg font-normal">
-        Creed Tech delivers enterprise software architecture, robust cloud infrastructure, advanced cybersecurity, and AI solutions — all in one platform.
+      <p class="text-base sm:text-lg text-[#3E3E3E] leading-[1.75] mt-4 max-w-lg font-normal">
+        Creed Tech delivers enterprise software architecture, robust cloud infrastructure, advanced cybersecurity, and AI solutions all in one platform.
       </p>
 
       <div class="mt-7 w-full flex justify-center lg:justify-start">
@@ -33,10 +37,10 @@ include __DIR__ . '/includes/header.php';
     <div class="w-full lg:w-[48%] flex justify-end">
       <div class="relative w-full max-w-[620px] flex items-center justify-center">
         <img 
-          src="hero-3d-white.webp" 
+          src="hero-services-web-q90.webp" 
           alt="Creed Tech Cloud, AI, and Software Architecture Solutions" 
           class="w-full h-auto object-contain block transition-transform duration-700 hover:scale-105 select-none"
-          onerror="this.src='hero-3d-transparent.webp'"
+          onerror="this.src='hero-3d-white.png'"
           width="620"
           height="520"
           decoding="async"
@@ -64,7 +68,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Set 1 -->
       <div class="flex items-center gap-14 sm:gap-20 shrink-0">
         <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+          <img src="partners/clutch.webp" alt="Clutch" class="h-7 w-auto object-contain" width="105" height="28" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
           <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
@@ -83,7 +87,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Set 2 -->
       <div class="flex items-center gap-14 sm:gap-20 shrink-0">
         <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+          <img src="partners/clutch.webp" alt="Clutch" class="h-7 w-auto object-contain" width="105" height="28" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
           <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
@@ -102,7 +106,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Set 3 -->
       <div class="flex items-center gap-14 sm:gap-20 shrink-0">
         <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+          <img src="partners/clutch.webp" alt="Clutch" class="h-7 w-auto object-contain" width="105" height="28" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
           <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
@@ -121,7 +125,7 @@ include __DIR__ . '/includes/header.php';
       <!-- Set 4 -->
       <div class="flex items-center gap-14 sm:gap-20 shrink-0">
         <a href="https://clutch.co" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
-          <img src="partners/clutch.webp" alt="Clutch" class="h-9 w-auto object-contain" width="120" height="36" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
+          <img src="partners/clutch.webp" alt="Clutch" class="h-7 w-auto object-contain" width="105" height="28" loading="lazy" decoding="async" onerror="this.src='clutch-logo.png'">
         </a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 transition-opacity">
           <img src="partners/google.webp" alt="Google" class="h-9 w-auto object-contain" width="110" height="36" loading="lazy" decoding="async" onerror="this.src='google-ar21.svg'">
@@ -152,7 +156,7 @@ include __DIR__ . '/includes/header.php';
     
     <!-- Section Heading & Subtitle -->
     <div class="flex flex-col items-center text-center mb-7 max-w-3xl">
-      <h2 class="text-3xl sm:text-4xl lg:text-[2.6rem] font-bold tracking-tight text-[#0F172A] leading-tight">
+      <h2 class="text-3xl sm:text-4xl lg:text-[2.6rem] font-medium tracking-tight text-[#0F172A] leading-tight">
         What We Provide
       </h2>
       <p class="text-sm sm:text-base text-[#475569] mt-3 font-normal leading-relaxed max-w-2xl">
@@ -415,7 +419,7 @@ include __DIR__ . '/includes/header.php';
     }
     .prov-title {
       font-size: 1.05rem;
-      font-weight: 700;
+      font-weight: 500;
       color: #0F172A;
       line-height: 1.35;
       margin: 0 0 0.45rem;
@@ -434,7 +438,7 @@ include __DIR__ . '/includes/header.php';
       align-items: center;
       gap: 5px;
       font-size: 0.78rem;
-      font-weight: 700;
+      font-weight: 600;
       color: #0052FF;
       text-decoration: none;
       letter-spacing: 0.01em;
@@ -478,11 +482,11 @@ include __DIR__ . '/includes/header.php';
     
     <!-- Section Header -->
     <div class="flex flex-col items-center text-center mb-10 max-w-3xl">
-      <a href="about" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF6B00] text-[11px] font-bold uppercase tracking-widest mb-3 cursor-pointer hover:bg-orange-500/20 hover:border-orange-500/40 transition-all duration-200">
+      <a href="about" class="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-orange-500/10 border border-orange-500/20 text-[#FF6B00] text-[11px] font-medium uppercase tracking-widest mb-3 cursor-pointer hover:bg-orange-500/20 hover:border-orange-500/40 transition-colors duration-150">
         <span class="w-1.5 h-1.5 rounded-full bg-[#FF6B00]"></span>
         ENGINEERING METHODOLOGY
       </a>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white uppercase text-center mb-3">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-white uppercase text-center mb-3">
         HOW WE DELIVER
       </h2>
       <p class="text-xs sm:text-sm text-gray-400 max-w-xl text-center font-normal leading-relaxed">
@@ -539,7 +543,7 @@ include __DIR__ . '/includes/header.php';
               <span class="badge-dot"></span>
               <span class="badge-text">PHASE 01</span>
             </div>
-            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3">
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-medium text-white tracking-tight mb-3">
               Team Requirement
             </h3>
             <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
@@ -548,16 +552,16 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="lg:col-span-5 w-full flex flex-col justify-center divide-y divide-gray-800/80">
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">01</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Define technical stack &amp; domain scope</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">01</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Define technical stack &amp; domain scope</span>
             </div>
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">02</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Evaluate seniority expectations</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">02</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Evaluate seniority expectations</span>
             </div>
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">03</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Match verified senior software engineers</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">03</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Match verified senior software engineers</span>
             </div>
           </div>
         </div>
@@ -571,7 +575,7 @@ include __DIR__ . '/includes/header.php';
               <span class="badge-dot"></span>
               <span class="badge-text">PHASE 02</span>
             </div>
-            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3">
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-medium text-white tracking-tight mb-3">
               Rapid Onboarding &amp; Setup
             </h3>
             <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
@@ -580,16 +584,16 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="lg:col-span-5 w-full flex flex-col justify-center divide-y divide-gray-800/80">
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">01</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Sprint kickoff &amp; repo provisioning</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">01</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Sprint kickoff &amp; repo provisioning</span>
             </div>
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">02</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Secure access integration</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">02</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Secure access integration</span>
             </div>
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">03</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Architectural alignment within 48 hours</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">03</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Architectural alignment within 48 hours</span>
             </div>
           </div>
         </div>
@@ -603,7 +607,7 @@ include __DIR__ . '/includes/header.php';
               <span class="badge-dot"></span>
               <span class="badge-text">PHASE 03</span>
             </div>
-            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3">
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-medium text-white tracking-tight mb-3">
               Full Velocity Execution
             </h3>
             <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
@@ -612,16 +616,16 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="lg:col-span-5 w-full flex flex-col justify-center divide-y divide-gray-800/80">
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">01</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Daily async syncs &amp; milestone tracking</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">01</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Daily async syncs &amp; milestone tracking</span>
             </div>
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">02</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Clean PR code reviews</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">02</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Clean PR code reviews</span>
             </div>
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">03</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Automated CI/CD deployment pipelines</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">03</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Automated CI/CD deployment pipelines</span>
             </div>
           </div>
         </div>
@@ -635,7 +639,7 @@ include __DIR__ . '/includes/header.php';
               <span class="badge-dot"></span>
               <span class="badge-text">PHASE 04</span>
             </div>
-            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3">
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-medium text-white tracking-tight mb-3">
               Continuous Quality Control
             </h3>
             <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
@@ -644,16 +648,16 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="lg:col-span-5 w-full flex flex-col justify-center divide-y divide-gray-800/80">
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">01</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">End-to-end automated testing</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">01</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">End-to-end automated testing</span>
             </div>
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">02</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Security audits &amp; performance profiling</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">02</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Security audits &amp; performance profiling</span>
             </div>
             <div class="py-3 first:pt-0 last:pb-0 flex items-center gap-3.5">
-              <span class="text-xs font-mono font-bold text-[#FF6B00] tracking-wider">03</span>
-              <span class="text-xs sm:text-sm text-gray-200 font-medium">Production-grade milestone sign-offs</span>
+              <span class="text-xs font-mono font-medium text-[#FF6B00] tracking-wider">03</span>
+              <span class="text-xs sm:text-sm text-gray-200 font-normal">Production-grade milestone sign-offs</span>
             </div>
           </div>
         </div>
@@ -836,14 +840,14 @@ include __DIR__ . '/includes/header.php';
     
     <!-- Left Column -->
     <div class="w-full lg:w-[44%] flex flex-col items-start text-left">
-      <span class="text-xs font-bold text-orange-600 uppercase tracking-widest mb-3">
+      <span class="text-xs font-medium text-orange-600 uppercase tracking-widest mb-3">
         WHY CREED TECH
       </span>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-[1.15] mb-5">
-        Focused teams.<br />
-        <span class="text-[#0052FF]">Reliable delivery.</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-medium text-gray-900 tracking-tight leading-tight mb-5">
+        <span class="block">Focused teams</span>
+        <span class="block text-[#0052FF] mt-2.5 sm:mt-3">Reliable delivery</span>
       </h2>
-      <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-8 max-w-md">
+      <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-8 max-w-md font-normal">
         What does this mean for you? You gain enterprise-grade engineering with the responsiveness of a dedicated team.
       </p>
       <a href="contact" class="btn-blue">
@@ -863,7 +867,7 @@ include __DIR__ . '/includes/header.php';
               <path d="m9 12 2 2 4-4"/>
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-gray-900 mb-2">Risk Free</h3>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Risk Free</h3>
           <p class="text-sm text-gray-600 leading-relaxed font-normal">
             Structured delivery with clear milestones reduces project risk from day one.
           </p>
@@ -879,7 +883,7 @@ include __DIR__ . '/includes/header.php';
               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-gray-900 mb-2">Cost</h3>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Cost</h3>
           <p class="text-sm text-gray-600 leading-relaxed font-normal">
             Transparent pricing with no hidden fees, scoped to your actual needs.
           </p>
@@ -902,7 +906,7 @@ include __DIR__ . '/includes/header.php';
               <line x1="17" y1="16" x2="23" y2="16"/>
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-gray-900 mb-2">Flexibility</h3>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Flexibility</h3>
           <p class="text-sm text-gray-600 leading-relaxed font-normal">
             Engagement models that adapt as your priorities and roadmap change.
           </p>
@@ -920,7 +924,7 @@ include __DIR__ . '/includes/header.php';
               <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-gray-900 mb-2">Dedicated Delivery</h3>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Dedicated Delivery</h3>
           <p class="text-sm text-gray-600 leading-relaxed font-normal">
             A consistent, dedicated team — not a rotating pool of contractors.
           </p>
@@ -1020,37 +1024,38 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- 7. CLIENT FEEDBACK SECTION: DUAL CONTINUOUS VERTICAL SCROLL (Left DOWN, Right UP) -->
-<section class="w-full py-12 sm:py-14 lg:py-[60px] bg-[#FCFDFF] text-gray-900 border-b border-gray-100 overflow-hidden relative">
+<section id="homeReviewsSection" class="w-full py-6 sm:py-8 lg:py-8 bg-[#FCFDFF] text-gray-900 border-b border-gray-100 overflow-hidden relative">
   <div class="max-w-7xl mx-auto px-6 lg:px-12">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
       
       <!-- LEFT COLUMN -->
       <div class="lg:col-span-5 text-left space-y-6">
         <div>
-          <span class="text-xs sm:text-[13px] font-bold text-[#E67E22] uppercase tracking-wider block mb-2">
+          <span class="text-xs sm:text-[13px] font-medium text-[#E67E22] uppercase tracking-wider block mb-2">
             Enterprise Client Feedback
           </span>
-          <h2 class="text-3xl sm:text-4xl lg:text-[44px] font-semibold text-gray-950 tracking-tight leading-tight">
-            What Our Clients Say About Creed Tech
+          <h2 class="text-3xl sm:text-4xl lg:text-[44px] font-medium text-gray-950 tracking-tight leading-tight">
+            <span class="block">What Our Clients Say</span>
+            <span class="block mt-2.5 sm:mt-3">About Creed Tech</span>
           </h2>
         </div>
 
         <div class="space-y-3.5 pt-2">
           <div class="flex items-start gap-3">
             <span class="text-[#E67E22] font-semibold text-base shrink-0 mt-0.5">✓</span>
-            <span class="text-sm sm:text-[15px] font-semibold text-gray-800 leading-snug">Dedicated Principal Engineers on Every Project.</span>
+            <span class="text-sm sm:text-[15px] font-normal text-gray-800 leading-snug">Dedicated Principal Engineers on Every Project.</span>
           </div>
           <div class="flex items-start gap-3">
             <span class="text-[#E67E22] font-semibold text-base shrink-0 mt-0.5">✓</span>
-            <span class="text-sm sm:text-[15px] font-semibold text-gray-800 leading-snug">The Ability to Scale Engineering Pods in Real Time.</span>
+            <span class="text-sm sm:text-[15px] font-normal text-gray-800 leading-snug">The Ability to Scale Engineering Pods in Real Time.</span>
           </div>
           <div class="flex items-start gap-3">
             <span class="text-[#E67E22] font-semibold text-base shrink-0 mt-0.5">✓</span>
-            <span class="text-sm sm:text-[15px] font-semibold text-gray-800 leading-snug">99.8% On-Time Deployment & Strict SLA Controls.</span>
+            <span class="text-sm sm:text-[15px] font-normal text-gray-800 leading-snug">99.8% On-Time Deployment & Strict SLA Controls.</span>
           </div>
           <div class="flex items-start gap-3">
             <span class="text-[#E67E22] font-semibold text-base shrink-0 mt-0.5">✓</span>
-            <span class="text-sm sm:text-[15px] font-semibold text-gray-800 leading-snug">Zero-Defect Code Audits & SOC 2 Compliance.</span>
+            <span class="text-sm sm:text-[15px] font-normal text-gray-800 leading-snug">Zero-Defect Code Audits & SOC 2 Compliance.</span>
           </div>
         </div>
 
@@ -1068,14 +1073,14 @@ include __DIR__ . '/includes/header.php';
           <div>
             <a
               href="portfolio"
-              class="inline-flex items-center text-xs sm:text-sm font-bold text-gray-900 hover:text-[#E67E22] border-b-2 border-gray-900 hover:border-[#E67E22] pb-0.5 transition-colors"
+              class="inline-flex items-center text-xs sm:text-sm font-medium text-gray-900 hover:text-[#E67E22] border-b-2 border-gray-900 hover:border-[#E67E22] pb-0.5 transition-colors"
             >
               View Client Portfolio &rarr;
             </a>
           </div>
         </div>
 
-        <p class="text-[11px] text-gray-400 font-medium pt-2">
+        <p class="text-[11px] text-gray-400 font-normal pt-2">
           Verified Enterprise Customer Reviews on Clutch & Trustpilot.
         </p>
       </div>
@@ -1100,11 +1105,11 @@ include __DIR__ . '/includes/header.php';
                   &ldquo;I'm using Creed Tech for our enterprise cloud architecture. It allowed us to deploy multi-region failover seamlessly with zero downtime.&rdquo;
                 </p>
                 <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
-                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-bold text-xs">
+                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-medium text-xs">
                     MR
                   </div>
                   <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">Marina R.</h4>
+                    <h4 class="text-xs sm:text-sm font-medium text-gray-900 leading-tight">Marina R.</h4>
                     <p class="text-[11px] text-gray-500 font-normal">Italy • Enterprise Cloud</p>
                   </div>
                 </div>
@@ -1117,11 +1122,11 @@ include __DIR__ . '/includes/header.php';
                   &ldquo;Exceptional full-stack capabilities and attention to detail. They built our AI-driven document intelligence pipeline directly with our ERP.&rdquo;
                 </p>
                 <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
-                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-bold text-xs">
+                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-medium text-xs">
                     ER
                   </div>
                   <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">Elena Rostova</h4>
+                    <h4 class="text-xs sm:text-sm font-medium text-gray-900 leading-tight">Elena Rostova</h4>
                     <p class="text-[11px] text-gray-500 font-normal">Germany • AI Automation</p>
                   </div>
                 </div>
@@ -1134,11 +1139,11 @@ include __DIR__ . '/includes/header.php';
                   &ldquo;I'm using Creed Tech for our enterprise cloud architecture. It allowed us to deploy multi-region failover seamlessly with zero downtime.&rdquo;
                 </p>
                 <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
-                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-bold text-xs">
+                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-medium text-xs">
                     MR
                   </div>
                   <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">Marina R.</h4>
+                    <h4 class="text-xs sm:text-sm font-medium text-gray-900 leading-tight">Marina R.</h4>
                     <p class="text-[11px] text-gray-500 font-normal">Italy • Enterprise Cloud</p>
                   </div>
                 </div>
@@ -1150,11 +1155,11 @@ include __DIR__ . '/includes/header.php';
                   &ldquo;Exceptional full-stack capabilities and attention to detail. They built our AI-driven document intelligence pipeline directly with our ERP.&rdquo;
                 </p>
                 <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
-                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-bold text-xs">
+                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-medium text-xs">
                     ER
                   </div>
                   <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">Elena Rostova</h4>
+                    <h4 class="text-xs sm:text-sm font-medium text-gray-900 leading-tight">Elena Rostova</h4>
                     <p class="text-[11px] text-gray-500 font-normal">Germany • AI Automation</p>
                   </div>
                 </div>
@@ -1174,11 +1179,11 @@ include __DIR__ . '/includes/header.php';
                   &ldquo;We had a complex legacy database problem and the engineering support was world-class. Solved our bottleneck within days.&rdquo;
                 </p>
                 <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
-                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-bold text-xs">
+                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-medium text-xs">
                     DL
                   </div>
                   <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">David L.</h4>
+                    <h4 class="text-xs sm:text-sm font-medium text-gray-900 leading-tight">David L.</h4>
                     <p class="text-[11px] text-gray-500 font-normal">United States • Database Arch</p>
                   </div>
                 </div>
@@ -1191,11 +1196,11 @@ include __DIR__ . '/includes/header.php';
                   &ldquo;It's been 4 years now that we rely on Creed Tech for dedicated staff augmentation and infrastructure. Top quality code.&rdquo;
                 </p>
                 <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
-                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-bold text-xs">
+                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-medium text-xs">
                     SJ
                   </div>
                   <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">Sarah Jenkins</h4>
+                    <h4 class="text-xs sm:text-sm font-medium text-gray-900 leading-tight">Sarah Jenkins</h4>
                     <p class="text-[11px] text-gray-500 font-normal">United Kingdom • Enterprise Squads</p>
                   </div>
                 </div>
@@ -1208,11 +1213,11 @@ include __DIR__ . '/includes/header.php';
                   &ldquo;We had a complex legacy database problem and the engineering support was world-class. Solved our bottleneck within days.&rdquo;
                 </p>
                 <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
-                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-bold text-xs">
+                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-medium text-xs">
                     DL
                   </div>
                   <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">David L.</h4>
+                    <h4 class="text-xs sm:text-sm font-medium text-gray-900 leading-tight">David L.</h4>
                     <p class="text-[11px] text-gray-500 font-normal">United States • Database Arch</p>
                   </div>
                 </div>
@@ -1224,11 +1229,11 @@ include __DIR__ . '/includes/header.php';
                   &ldquo;It's been 4 years now that we rely on Creed Tech for dedicated staff augmentation and infrastructure. Top quality code.&rdquo;
                 </p>
                 <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
-                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-bold text-xs">
+                  <div class="w-9 h-9 rounded-none overflow-hidden shrink-0 border border-blue-200 flex items-center justify-center bg-gray-900 text-white font-medium text-xs">
                     SJ
                   </div>
                   <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">Sarah Jenkins</h4>
+                    <h4 class="text-xs sm:text-sm font-medium text-gray-900 leading-tight">Sarah Jenkins</h4>
                     <p class="text-[11px] text-gray-500 font-normal">United Kingdom • Enterprise Squads</p>
                   </div>
                 </div>
@@ -1254,10 +1259,13 @@ include __DIR__ . '/includes/header.php';
       <div class="lg:col-span-6 w-full flex items-center justify-center">
         <div class="relative w-full max-w-[480px] rounded-[28px] overflow-hidden bg-white shadow-[0_15px_40px_-10px_rgba(0,82,255,0.08)] border border-[#E2E8F0]/90 group hover:shadow-[0_20px_50px_-10px_rgba(0,82,255,0.14)] transition-all duration-300">
           <img 
-            src="assets/img/trust-security-3d.png" 
+            src="assets/img/trust-security-3d-test.webp" 
             alt="Secure Engineering - 99.99% Reliability SLA" 
             class="w-full h-auto object-contain block select-none"
             loading="lazy"
+            decoding="async"
+            width="480"
+            height="500"
           />
         </div>
       </div>
@@ -1266,18 +1274,19 @@ include __DIR__ . '/includes/header.php';
       <div class="lg:col-span-6 flex flex-col items-start text-left">
         
         <!-- Pre-title Pill / Tag -->
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#EBF3FF] text-[#0052FF] text-xs font-bold tracking-wider uppercase mb-5">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[4px] bg-[#EBF3FF] text-[#0052FF] text-xs font-medium tracking-wider uppercase mb-5">
           <span class="w-2 h-2 rounded-full bg-[#0052FF]"></span>
           <span>TRUST & SECURITY</span>
         </div>
 
         <!-- Main Headline -->
-        <h2 class="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0F172A] tracking-tight leading-[1.18] mb-5">
-          Enterprise engineering<br>built on security,<br>reliability, and trust.
+        <h2 class="text-[21px] sm:text-4xl lg:text-[42px] font-medium text-[#0F172A] tracking-tight leading-tight mb-5">
+          <span class="block">Enterprise engineering built on</span>
+          <span class="block mt-2.5 sm:mt-3">security reliability and trust</span>
         </h2>
 
         <!-- Description -->
-        <p class="text-sm sm:text-[15px] text-[#475569] leading-relaxed mb-8 max-w-lg">
+        <p class="text-sm sm:text-[15px] text-[#475569] leading-relaxed mb-8 max-w-lg font-normal">
           We combine deep technical expertise with industry-leading security practices to deliver reliable, scalable, and future-ready solutions for your business.
         </p>
 
@@ -1287,10 +1296,10 @@ include __DIR__ . '/includes/header.php';
           <!-- Stat 1: 10+ Years Experience -->
           <div class="flex flex-col">
             <div class="flex items-baseline mb-1">
-              <span class="text-4xl sm:text-5xl font-black text-[#0F172A] tracking-tight">10</span>
-              <span class="text-3xl sm:text-4xl font-extrabold text-[#0052FF] ml-0.5">+</span>
+              <span class="text-4xl sm:text-5xl font-medium text-[#0F172A] tracking-tight">10</span>
+              <span class="text-3xl sm:text-4xl font-medium text-[#0052FF] ml-0.5">+</span>
             </div>
-            <span class="text-xs sm:text-[13px] font-bold text-[#64748B] uppercase tracking-wider">
+            <span class="text-xs sm:text-[13px] font-medium text-[#64748B] uppercase tracking-wider">
               YEARS EXPERIENCE
             </span>
           </div>
@@ -1301,10 +1310,10 @@ include __DIR__ . '/includes/header.php';
           <!-- Stat 2: 99.99% Reliability SLA -->
           <div class="flex flex-col">
             <div class="flex items-baseline mb-1">
-              <span class="text-4xl sm:text-5xl font-black text-[#0F172A] tracking-tight">99.99</span>
-              <span class="text-2xl sm:text-3xl font-extrabold text-[#0052FF] ml-0.5">%</span>
+              <span class="text-4xl sm:text-5xl font-medium text-[#0F172A] tracking-tight">99.99</span>
+              <span class="text-2xl sm:text-3xl font-medium text-[#0052FF] ml-0.5">%</span>
             </div>
-            <span class="text-xs sm:text-[13px] font-bold text-[#64748B] uppercase tracking-wider">
+            <span class="text-xs sm:text-[13px] font-medium text-[#64748B] uppercase tracking-wider">
               RELIABILITY SLA
             </span>
           </div>
@@ -1313,9 +1322,9 @@ include __DIR__ . '/includes/header.php';
 
         <!-- CTA Button -->
         <div>
-                  <a 
+          <a 
             href="security" 
-            class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#0052FF] hover:bg-[#0043D6] text-white text-sm sm:text-[15px] font-bold shadow-sm hover:shadow-md transition-all duration-200 group"
+            class="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-[4px] bg-[#0052FF] hover:bg-[#0042D0] text-white text-sm font-semibold transition-colors duration-150 group"
           >
             <span>Security & Trust</span>
             <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
@@ -1330,87 +1339,160 @@ include __DIR__ . '/includes/header.php';
 
 <!-- 9. KNOWLEDGE CENTER SECTION (src/components/home/knowledge-center) -->
 <?php
-// Dynamic Knowledge Center Cards Image Resolver
-$kc_insight_image = '';
-$kc_article_image = '';
-$kc_news_image    = '';
-$kc_blog_image    = '';
+// Dynamic Knowledge Center Cards Image Resolver with Host-Agnostic Fast Cache & Invalidation
+if (!function_exists('creed_get_kc_card_images')) {
+    function creed_get_kc_card_images() {
+        $cacheFile = __DIR__ . '/data/kc_images_cache.json';
+        $liveNewsJsonPath = __DIR__ . '/data/live_news_cache.json';
+        $articlesJsonPath = __DIR__ . '/data/articles.json';
+        $maxTtl = 60; // Strict 60-second max TTL for MySQL-derived updates
 
-// 1. Try fetching from database if active
-$db_conn = function_exists('creed_db') ? creed_db() : false;
-if ($db_conn) {
-    $artQuery = @$db_conn->query("SELECT title, category, image_url FROM articles WHERE is_published = 1 ORDER BY id DESC LIMIT 10");
-    if ($artQuery) {
-        while ($row = $artQuery->fetch_assoc()) {
-            $cat = strtoupper($row['category'] ?? '');
-            $img = $row['image_url'] ?? $row['image'] ?? $row['thumbnail'] ?? $row['featured_image'] ?? '';
-            if (!empty($img)) {
-                if (empty($kc_insight_image) && (strpos($cat, 'INSIGHT') !== false || strpos($cat, 'CLOUD') !== false || strpos($cat, 'HARDWARE') !== false)) {
-                    $kc_insight_image = $img;
-                } elseif (empty($kc_article_image) && (strpos($cat, 'ARTICLE') !== false || strpos($cat, 'RESEARCH') !== false || strpos($cat, 'SECURITY') !== false)) {
-                    $kc_article_image = $img;
-                } elseif (empty($kc_blog_image) && (strpos($cat, 'BLOG') !== false || strpos($cat, 'QA') !== false)) {
-                    $kc_blog_image = $img;
+        $newsMtime = file_exists($liveNewsJsonPath) ? (@filemtime($liveNewsJsonPath) ?: 0) : 0;
+        $articlesMtime = file_exists($articlesJsonPath) ? (@filemtime($articlesJsonPath) ?: 0) : 0;
+        $now = time();
+
+        // 1. Try reading from cache
+        if (file_exists($cacheFile)) {
+            $rawCache = @file_get_contents($cacheFile);
+            if ($rawCache) {
+                $cache = @json_decode($rawCache, true);
+                if (
+                    is_array($cache) &&
+                    !empty($cache['images']) &&
+                    isset($cache['created_at']) &&
+                    ($now - (int)$cache['created_at']) <= $maxTtl &&
+                    isset($cache['source_mtimes']) &&
+                    ($cache['source_mtimes']['live_news_cache'] ?? null) === $newsMtime &&
+                    ($cache['source_mtimes']['articles'] ?? null) === $articlesMtime
+                ) {
+                    return $cache['images'];
                 }
             }
         }
+
+        // 2. Cache Miss / Invalidation: Run existing resolution logic
+        $kc_insight_image = '';
+        $kc_article_image = '';
+        $kc_news_image    = '';
+        $kc_blog_image    = '';
+
+        // A. Database query
+        $db_conn = function_exists('creed_db') ? creed_db() : false;
+        if ($db_conn) {
+            $artQuery = @$db_conn->query("SELECT title, category, image_url FROM articles WHERE is_published = 1 ORDER BY id DESC LIMIT 10");
+            if ($artQuery) {
+                while ($row = $artQuery->fetch_assoc()) {
+                    $cat = strtoupper($row['category'] ?? '');
+                    $img = $row['image_url'] ?? $row['image'] ?? $row['thumbnail'] ?? $row['featured_image'] ?? '';
+                    if (!empty($img)) {
+                        if (empty($kc_insight_image) && (strpos($cat, 'INSIGHT') !== false || strpos($cat, 'CLOUD') !== false || strpos($cat, 'HARDWARE') !== false)) {
+                            $kc_insight_image = $img;
+                        } elseif (empty($kc_article_image) && (strpos($cat, 'ARTICLE') !== false || strpos($cat, 'RESEARCH') !== false || strpos($cat, 'SECURITY') !== false)) {
+                            $kc_article_image = $img;
+                        } elseif (empty($kc_blog_image) && (strpos($cat, 'BLOG') !== false || strpos($cat, 'QA') !== false)) {
+                            $kc_blog_image = $img;
+                        }
+                    }
+                }
+            }
+        }
+
+        // B. Fetch live news image from live_news_cache.json
+        if (file_exists($liveNewsJsonPath)) {
+            $liveNewsData = @json_decode(file_get_contents($liveNewsJsonPath), true);
+            if (!empty($liveNewsData['breaking_news'])) {
+                foreach ($liveNewsData['breaking_news'] as $bn) {
+                    $bnImg = $bn['img'] ?? $bn['image_url'] ?? $bn['source_image_url'] ?? '';
+                    if (!empty($bnImg)) {
+                        $kc_news_image = $bnImg;
+                        break;
+                    }
+                }
+            }
+            if (empty($kc_news_image) && !empty($liveNewsData['regional_items'])) {
+                foreach ($liveNewsData['regional_items'] as $ri) {
+                    $riImg = $ri['image_url'] ?? $ri['local_image_path'] ?? $ri['source_image_url'] ?? '';
+                    if (!empty($riImg)) {
+                        $kc_news_image = $riImg;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // C. Fallbacks from structured data/articles.json
+        if (file_exists($articlesJsonPath)) {
+            $articlesJsonData = @json_decode(file_get_contents($articlesJsonPath), true);
+            if (is_array($articlesJsonData)) {
+                foreach ($articlesJsonData as $aj) {
+                    $ajImg = $aj['image_url'] ?? $aj['image'] ?? $aj['thumbnail'] ?? $aj['featured_image'] ?? '';
+                    $ajCat = strtoupper($aj['category'] ?? '');
+                    if (!empty($ajImg)) {
+                        if (empty($kc_insight_image) && strpos($ajCat, 'INSIGHT') !== false) $kc_insight_image = $ajImg;
+                        if (empty($kc_article_image) && strpos($ajCat, 'ARTICLE') !== false) $kc_article_image = $ajImg;
+                        if (empty($kc_blog_image) && strpos($ajCat, 'BLOG') !== false) $kc_blog_image = $ajImg;
+                    }
+                }
+            }
+        }
+
+        // D. Fallback images
+        if (empty($kc_insight_image)) {
+            $kc_insight_image = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop';
+        }
+        if (empty($kc_article_image)) {
+            $kc_article_image = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';
+        }
+        if (empty($kc_news_image)) {
+            $kc_news_image = 'uploads/live_news/google_le-play-sweepstakes_4683461c45eb.webp';
+        }
+        if (empty($kc_blog_image)) {
+            $kc_blog_image = 'uploads/blog.webp';
+        }
+
+        $resolvedImages = [
+            'insight' => $kc_insight_image,
+            'article' => $kc_article_image,
+            'news'    => $kc_news_image,
+            'blog'    => $kc_blog_image,
+        ];
+
+        // 3. Concurrency-Safe Atomic Write
+        $cachePayload = [
+            'created_at'     => $now,
+            'source_mtimes'  => [
+                'live_news_cache' => $newsMtime,
+                'articles'        => $articlesMtime,
+            ],
+            'images'         => $resolvedImages,
+        ];
+
+        $dataDir = dirname($cacheFile);
+        if (is_dir($dataDir) && is_writable($dataDir)) {
+            $tmpFile = $cacheFile . '.' . bin2hex(random_bytes(6)) . '.tmp';
+            $json = @json_encode($cachePayload, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            if ($json !== false) {
+                $fp = @fopen($tmpFile, 'wb');
+                if ($fp) {
+                    @flock($fp, LOCK_EX);
+                    @fwrite($fp, $json);
+                    @fflush($fp);
+                    @flock($fp, LOCK_UN);
+                    @fclose($fp);
+                    @rename($tmpFile, $cacheFile);
+                }
+            }
+        }
+
+        return $resolvedImages;
     }
 }
 
-// 2. Fetch live news image from live_news_cache.json
-$liveNewsJsonPath = __DIR__ . '/data/live_news_cache.json';
-if (file_exists($liveNewsJsonPath)) {
-    $liveNewsData = @json_decode(file_get_contents($liveNewsJsonPath), true);
-    if (!empty($liveNewsData['breaking_news'])) {
-        foreach ($liveNewsData['breaking_news'] as $bn) {
-            $bnImg = $bn['img'] ?? $bn['image_url'] ?? $bn['source_image_url'] ?? '';
-            if (!empty($bnImg)) {
-                $kc_news_image = $bnImg;
-                break;
-            }
-        }
-    }
-    if (empty($kc_news_image) && !empty($liveNewsData['regional_items'])) {
-        foreach ($liveNewsData['regional_items'] as $ri) {
-            $riImg = $ri['image_url'] ?? $ri['local_image_path'] ?? $ri['source_image_url'] ?? '';
-            if (!empty($riImg)) {
-                $kc_news_image = $riImg;
-                break;
-            }
-        }
-    }
-}
-
-// 3. Fallbacks from structured data/articles.json and local asset records
-$articlesJsonPath = __DIR__ . '/data/articles.json';
-if (file_exists($articlesJsonPath)) {
-    $articlesJsonData = @json_decode(file_get_contents($articlesJsonPath), true);
-    if (is_array($articlesJsonData)) {
-        foreach ($articlesJsonData as $aj) {
-            $ajImg = $aj['image_url'] ?? $aj['image'] ?? $aj['thumbnail'] ?? $aj['featured_image'] ?? '';
-            $ajCat = strtoupper($aj['category'] ?? '');
-            if (!empty($ajImg)) {
-                if (empty($kc_insight_image) && strpos($ajCat, 'INSIGHT') !== false) $kc_insight_image = $ajImg;
-                if (empty($kc_article_image) && strpos($ajCat, 'ARTICLE') !== false) $kc_article_image = $ajImg;
-                if (empty($kc_blog_image) && strpos($ajCat, 'BLOG') !== false) $kc_blog_image = $ajImg;
-            }
-        }
-    }
-}
-
-// Fallback images from verified featured project image assets
-if (empty($kc_insight_image)) {
-    $kc_insight_image = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop';
-}
-if (empty($kc_article_image)) {
-    $kc_article_image = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';
-}
-if (empty($kc_news_image)) {
-    $kc_news_image = 'uploads/live_news/google_le-play-sweepstakes_4683461c45eb.webp';
-}
-if (empty($kc_blog_image)) {
-    $kc_blog_image = 'uploads/blog.webp';
-}
+$kc_images = creed_get_kc_card_images();
+$kc_insight_image = $kc_images['insight'] ?? 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop';
+$kc_article_image = $kc_images['article'] ?? 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';
+$kc_news_image    = $kc_images['news'] ?? 'uploads/live_news/google_le-play-sweepstakes_4683461c45eb.webp';
+$kc_blog_image    = $kc_images['blog'] ?? 'uploads/blog.webp';
 ?>
 <section 
   class="w-full py-12 lg:py-16 border-b border-[#E3EDFF]"
@@ -1419,10 +1501,10 @@ if (empty($kc_blog_image)) {
   <div class="max-w-7xl mx-auto px-6 lg:px-12">
     
     <div class="flex flex-col items-center text-center mb-10">
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-4">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-medium text-gray-900 tracking-tight mb-4">
         Knowledge Center
       </h2>
-      <p class="text-sm sm:text-base text-gray-600 max-w-2xl">
+      <p class="text-sm sm:text-base text-gray-600 max-w-2xl font-normal">
         Discover the latest advancements, expert insights, and practical tips to elevate your software development journey.
       </p>
     </div>
@@ -1436,10 +1518,10 @@ if (empty($kc_blog_image)) {
         class="group bg-white rounded-2xl border border-[#E1ECFB] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-300 flex items-center justify-between gap-6"
       >
         <div class="flex flex-col items-start pr-2">
-          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">
+          <span class="text-xs font-medium text-blue-600 uppercase tracking-wider mb-2">
             INSIGHT
           </span>
-          <h3 class="text-base sm:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug mb-2.5 max-w-md">
+          <h3 class="text-base sm:text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors leading-snug mb-2.5 max-w-md">
             The enterprise software checklist before you scale
           </h3>
           <span class="text-xs text-gray-400 font-normal">
@@ -1452,6 +1534,9 @@ if (empty($kc_blog_image)) {
             alt="The enterprise software checklist before you scale" 
             class="w-full h-full object-cover object-center block"
             loading="lazy"
+            decoding="async"
+            width="112"
+            height="88"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
           />
           <div class="hidden absolute inset-0 bg-gradient-to-br from-blue-50/70 to-blue-100/30 items-center justify-center">
@@ -1468,10 +1553,10 @@ if (empty($kc_blog_image)) {
         class="group bg-white rounded-2xl border border-[#E1ECFB] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-300 flex items-center justify-between gap-6"
       >
         <div class="flex flex-col items-start pr-2">
-          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">
+          <span class="text-xs font-medium text-blue-600 uppercase tracking-wider mb-2">
             ARTICLE
           </span>
-          <h3 class="text-base sm:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug mb-2.5 max-w-md">
+          <h3 class="text-base sm:text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors leading-snug mb-2.5 max-w-md">
             Why database migrations fail — and how to avoid it
           </h3>
           <span class="text-xs text-gray-400 font-normal">
@@ -1484,6 +1569,9 @@ if (empty($kc_blog_image)) {
             alt="Why database migrations fail — and how to avoid it" 
             class="w-full h-full object-cover object-center block"
             loading="lazy"
+            decoding="async"
+            width="112"
+            height="88"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
           />
           <div class="hidden absolute inset-0 bg-gradient-to-br from-orange-50/70 to-amber-100/30 items-center justify-center">
@@ -1500,10 +1588,10 @@ if (empty($kc_blog_image)) {
         class="group bg-white rounded-2xl border border-[#E1ECFB] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-300 flex items-center justify-between gap-6"
       >
         <div class="flex flex-col items-start pr-2">
-          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">
+          <span class="text-xs font-medium text-blue-600 uppercase tracking-wider mb-2">
             NEWS
           </span>
-          <h3 class="text-base sm:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug mb-2.5 max-w-md">
+          <h3 class="text-base sm:text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors leading-snug mb-2.5 max-w-md">
             Creed Tech expands cloud infrastructure practice
           </h3>
           <span class="text-xs text-gray-400 font-normal">
@@ -1516,6 +1604,9 @@ if (empty($kc_blog_image)) {
             alt="Creed Tech expands cloud infrastructure practice" 
             class="w-full h-full object-cover object-center block"
             loading="lazy"
+            decoding="async"
+            width="112"
+            height="88"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
           />
           <div class="hidden absolute inset-0 bg-gradient-to-br from-blue-50/70 to-blue-100/30 items-center justify-center">
@@ -1532,10 +1623,10 @@ if (empty($kc_blog_image)) {
         class="group bg-white rounded-2xl border border-[#E1ECFB] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-300 flex items-center justify-between gap-6"
       >
         <div class="flex flex-col items-start pr-2">
-          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">
+          <span class="text-xs font-medium text-blue-600 uppercase tracking-wider mb-2">
             BLOG
           </span>
-          <h3 class="text-base sm:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug mb-2.5 max-w-md">
+          <h3 class="text-base sm:text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors leading-snug mb-2.5 max-w-md">
             A practical guide to QA for fast-moving teams
           </h3>
           <span class="text-xs text-gray-400 font-normal">
@@ -1548,6 +1639,9 @@ if (empty($kc_blog_image)) {
             alt="A practical guide to QA for fast-moving teams" 
             class="w-full h-full object-cover object-center block"
             loading="lazy"
+            decoding="async"
+            width="112"
+            height="88"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
           />
           <div class="hidden absolute inset-0 bg-gradient-to-br from-orange-50/70 to-amber-100/30 items-center justify-center">
@@ -1577,18 +1671,19 @@ if (empty($kc_blog_image)) {
       <div class="lg:col-span-6 flex flex-col items-start text-left">
         
         <!-- Pre-title Pill / Tag -->
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF3FF] text-[#0052FF] text-xs font-bold tracking-wider uppercase mb-5">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[4px] bg-[#EBF3FF] text-[#0052FF] text-xs font-medium tracking-wider uppercase mb-5">
           <span class="w-2 h-2 rounded-full bg-[#0052FF]"></span>
           <span>CAREERS AT CREED TECH</span>
         </div>
 
         <!-- Main Headline -->
-        <h2 class="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#0F172A] tracking-tight leading-[1.2] mb-5">
-          Build meaningful technology.<br>Grow with the people behind it.
+        <h2 class="text-[22px] sm:text-4xl lg:text-[40px] font-medium text-[#0F172A] tracking-tight leading-tight mb-5">
+          <span class="block">Build meaningful technology</span>
+          <span class="block mt-2.5 sm:mt-3">Grow with the people behind it</span>
         </h2>
 
         <!-- Description -->
-        <p class="text-sm sm:text-base text-[#475569] leading-relaxed mb-7 max-w-xl">
+        <p class="text-sm sm:text-base text-[#475569] leading-relaxed mb-7 max-w-xl font-normal">
           Join a team focused on thoughtful engineering, continuous growth, and building technology that creates real business value.
         </p>
 
@@ -1598,19 +1693,19 @@ if (empty($kc_blog_image)) {
             <div class="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs shrink-0 border border-emerald-200/80">
               ✓
             </div>
-            <span class="text-sm sm:text-[15px] font-semibold text-gray-800">Work on meaningful projects</span>
+            <span class="text-sm sm:text-[15px] font-normal text-gray-800">Work on meaningful projects</span>
           </div>
           <div class="flex items-center gap-3">
             <div class="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs shrink-0 border border-emerald-200/80">
               ✓
             </div>
-            <span class="text-sm sm:text-[15px] font-semibold text-gray-800">Grow with experienced engineers</span>
+            <span class="text-sm sm:text-[15px] font-normal text-gray-800">Grow with experienced engineers</span>
           </div>
           <div class="flex items-center gap-3">
             <div class="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs shrink-0 border border-emerald-200/80">
               ✓
             </div>
-            <span class="text-sm sm:text-[15px] font-semibold text-gray-800">Build with modern technologies</span>
+            <span class="text-sm sm:text-[15px] font-normal text-gray-800">Build with modern technologies</span>
           </div>
         </div>
 
@@ -1618,7 +1713,7 @@ if (empty($kc_blog_image)) {
         <div>
           <a 
             href="careers" 
-            class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#0052FF] hover:bg-[#0043D6] text-white text-sm sm:text-[15px] font-bold shadow-sm hover:shadow-md transition-all duration-200 group"
+            class="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-[4px] bg-[#0052FF] hover:bg-[#0042D0] text-white text-sm font-semibold transition-colors duration-150 group"
           >
             <span>Explore Careers</span>
             <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
@@ -1756,19 +1851,19 @@ if (empty($kc_blog_image)) {
           </svg>
 
           <!-- Floating Badge: Top-Left -->
-          <div class="absolute top-5 left-5 z-20 bg-white/95 border border-[#D9E6F7] rounded-full px-3.5 py-1.5 shadow-sm flex items-center gap-2 text-xs font-semibold text-gray-800 transition-transform duration-300 hover:scale-105">
+          <div class="absolute top-5 left-5 z-20 bg-white/95 border border-[#D9E6F7] rounded-[4px] px-3.5 py-1.5 shadow-none flex items-center gap-2 text-xs font-medium text-gray-800 transition-transform duration-300 hover:scale-105">
             <span class="w-2 h-2 rounded-full bg-[#0052FF]"></span>
             <span>Engineering</span>
           </div>
 
           <!-- Floating Badge: Top-Right -->
-          <div class="absolute top-5 right-5 z-20 bg-white/95 border border-[#D9E6F7] rounded-full px-3.5 py-1.5 shadow-sm flex items-center gap-2 text-xs font-semibold text-gray-800 transition-transform duration-300 hover:scale-105">
+          <div class="absolute top-5 right-5 z-20 bg-white/95 border border-[#D9E6F7] rounded-[4px] px-3.5 py-1.5 shadow-none flex items-center gap-2 text-xs font-medium text-gray-800 transition-transform duration-300 hover:scale-105">
             <span class="text-[#FF8A00] font-bold">📈</span>
             <span>Growth</span>
           </div>
 
           <!-- Floating Badge: Bottom-Center -->
-          <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 bg-white/95 border border-[#D9E6F7] rounded-full px-4 py-1.5 shadow-sm flex items-center gap-2 text-xs font-semibold text-gray-800 transition-transform duration-300 hover:scale-105 whitespace-nowrap">
+          <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 bg-white/95 border border-[#D9E6F7] rounded-[4px] px-4 py-1.5 shadow-none flex items-center gap-2 text-xs font-medium text-gray-800 transition-transform duration-300 hover:scale-105 whitespace-nowrap">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>Open Roles • Active Hiring</span>
           </div>
@@ -1858,7 +1953,7 @@ if (empty($kc_blog_image)) {
         <circle cx="75" cy="195" r="2.5" fill="#38BDF8"/>
 
         <!-- Line to Message (Bottom-Right) -->
-        <path d="M210 145 C 255 160, 280 185, 305 195" stroke="#FF8A00" stroke-width="1.5" stroke-dasharray="4 4" stroke-opacity="0.45"/>
+        <path d="M210 145 C 255 160, 280 185, 305 195" stroke="#FF6B00" stroke-width="1.5" stroke-dasharray="4 4" stroke-opacity="0.45"/>
         <circle cx="305" cy="195" r="2.5" fill="#FF8A00"/>
 
         <!-- 3D Pedestal / Base Shadow for Main Bubble -->
@@ -1958,7 +2053,7 @@ if (empty($kc_blog_image)) {
       <span class="text-xs font-bold text-[#FF6B00] uppercase tracking-widest mb-4">
         CONTACT
       </span>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-6 leading-tight">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-white mb-6 leading-tight">
         Let's Discuss <span class="text-[#FF6B00]">Your Project</span>
       </h2>
       <p class="text-sm sm:text-base text-gray-300 max-w-xl mb-9 leading-relaxed font-normal">
@@ -1976,40 +2071,41 @@ if (empty($kc_blog_image)) {
 
 <!-- ================= CLIENT REVIEW MODAL ================= -->
 <div id="homeReviewModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(5px);z-index:9999;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
-  <div style="background:#fff;border-radius:12px;max-width:540px;width:100%;padding:28px;position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,0.35);text-align:left;">
+  <div style="background:#fff;border-radius:6px;max-width:540px;width:100%;padding:28px;position:relative;box-shadow:none;border:1px solid #E2E8F0;text-align:left;">
     
-    <button type="button" onclick="closeHomeReviewModal()" style="position:absolute;top:20px;right:20px;background:none;border:none;font-size:20px;font-weight:700;color:#94A3B8;cursor:pointer;">✕</button>
+    <button type="button" onclick="closeHomeReviewModal()" style="position:absolute;top:20px;right:20px;background:none;border:none;font-size:20px;font-weight:600;color:#94A3B8;cursor:pointer;">✕</button>
 
     <div id="reviewFormContainer">
       <div style="margin-bottom:18px;">
-        <span style="font-size:11px;font-weight:800;color:#FF6B00;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:4px;">★ VERIFIED CLIENT ENDORSEMENT</span>
-        <h2 style="font-size:22px;font-weight:800;color:#0F172A;margin:0 0 6px;">Share Your Enterprise Experience</h2>
-        <p style="font-size:13px;color:#64748B;margin:0;">Your verified review helps global organizations evaluate Creed Tech engineering standards.</p>
+        <span style="font-size:11px;font-weight:600;color:#FF6B00;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:4px;">★ VERIFIED CLIENT ENDORSEMENT</span>
+        <h2 style="font-size:22px;font-weight:600;color:#0F172A;margin:0 0 6px;">Share Your Enterprise Experience</h2>
+        <p style="font-size:13px;color:#64748B;margin:0;font-weight:400;">Your verified review helps global organizations evaluate Creed Tech engineering standards.</p>
       </div>
 
       <form id="homeReviewForm" onsubmit="submitHomeReview(event)" style="display:flex;flex-direction:column;gap:14px;">
+        <?= csrf_field() ?>
         
         <!-- Full Name & Role -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label style="display:block;font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">Full Name *</label>
-            <input type="text" id="revName" required placeholder="e.g. Marcus Vance" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;box-sizing:border-box;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#1E293B;margin-bottom:4px;">Full Name *</label>
+            <input type="text" id="revName" required placeholder="e.g. Marcus Vance" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:13px;box-sizing:border-box;">
           </div>
           <div>
-            <label style="display:block;font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">Role &amp; Company *</label>
-            <input type="text" id="revRole" required placeholder="e.g. VP of Eng, Apex Global" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;box-sizing:border-box;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#1E293B;margin-bottom:4px;">Role &amp; Company *</label>
+            <input type="text" id="revRole" required placeholder="e.g. VP of Eng, Apex Global" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:13px;box-sizing:border-box;">
           </div>
         </div>
 
         <!-- Location & Rating -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label style="display:block;font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">Country / Location</label>
-            <input type="text" id="revLocation" placeholder="e.g. Germany / United Kingdom" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;box-sizing:border-box;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#1E293B;margin-bottom:4px;">Country / Location</label>
+            <input type="text" id="revLocation" placeholder="e.g. Germany / United Kingdom" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:13px;box-sizing:border-box;">
           </div>
           <div>
-            <label style="display:block;font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">Rating Score *</label>
-            <select id="revRating" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;box-sizing:border-box;background:#fff;font-weight:700;color:#E67E22;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#1E293B;margin-bottom:4px;">Rating Score *</label>
+            <select id="revRating" style="width:100%;padding:9px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:13px;box-sizing:border-box;background:#fff;font-weight:600;color:#E67E22;">
               <option value="5" selected>★★★★★ (5.0 Excellent)</option>
               <option value="4">★★★★☆ (4.0 Very Good)</option>
               <option value="3">★★★☆☆ (3.0 Good)</option>
@@ -2019,24 +2115,24 @@ if (empty($kc_blog_image)) {
 
         <!-- Review Quote -->
         <div>
-          <label style="display:block;font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">Your Review / Testimonial *</label>
-          <textarea id="revQuote" rows="4" required placeholder="Describe your experience with Creed Tech engineers, architecture, velocity, or reliability..." style="width:100%;padding:10px 12px;border:1px solid #CBD5E1;border-radius:6px;font-size:13px;box-sizing:border-box;resize:none;line-height:1.6;"></textarea>
+          <label style="display:block;font-size:12px;font-weight:600;color:#1E293B;margin-bottom:4px;">Your Review / Testimonial *</label>
+          <textarea id="revQuote" rows="4" required placeholder="Describe your experience with Creed Tech engineers, architecture, velocity, or reliability..." style="width:100%;padding:10px 12px;border:1px solid #CBD5E1;border-radius:4px;font-size:13px;box-sizing:border-box;resize:none;line-height:1.6;"></textarea>
         </div>
 
         <!-- Submit Button -->
         <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">
-          <button type="button" onclick="closeHomeReviewModal()" style="padding:10px 18px;background:#F1F5F9;border:1px solid #CBD5E1;font-size:13px;font-weight:700;color:#475569;border-radius:6px;cursor:pointer;">Cancel</button>
-          <button type="submit" id="submitRevBtn" style="padding:10px 24px;background:#FF6B00;color:#fff;font-size:13px;font-weight:700;border:none;border-radius:6px;cursor:pointer;box-shadow:0 4px 6px -1px rgba(255,107,0,0.3);">Submit Client Review ★</button>
+          <button type="button" onclick="closeHomeReviewModal()" style="padding:9px 18px;background:#F1F5F9;border:1px solid #CBD5E1;font-size:13px;font-weight:600;color:#475569;border-radius:4px;cursor:pointer;">Cancel</button>
+          <button type="submit" id="submitRevBtn" style="padding:9px 22px;background:#FF6B00;color:#fff;font-size:13px;font-weight:600;border:none;border-radius:4px;cursor:pointer;box-shadow:none;">Submit Client Review ★</button>
         </div>
       </form>
     </div>
 
     <!-- Success Confirmation State -->
     <div id="reviewSuccessState" style="display:none;text-align:center;padding:24px 12px;">
-      <div style="width:60px;height:60px;background:#ECFDF5;border:2px solid #6EE7B7;color:#059669;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;">✓</div>
-      <h3 style="font-size:20px;font-weight:800;color:#0F172A;margin:0 0 8px;">Review Submitted Successfully!</h3>
+      <div style="width:52px;height:52px;background:#ECFDF5;border:2px solid #6EE7B7;color:#059669;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px;">✓</div>
+      <h3 style="font-size:18px;font-weight:600;color:#0F172A;margin:0 0 8px;">Review Submitted Successfully!</h3>
       <p style="font-size:13px;color:#64748B;line-height:1.6;margin:0 0 20px;max-width:400px;margin-left:auto;margin-right:auto;">Thank you for your valuable endorsement. Your review has been saved and will appear in our verified customer highlights.</p>
-      <button type="button" onclick="closeHomeReviewModal()" style="padding:10px 24px;background:#0F172A;color:#fff;font-size:13px;font-weight:700;border:none;border-radius:6px;cursor:pointer;">Close Window</button>
+      <button type="button" onclick="closeHomeReviewModal()" style="padding:9px 22px;background:#0F172A;color:#fff;font-size:13px;font-weight:600;border:none;border-radius:4px;cursor:pointer;">Close Window</button>
     </div>
 
   </div>
@@ -2080,35 +2176,59 @@ function closeHomeReviewModal() {
   if (modal) modal.style.display = 'none';
 }
 
+function escapeReviewHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function renderReviewCardHtml(rev) {
   var stars = '';
-  for (var i = 0; i < (rev.rating || 5); i++) stars += '★';
+  var rating = parseInt(rev.rating, 10) || 5;
+  rating = Math.min(5, Math.max(1, rating));
+  for (var i = 0; i < rating; i++) stars += '★';
   while (stars.length < 5) stars += '☆';
   
+  var authorName = escapeReviewHtml(rev.authorName || 'Verified Client');
+  var quote = escapeReviewHtml(rev.quote || '');
+  var location = escapeReviewHtml(rev.location || 'Global');
+  var authorRole = escapeReviewHtml(rev.authorRole || 'Enterprise Client');
+
   var initials = 'CT';
   if (rev.authorName) {
-    var parts = rev.authorName.trim().split(' ');
-    if (parts.length === 1) initials = parts[0].substring(0, 2).toUpperCase();
-    else initials = (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    var cleanName = String(rev.authorName).trim().replace(/[^a-zA-Z0-9\s]/g, '');
+    var parts = cleanName.split(/\s+/).filter(Boolean);
+    if (parts.length === 1 && parts[0].length >= 2) initials = parts[0].substring(0, 2).toUpperCase();
+    else if (parts.length >= 2) initials = (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    else if (parts.length === 1) initials = parts[0][0].toUpperCase();
   }
+  initials = escapeReviewHtml(initials);
 
   return '<div class="bg-white rounded-2xl border border-blue-200/80 p-5 shadow-sm hover:shadow-md transition-all duration-300 text-left bg-gradient-to-b from-white to-[#F0F7FF]">' +
     '<div class="flex items-center justify-between mb-2.5">' +
       '<span class="text-[#FFAA00] text-xs sm:text-sm">' + stars + '</span>' +
       '<span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 uppercase tracking-wider">Verified Client</span>' +
     '</div>' +
-    '<p class="text-xs sm:text-[13px] text-gray-800 leading-relaxed font-medium mb-3.5">&ldquo;' + rev.quote + '&rdquo;</p>' +
+    '<p class="text-xs sm:text-[13px] text-gray-800 leading-relaxed font-medium mb-3.5">&ldquo;' + quote + '&rdquo;</p>' +
     '<div class="flex items-center gap-3 pt-3 border-t border-gray-100">' +
       '<div class="w-9 h-9 rounded-full overflow-hidden shrink-0 border border-blue-300 flex items-center justify-center bg-blue-600 text-white font-bold text-xs shadow-xs">' + initials + '</div>' +
       '<div>' +
-        '<h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">' + rev.authorName + '</h4>' +
-        '<p class="text-[11px] text-gray-500 font-normal">' + (rev.location || 'Global') + ' • ' + (rev.authorRole || 'Enterprise Client') + '</p>' +
+        '<h4 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">' + authorName + '</h4>' +
+        '<p class="text-[11px] text-gray-500 font-normal">' + location + ' • ' + authorRole + '</p>' +
       '</div>' +
     '</div>' +
   '</div>';
 }
 
+var _hasLoadedLiveReviews = false;
 function loadLiveReviewsOnHome() {
+  if (_hasLoadedLiveReviews) return;
+  _hasLoadedLiveReviews = true;
+
   fetch('ajax/reviews.php')
     .then(function(res) { return res.json(); })
     .then(function(data) {
@@ -2132,7 +2252,25 @@ function loadLiveReviewsOnHome() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  loadLiveReviewsOnHome();
+  var targetSection = document.getElementById('homeReviewsSection') || document.querySelector('.reviews-col-down');
+
+  if ('IntersectionObserver' in window && targetSection) {
+    var observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          loadLiveReviewsOnHome();
+          obs.disconnect();
+        }
+      });
+    }, { rootMargin: '300px 0px' });
+
+    observer.observe(targetSection);
+  } else {
+    // Fallback if IntersectionObserver is not supported
+    window.addEventListener('load', function() {
+      loadLiveReviewsOnHome();
+    });
+  }
 });
 
 function submitHomeReview(e) {
@@ -2141,7 +2279,11 @@ function submitHomeReview(e) {
   btn.textContent = 'Submitting...';
   btn.disabled = true;
 
+  var csrfInput = document.querySelector('#homeReviewForm input[name="csrf_token"]');
+  var csrfVal = csrfInput ? csrfInput.value : '';
+
   var payload = {
+    csrf_token: csrfVal,
     authorName: document.getElementById('revName').value,
     authorRole: document.getElementById('revRole').value,
     location: document.getElementById('revLocation').value,
@@ -2156,6 +2298,12 @@ function submitHomeReview(e) {
   })
   .then(function(res) { return res.json(); })
   .then(function(data) {
+    if (!data.success) {
+      btn.textContent = 'Submit Client Review ★';
+      btn.disabled = false;
+      alert(data.message || 'Submission failed. Please try again.');
+      return;
+    }
     document.getElementById('reviewFormContainer').style.display = 'none';
     document.getElementById('reviewSuccessState').style.display = 'block';
     btn.textContent = 'Submit Client Review ★';
@@ -2168,16 +2316,9 @@ function submitHomeReview(e) {
     else if (colDown) colDown.insertAdjacentHTML('afterbegin', cardHtml);
   })
   .catch(function(err) {
-    document.getElementById('reviewFormContainer').style.display = 'none';
-    document.getElementById('reviewSuccessState').style.display = 'block';
     btn.textContent = 'Submit Client Review ★';
     btn.disabled = false;
-
-    var cardHtml = renderReviewCardHtml(payload);
-    var grid = document.getElementById('reviews-grid');
-    var colDown = document.querySelector('.reviews-col-down');
-    if (grid) grid.insertAdjacentHTML('afterbegin', cardHtml);
-    else if (colDown) colDown.insertAdjacentHTML('afterbegin', cardHtml);
+    alert('An unexpected error occurred. Please try again.');
   });
 }
 </script>

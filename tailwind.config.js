@@ -21,7 +21,7 @@ module.exports = {
         newsDark: "#070D1E",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ['"Segoe UI"', '"Segoe UI Variable"', 'Arial', 'sans-serif'],
       }
     }
   },

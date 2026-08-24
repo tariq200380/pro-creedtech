@@ -10,7 +10,11 @@ if (!defined('CREED_CSRF_ACTIVE')) {
 if (session_status() === PHP_SESSION_NONE) {
     // Ensure session is started if not already
     if (!headers_sent()) {
-        session_start();
+        $sessPath = session_save_path();
+        if (empty($sessPath) || !is_writable($sessPath)) {
+            @session_save_path(sys_get_temp_dir());
+        }
+        @session_start();
     }
 }
 

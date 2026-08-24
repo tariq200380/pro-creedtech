@@ -78,6 +78,10 @@ if (!isset($og_image) || empty($og_image)) {
   <meta property="og:url" content="<?php echo htmlspecialchars($og_url); ?>">
   <meta property="og:type" content="<?php echo htmlspecialchars($og_type); ?>">
   <meta property="og:image" content="<?php echo htmlspecialchars($og_image); ?>">
+  <?php if (!empty($og_image_width) && !empty($og_image_height)): ?>
+  <meta property="og:image:width" content="<?php echo (int)$og_image_width; ?>">
+  <meta property="og:image:height" content="<?php echo (int)$og_image_height; ?>">
+  <?php endif; ?>
 
   <!-- Twitter / X Card Social Metadata -->
   <meta name="twitter:card" content="summary_large_image">
@@ -131,9 +135,18 @@ if (!isset($og_image) || empty($og_image)) {
   
   <!-- Local Production Stylesheets with Automatic Cache Busting -->
   <link rel="stylesheet" href="<?= creed_asset_url('assets/css/tailwind.min.css') ?>">
+  <?php 
+  // Conditionally load Bootstrap Icons only on pages that use bi- classes
+  $biPages = ['qa', 'software-development', 'database', 'ui-ux', 'login', 'edit', 'article', 'blog-insert', 'article-insert', 'events', 'stories', 'trending', 'video', 'dont_missing'];
+  $currentScript = strtolower(pathinfo($_SERVER['SCRIPT_NAME'] ?? '', PATHINFO_FILENAME));
+  $currentUri = strtolower(trim(parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '', '/'));
+  $needsBootstrapIcons = (!empty($use_bootstrap_icons) || in_array($active_page ?? '', $biPages, true) || in_array($currentScript, $biPages, true) || in_array($currentUri, $biPages, true));
+  if ($needsBootstrapIcons): 
+  ?>
   <link rel="stylesheet" href="<?= creed_asset_url('assets/vendor/bootstrap-icons/bootstrap-icons.min.css') ?>">
+  <?php endif; ?>
   
-  <!-- Bulletproof Button & Component Styles (Immune to Tailwind class gaps) -->
+  <!-- Bulletproof Button & Component Styles (Microsoft-Style Clean Rectangular Design System) -->
   <style>
     /* ================= UNIVERSAL BUTTON DESIGN SYSTEM ================= */
     .btn-blue {
@@ -142,24 +155,23 @@ if (!isset($og_image) || empty($og_image)) {
       justify-content: center !important;
       background-color: #0052FF !important;
       color: #FFFFFF !important;
-      font-size: 13.5px !important;
+      font-size: 14px !important;
       font-weight: 600 !important;
       line-height: 1 !important;
       height: 40px !important;
-      padding: 0 20px !important;
+      padding: 0 22px !important;
       border-radius: 4px !important;
       border: 1px solid transparent !important;
       cursor: pointer !important;
       text-decoration: none !important;
       white-space: nowrap !important;
-      transition: all 0.2s ease-in-out !important;
-      box-shadow: 0 1px 3px rgba(0, 82, 255, 0.2) !important;
+      transition: background-color 0.15s ease-in-out !important;
+      box-shadow: none !important;
     }
     .btn-blue:hover {
       background-color: #0042D0 !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 4px 10px rgba(0, 82, 255, 0.3) !important;
       color: #FFFFFF !important;
+      box-shadow: none !important;
     }
 
     .btn-blue-sm {
@@ -168,7 +180,7 @@ if (!isset($og_image) || empty($og_image)) {
       justify-content: center !important;
       background-color: #0052FF !important;
       color: #FFFFFF !important;
-      font-size: 12.5px !important;
+      font-size: 13px !important;
       font-weight: 600 !important;
       line-height: 1 !important;
       height: 36px !important;
@@ -178,12 +190,13 @@ if (!isset($og_image) || empty($og_image)) {
       cursor: pointer !important;
       text-decoration: none !important;
       white-space: nowrap !important;
-      transition: all 0.2s ease-in-out !important;
+      transition: background-color 0.15s ease-in-out !important;
+      box-shadow: none !important;
     }
     .btn-blue-sm:hover {
       background-color: #0042D0 !important;
-      transform: translateY(-1px) !important;
       color: #FFFFFF !important;
+      box-shadow: none !important;
     }
 
     .btn-orange {
@@ -192,24 +205,23 @@ if (!isset($og_image) || empty($og_image)) {
       justify-content: center !important;
       background-color: #FF6B00 !important;
       color: #FFFFFF !important;
-      font-size: 13.5px !important;
+      font-size: 14px !important;
       font-weight: 600 !important;
       line-height: 1 !important;
-      height: 42px !important;
+      height: 40px !important;
       padding: 0 22px !important;
       border-radius: 4px !important;
       border: 1px solid transparent !important;
       cursor: pointer !important;
       text-decoration: none !important;
       white-space: nowrap !important;
-      transition: all 0.2s ease-in-out !important;
-      box-shadow: 0 2px 6px rgba(255, 107, 0, 0.25) !important;
+      transition: background-color 0.15s ease-in-out !important;
+      box-shadow: none !important;
     }
     .btn-orange:hover {
       background-color: #E05D00 !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.35) !important;
       color: #FFFFFF !important;
+      box-shadow: none !important;
     }
 
     .btn-dark {
@@ -219,23 +231,23 @@ if (!isset($og_image) || empty($og_image)) {
       gap: 6px !important;
       background-color: #111827 !important;
       color: #FFFFFF !important;
-      font-size: 13px !important;
+      font-size: 13.5px !important;
       font-weight: 600 !important;
       line-height: 1 !important;
-      height: 42px !important;
+      height: 40px !important;
       padding: 0 20px !important;
       border-radius: 4px !important;
       border: 1px solid #374151 !important;
       cursor: pointer !important;
       text-decoration: none !important;
       white-space: nowrap !important;
-      transition: all 0.2s ease-in-out !important;
+      transition: background-color 0.15s ease-in-out !important;
+      box-shadow: none !important;
     }
     .btn-dark:hover {
-      background-color: #0052FF !important;
-      border-color: #0052FF !important;
-      transform: translateY(-1px) !important;
+      background-color: #1F2937 !important;
       color: #FFFFFF !important;
+      box-shadow: none !important;
     }
 
     /* Unbreakable 100% Continuous Seamless Horizontal Marquee */
@@ -311,7 +323,7 @@ if (!isset($og_image) || empty($og_image)) {
       <div class="max-w-7xl mx-auto flex items-center justify-between sm:justify-center gap-2 sm:gap-3 h-7">
         
         <!-- FIXED STATIONARY ORANGE BADGE (Never Moves) -->
-        <span class="px-2.5 py-0.5 bg-[#FF6B00] text-white text-[10px] sm:text-[10.5px] font-extrabold uppercase tracking-widest rounded-[2px] shrink-0 z-10 shadow-xs flex items-center gap-1.5">
+        <span class="px-2.5 py-0.5 bg-[#FF6B00] text-white text-[10px] sm:text-[10.5px] font-medium uppercase tracking-widest rounded-[2px] shrink-0 z-10 shadow-xs flex items-center gap-1.5">
           <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
           <span>LIVE</span>
         </span>
@@ -319,10 +331,10 @@ if (!isset($og_image) || empty($og_image)) {
         <!-- ANIMATED MOVING NEWS TEXT CONTAINER -->
         <div class="relative overflow-hidden h-6 flex items-center flex-1 min-w-0 max-w-lg sm:max-w-xl md:max-w-2xl">
           <div id="animatedNewsBox" class="news-text-active flex items-center gap-2 truncate w-full text-left">
-            <span id="animatedNewsText" class="text-gray-300 font-medium truncate text-[11px] sm:text-xs">
+            <span id="animatedNewsText" class="text-gray-300 font-normal truncate text-[11px] sm:text-xs">
               Creed Tech recognized as Leading Enterprise Systems & Cloud Modernization Provider.
             </span>
-            <a id="animatedNewsLink" href="knowledge-center" class="text-[#38BDF8] hover:text-white font-bold transition-colors inline-flex items-center gap-1 text-[11px] sm:text-xs shrink-0 ml-1">
+            <a id="animatedNewsLink" href="knowledge-center" class="text-[#38BDF8] hover:text-white font-medium transition-colors inline-flex items-center gap-1 text-[11px] sm:text-xs shrink-0 ml-1">
               <span>Explore</span> <span class="text-[#FF6B00]">&rarr;</span>
             </a>
           </div>
@@ -359,7 +371,7 @@ if (!isset($og_image) || empty($og_image)) {
             $hKey   = strtolower(trim($hNav['active_key'] ?? $hNav['label'] ?? ''));
             $isHActive = ($active_page === $hKey || $active_page === strtolower($hNav['url'] ?? '') || ($active_page === 'home' && ($hNav['url'] === 'Home' || $hNav['url'] === '/' || $hKey === 'home')));
           ?>
-          <a href="<?= $hUrl ?>" class="relative h-full flex items-center text-sm font-medium transition-colors hover:text-[#0052FF] <?= $isHActive ? 'text-[#0052FF] font-semibold' : 'text-[#1A1A1A]/80' ?>">
+          <a href="<?= $hUrl ?>" class="relative h-full flex items-center text-sm font-normal transition-colors hover:text-[#0052FF] <?= $isHActive ? 'text-[#0052FF] font-medium' : 'text-[#1A1A1A]/80' ?>">
             <?= $hLabel ?>
             <?php if ($isHActive): ?><span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#0052FF]"></span><?php endif; ?>
           </a>
@@ -444,9 +456,9 @@ if (!isset($og_image) || empty($og_image)) {
         align-items: center;
         justify-content: space-between;
         padding: 0.65rem 0.85rem;
-        border-radius: 0.5rem;
+        border-radius: 4px;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 400;
         transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         text-decoration: none;
       }
@@ -466,7 +478,7 @@ if (!isset($og_image) || empty($og_image)) {
             $isHActive = ($active_page === $hKey || $active_page === strtolower($hNav['url'] ?? '') || ($active_page === 'home' && ($hNav['url'] === 'Home' || $hNav['url'] === '/' || $hKey === 'home')));
           ?>
           <li>
-            <a href="<?= $hUrl ?>" onclick="closeMobileMenu()" class="mobile-nav-link group <?= $isHActive ? 'bg-[#0052FF] text-white shadow-xs' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]' ?>">
+            <a href="<?= $hUrl ?>" onclick="closeMobileMenu()" class="mobile-nav-link group <?= $isHActive ? 'bg-[#0052FF] text-white shadow-none' : 'text-gray-700 hover:bg-[#EAEFF6] hover:text-[#0052FF]' ?>">
               <span><?= $hLabel ?></span>
               <span class="text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
             </a>
@@ -474,7 +486,7 @@ if (!isset($og_image) || empty($og_image)) {
           <?php endforeach; ?>
         </ul>
         <div class="pt-2 border-t border-gray-200/80">
-          <a href="<?= htmlspecialchars($headerCtaUrl) ?>" onclick="closeMobileMenu()" class="btn-blue w-full justify-center text-center shadow-xs py-2 text-xs font-bold uppercase tracking-wider">
+          <a href="<?= htmlspecialchars($headerCtaUrl) ?>" onclick="closeMobileMenu()" class="btn-blue w-full justify-center text-center py-2 text-xs font-semibold uppercase tracking-wider">
             <?= htmlspecialchars($headerCtaText) ?>
           </a>
         </div>
@@ -588,12 +600,11 @@ if (!isset($og_image) || empty($og_image)) {
           // 3. Teleport to Right (no transition)
           newsBox.className = "news-text-in-prep flex items-center gap-2 truncate w-full text-left";
 
-          // Force reflow
-          void newsBox.offsetWidth;
-
-          // 4. Fast Slide In to Center
+          // 4. Smooth Double rAF Animation Step (Zero Forced Reflow / No Layout Reads)
           requestAnimationFrame(() => {
-            newsBox.className = "news-text-active flex items-center gap-2 truncate w-full text-left";
+            requestAnimationFrame(() => {
+              newsBox.className = "news-text-active flex items-center gap-2 truncate w-full text-left";
+            });
           });
         }, 350);
       }
