@@ -23,7 +23,7 @@ $brandP2 = !empty($footerConfig['brand_description_p2']) ? $footerConfig['brand_
 $brandP3 = !empty($footerConfig['brand_description_p3']) ? $footerConfig['brand_description_p3'] : 'Delivering end-to-end digital transformation, modern web systems, and strategic IT consulting to accelerate growth.';
 
 // Contact Information: Connected directly to general settings with fallback
-$footerAddress = !empty($generalConfig['office_address']) ? $generalConfig['office_address'] : 'Office # 02, Mian Shopping Center, Sheikhupura, Pakistan';
+$footerAddress = !empty($generalConfig['office_address']) ? $generalConfig['office_address'] : "Office # 02, Main Shopping\nCenter Sheikhupura.";
 $footerEmail   = !empty($generalConfig['contact_email']) ? $generalConfig['contact_email'] : 'info@creed-tech.com';
 $footerPhone   = !empty($generalConfig['contact_phone']) ? $generalConfig['contact_phone'] : '+92 309 8307115';
 
@@ -54,8 +54,8 @@ $defaultServicesLinks = [
 $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerConfig['services_links'])) ? $footerConfig['services_links'] : $defaultServicesLinks;
 ?>
   <!-- ======= NEWSLETTER STRIP (newsletter-strip/index.tsx) ======= -->
-  <section class="w-full bg-[#F4F6F8]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <section class="w-full bg-[#F4F6F8]" style="padding: 80px 0; box-sizing: border-box;">
+    <div class="max-w-[1440px] w-[calc(100%-64px)] mx-auto">
       
       <div class="bg-white border border-[#E5E8EB] p-6 sm:p-8 md:p-10 rounded-2xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16">
         
@@ -72,9 +72,74 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
         <!-- Vertical Separator for Desktop -->
         <div class="hidden md:block w-1 h-20 bg-[#E5E8EB] shrink-0 rounded-[2px]"></div>
 
-        <!-- Form -->
+                <!-- Form -->
         <div class="w-full md:w-1/2 flex flex-col">
-          <form id="nextJsNewsletterForm" class="flex flex-col sm:flex-row gap-3 w-full">
+          <style>
+            .newsletter-form-row {
+              display: flex;
+              align-items: center;
+              gap: 16px;
+              width: 100%;
+            }
+            .newsletter-input {
+              flex: 1 1 auto !important;
+              width: auto !important;
+              min-width: 0 !important;
+              height: 56px !important;
+              padding: 0 20px !important;
+              background: #F4F6F8 !important;
+              border: 1px solid #E5E8EB !important;
+              color: #1A1A1A !important;
+              font-size: 14px !important;
+              border-radius: 4px !important;
+              box-sizing: border-box !important;
+              outline: none !important;
+              transition: border-color 0.15s ease-in-out !important;
+            }
+            .newsletter-input:focus {
+              border-color: #0052FF !important;
+            }
+            .newsletter-btn {
+              flex: 0 0 180px !important;
+              width: 180px !important;
+              min-width: 180px !important;
+              max-width: 180px !important;
+              height: 56px !important;
+              padding: 0 24px !important;
+              background-color: #FF6B00 !important;
+              color: #FFFFFF !important;
+              font-size: 14px !important;
+              font-weight: 600 !important;
+              border-radius: 4px !important;
+              border: 1px solid transparent !important;
+              display: inline-flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              cursor: pointer !important;
+              white-space: nowrap !important;
+              box-sizing: border-box !important;
+              transition: background-color 0.15s ease-in-out !important;
+            }
+            .newsletter-btn:hover {
+              background-color: #E05D00 !important;
+            }
+            @media (max-width: 639px) {
+              .newsletter-form-row {
+                flex-direction: column !important;
+                gap: 12px !important;
+              }
+              .newsletter-input {
+                width: 100% !important;
+                flex: none !important;
+              }
+              .newsletter-btn {
+                width: 100% !important;
+                max-width: none !important;
+                flex: none !important;
+              }
+            }
+          </style>
+          <form id="nextJsNewsletterForm" class="newsletter-form-row">
             <?= csrf_field() ?>
             <!-- Honeypot anti-bot verification -->
             <div style="display:none !important; position:absolute; left:-9999px; width:0; height:0; overflow:hidden;" aria-hidden="true">
@@ -85,12 +150,12 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
               name="email"
               placeholder="Enter your work email"
               required
-              class="bg-[#F4F6F8] border border-[#E5E8EB] text-[#1A1A1A] text-sm rounded-[4px] px-4 py-2.5 focus:outline-none focus:border-[#0052FF] placeholder-[#888888] w-full transition-colors h-[42px]"
+              class="newsletter-input"
             />
             <button
               type="submit"
               id="newsletterBtnExact"
-              class="btn-orange shrink-0 min-w-[130px]"
+              class="newsletter-btn"
             >
               Subscribe
             </button>
@@ -192,7 +257,7 @@ $servicesLinks = (!empty($footerConfig['services_links']) && is_array($footerCon
 
             <!-- RIGHT on Mobile / TOP on Desktop: Address, Email, Phone -->
             <div class="flex flex-col space-y-3.5 order-2 md:order-1">
-              <div class="h-auto leading-tight flex items-center"><?= htmlspecialchars($footerAddress) ?></div>
+              <div class="h-auto leading-snug"><?= nl2br(htmlspecialchars($footerAddress)) ?></div>
               <div class="h-6 flex items-center">
                 <a href="mailto:<?= htmlspecialchars($footerEmail) ?>" class="hover:text-white transition-colors">
                   <?= htmlspecialchars($footerEmail) ?>

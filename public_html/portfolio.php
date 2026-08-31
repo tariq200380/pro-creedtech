@@ -24,62 +24,369 @@ include __DIR__ . '/includes/header.php';
 
 <div style="width:100%;background:#FAFAFC;color:#111827;font-family:sans-serif;text-align:left;">
   
-  <!-- 1. HERO BANNER (CENTER ALIGNED) -->
-  <section style="width:100%;background:#070D1E;color:#fff;padding:5rem 0 6rem;position:relative;overflow:hidden;border-bottom:1px solid #1F2937;">
-    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 75% 30%, rgba(0, 102, 255, 0.22) 0%, transparent 60%), radial-gradient(circle at 20% 70%, rgba(255, 107, 0, 0.14) 0%, transparent 55%);"></div>
-    
-    <div style="position:absolute;inset:0;opacity:0.15;pointer-events:none;background-image:linear-gradient(to right, rgba(0, 150, 255, 0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 150, 255, 0.2) 1px, transparent 1px);background-size:40px 40px;"></div>
+  <!-- ============================================ -->
+  <!-- FLAGSHIP CASE STUDIES SECTION - PREMIUM DESIGN -->
+  <!-- ONLY THIS SECTION - NOTHING ELSE CHANGES -->
+  <!-- ============================================ -->
 
-    <div style="max-width:80rem;margin:0 auto;padding:0 3rem;position:relative;z-index:10;">
-      <div style="max-width:54rem;margin:0 auto;text-align:center;">
-        
-        <!-- Pulse Badge -->
-        <div style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:4px 14px;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);color:#FF6B00;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem;border-radius:2px;">
-          <span style="width:6px;height:6px;background:#FF6B00;border-radius:50%;display:inline-block;"></span>
-          FLAGSHIP CASE STUDIES &amp; PROVEN ARCHITECTURES
+  <style>
+  /* ========================================== */
+  /* FLAGSHIP SECTION - FINAL DESIGN */
+  /* ========================================== */
+
+  /* SECTION BACKGROUND - MATCHES "HOW WE DELIVER" */
+  .case-studies-section,
+  .flagship-section {
+    background: #0B1120 !important;
+    padding: 40px 60px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* AMBIENT ORANGE GLOW - TOP CENTER + LEFT & RIGHT SIDES */
+  .case-studies-section::before,
+  .flagship-section::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(255,107,0,0.17) 0%, rgba(255,107,0,0.05) 45%, rgba(11,17,32,0) 70%),
+      radial-gradient(circle at 0% 50%, rgba(255,107,0,0.16) 0%, rgba(255,107,0,0.05) 40%, rgba(11,17,32,0) 65%),
+      radial-gradient(circle at 100% 50%, rgba(255,107,0,0.16) 0%, rgba(255,107,0,0.05) 40%, rgba(11,17,32,0) 65%) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+
+  /* ULTRA-LIGHT SUBTLE GRID BACKGROUND */
+  .case-studies-section::after,
+  .flagship-section::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: linear-gradient(to right, #FFFFFF 1px, transparent 1px),
+                      linear-gradient(to bottom, #FFFFFF 1px, transparent 1px) !important;
+    background-size: 36px 36px !important;
+    opacity: 0.035 !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+
+  /* CONTAINER LAYOUT */
+  .flagship-container,
+  .portfolio-container {
+    display: flex !important;
+    align-items: center !important;
+    gap: 50px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    max-width: 1280px !important;
+    margin: 0 auto !important;
+  }
+
+  /* LEFT COLUMN (TEXT CONTENT) */
+  .flagship-left {
+    flex: 1 1 50% !important;
+    max-width: 50% !important;
+  }
+
+  /* RIGHT COLUMN (STATS) */
+  .flagship-right {
+    flex: 1 1 50% !important;
+    max-width: 50% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* TAGLINE COLOR & STYLING (scoped - sirf tagline, kisi aur h2 par nahi) */
+  .flagship-section .flagship-tagline {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 3px !important;
+    color: #AEB6C2 !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* SEPARATOR LINE */
+  .flagship-line {
+    width: 60px !important;
+    height: 2px !important;
+    background: #FF6B00 !important;
+    opacity: 0.8 !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* HEADLINE - SOLID WHITE (NO GRADIENT) */
+  .case-studies-section h3:first-of-type,
+  .flagship-section h3:first-of-type,
+  .flagship-section .flagship-headline-1 {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 46px !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
+    margin: 0 0 2px 0 !important;
+    line-height: 1.1 !important;
+  }
+
+  .flagship-headline-2 {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 38px !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
+    margin: 0 0 18px 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  /* DESCRIPTION */
+  .flagship-desc {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: rgba(255,255,255,0.75) !important;
+    line-height: 1.7 !important;
+    max-width: 520px !important;
+    margin: 0 0 28px 0 !important;
+  }
+
+  /* CTA BUTTON - SAME AS NAVBAR "GET STARTED" */
+  .case-studies-section .btn,
+  .flagship-section .btn,
+  .flagship-section .flagship-btn {
+    background-color: #0052FF !important;
+    color: #FFFFFF !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    padding: 16px 32px !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    transition: background-color 0.15s ease !important;
+    border: 1px solid transparent !important;
+    display: inline-block !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+  }
+
+  .case-studies-section .btn:hover,
+  .flagship-section .btn:hover,
+  .flagship-section .flagship-btn:hover {
+    background-color: #0042D0 !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  /* STAT CARDS - GLASSMORPHISM */
+  .case-studies-section .stat-item,
+  .case-studies-section .stat-card,
+  .flagship-section .stat-item,
+  .flagship-section .stat-card,
+  .flagship-section .flagship-card {
+    background: rgba(255,255,255,0.06) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: 14px !important;
+    padding: 22px 18px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
+    transition: all 0.3s ease !important;
+    text-align: left !important;
+  }
+
+  .case-studies-section .stat-item:hover,
+  .flagship-section .stat-item:hover,
+  .flagship-section .stat-card:hover,
+  .flagship-section .flagship-card:hover {
+    transform: translateY(-4px) !important;
+    border-color: rgba(255,107,0,0.4) !important;
+  }
+
+  /* CARD ICON */
+  .flagship-icon {
+    width: 24px !important;
+    height: 24px !important;
+    color: rgba(0, 240, 255, 0.7) !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+  }
+
+  /* STAT NUMBERS - WHITE */
+  .case-studies-section .stat-number,
+  .case-studies-section strong,
+  .flagship-section .stat-number,
+  .flagship-section .flagship-number {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 34px !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    display: block !important;
+    line-height: 1.1 !important;
+    margin: 0 0 2px 0 !important;
+  }
+
+  .flagship-number.small {
+    font-size: 28px !important;
+  }
+
+  /* STAT LABELS */
+  .flagship-label {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    color: rgba(255,255,255,0.5) !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .flagship-container {
+      flex-direction: column !important;
+      gap: 40px !important;
+    }
+    .flagship-left,
+    .flagship-right {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+    .flagship-headline-1 {
+      font-size: 36px !important;
+    }
+    .flagship-headline-2 {
+      font-size: 30px !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .flagship-section {
+      padding: 60px 24px !important;
+    }
+    .flagship-headline-1 {
+      font-size: 28px !important;
+    }
+    .flagship-headline-2 {
+      font-size: 24px !important;
+    }
+    .flagship-desc {
+      font-size: 15px !important;
+    }
+    .flagship-right {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 12px !important;
+    }
+    .flagship-number {
+      font-size: 26px !important;
+    }
+    .flagship-number.small {
+      font-size: 22px !important;
+    }
+  }
+  </style>
+
+  <!-- ===== HTML SECTION ===== -->
+  <section class="flagship-section case-studies-section" id="portfolio-hero-section">
+    <div class="flagship-container portfolio-container">
+
+      <!-- LEFT COLUMN -->
+      <div class="flagship-left">
+        <div class="flagship-tagline">FLAGSHIP CASE STUDIES &amp; PROVEN ARCHITECTURES</div>
+        <div class="flagship-line"></div>
+        <h1 class="flagship-headline-1">Architectural Mastery.</h1>
+        <h2 class="flagship-headline-2">Proven Business Impact.</h2>
+        <p class="flagship-desc">
+          In-depth case studies documenting how Creed Tech engineers mission-critical infrastructure, multi-region database replication, private LLMs, and enterprise-grade security platforms — delivering measurable outcomes for global enterprises.
+        </p>
+        <a href="#portfolio-case-studies" class="flagship-btn btn">View Case Studies</a>
+      </div>
+
+      <!-- RIGHT COLUMN - STATS -->
+      <div class="flagship-right">
+
+        <!-- CARD 1 -->
+        <div class="flagship-card stat-item stat-card">
+          <svg class="flagship-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+          </svg>
+          <p class="flagship-number stat-number small">End-to-End</p>
+          <p class="flagship-label">Project Delivery</p>
         </div>
 
-        <h1 style="font-size:clamp(2rem,4vw,3.25rem);font-weight:600;letter-spacing:-0.03em;color:#fff;margin:0 auto 1rem;line-height:1.15;text-align:center;">
-          Architectural Mastery. <br />
-          <span style="color:#00A3FF;">Proven Business Impact.</span>
-        </h1>
+        <!-- CARD 2 -->
+        <div class="flagship-card stat-item stat-card">
+          <svg class="flagship-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <polyline points="9 12 11 14 15 10" />
+          </svg>
+          <p class="flagship-number stat-number small">Security-First</p>
+          <p class="flagship-label">Engineering</p>
+        </div>
 
-        <p style="font-size:clamp(0.875rem,1.5vw,1rem);color:#D1D5DB;line-height:1.7;font-weight:400;margin:0 auto 2rem;max-width:46rem;text-align:center;">
-          Deep architectural case studies documenting how Creed Tech engineers mission-critical infrastructure, multi-region database replication, private LLMs, and enterprise security platforms.
-        </p>
+        <!-- CARD 3 -->
+        <div class="flagship-card stat-item stat-card">
+          <svg class="flagship-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <p class="flagship-number stat-number small">Reliable</p>
+          <p class="flagship-label">Delivery</p>
+        </div>
 
-        <!-- Quick Hero Metrics Bar (Center Aligned) -->
-        <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.1);text-align:center;max-width:52rem;margin:0 auto;">
-          <div style="text-align:center;">
-            <span style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;color:#fff;display:block;line-height:1.1;">120+</span>
-            <span style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;display:block;margin-top:4px;">Enterprise Projects</span>
-          </div>
-          <div style="text-align:center;">
-            <span style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;color:#00A3FF;display:block;line-height:1.1;">$450M+</span>
-            <span style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;display:block;margin-top:4px;">Transactions Secured</span>
-          </div>
-          <div style="text-align:center;">
-            <span style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;color:#FF6B00;display:block;line-height:1.1;">99.99%</span>
-            <span style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;display:block;margin-top:4px;">Historical Uptime</span>
-          </div>
-          <div style="text-align:center;">
-            <span style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:600;color:#fff;display:block;line-height:1.1;">0 Defect</span>
-            <span style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;display:block;margin-top:4px;">SLA Guarantee</span>
-          </div>
+        <!-- CARD 4 -->
+        <div class="flagship-card stat-item stat-card">
+          <svg class="flagship-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+          <p class="flagship-number stat-number small">Quality-Driven</p>
+          <p class="flagship-label">Development</p>
         </div>
 
       </div>
+      <!-- END RIGHT COLUMN -->
+
     </div>
+    <!-- END CONTAINER -->
   </section>
+  <!-- ===== END SECTION ===== -->
 
   <!-- 2. UNIQUE ENGINEERING STANDARDS & EXECUTION SHOWCASE WITH PICTURE -->
-  <section style="width:100%;padding:5rem 0;background:#F4F6FA;border-bottom:1px solid #E5E7EB;color:#111827;">
+  <section style="width:100%;padding:2.5rem 0;background:#F4F6FA;border-bottom:1px solid #E5E7EB;color:#111827;">
     <div style="max-width:80rem;margin:0 auto;padding:0 3rem;">
-      <div style="display:grid;grid-template-columns:5fr 7fr;gap:3.5rem;align-items:center;">
+      <style>
+        .portfolio-standards-grid {
+          display: grid;
+          grid-template-columns: 5fr 7fr;
+          gap: 3.5rem;
+          align-items: center;
+        }
+        @media (max-width: 1024px) {
+          .portfolio-standards-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
+          }
+        }
+        .portfolio-standards-img-box {
+          width: 100%;
+          height: 460px;
+          position: relative;
+        }
+        @media (max-width: 640px) {
+          .portfolio-standards-img-box {
+            height: 260px !important;
+          }
+        }
+      </style>
+      <div class="portfolio-standards-grid">
         
         <!-- Left: High-Tech Engineering & DevOps Picture -->
         <div style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);border:1px solid #E5E7EB;">
-          <div style="width:100%;height:460px;position:relative;">
+          <div class="portfolio-standards-img-box">
             <img src="<?= htmlspecialchars($standards['image'] ?? 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80') ?>" alt="Creed Tech Senior Engineering Team" width="600" height="460" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3) 50%, transparent);pointer-events:none;"></div>
             
@@ -177,8 +484,32 @@ include __DIR__ . '/includes/header.php';
   </section>
 
   <!-- 3. ALTERNATING CASE STUDIES SECTION -->
-  <section style="width:100%;padding:6rem 0;background:#fff;border-bottom:1px solid #E5E7EB;">
+  <section id="portfolio-case-studies" style="width:100%;padding:2.5rem 0;background:#fff;border-bottom:1px solid #E5E7EB;">
     <div style="max-width:80rem;margin:0 auto;padding:0 3rem;display:flex;flex-direction:column;gap:6rem;">
+      <style>
+        .portfolio-case-item {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3.5rem;
+          align-items: center;
+        }
+        @media (max-width: 1024px) {
+          .portfolio-case-item {
+            grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
+          }
+        }
+        .portfolio-case-img-box {
+          width: 100%;
+          height: 400px;
+          position: relative;
+        }
+        @media (max-width: 640px) {
+          .portfolio-case-img-box {
+            height: 240px !important;
+          }
+        }
+      </style>
       
       <?php foreach ($projectsList as $idx => $proj): 
         $pId = $proj['id'] ?? ('case-' . ($idx + 1));
@@ -186,12 +517,12 @@ include __DIR__ . '/includes/header.php';
         $dotColor = ($idx % 3 === 0) ? '#0052FF' : (($idx % 3 === 1) ? '#FF6B00' : '#10B981');
         $isImageLeft = ($idx % 2 === 0);
       ?>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;">
+      <div class="portfolio-case-item">
         
         <?php if ($isImageLeft): ?>
           <!-- Image Column (Left) -->
           <div onclick="openCaseModal('<?= htmlspecialchars($pId) ?>')" style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);border:1px solid #E5E7EB;background:#030712;cursor:pointer;">
-            <div style="width:100%;height:400px;position:relative;">
+            <div class="portfolio-case-img-box">
               <img src="<?= htmlspecialchars($proj['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($proj['title'] ?? 'Case Study') ?>" width="550" height="400" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
               <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2) 50%, transparent);pointer-events:none;"></div>
               
@@ -263,7 +594,7 @@ include __DIR__ . '/includes/header.php';
         <?php if (!$isImageLeft): ?>
           <!-- Image Column (Right) -->
           <div onclick="openCaseModal('<?= htmlspecialchars($pId) ?>')" style="position:relative;border-radius:1rem;overflow:hidden;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);border:1px solid #E5E7EB;background:#030712;cursor:pointer;">
-            <div style="width:100%;height:400px;position:relative;">
+            <div class="portfolio-case-img-box">
               <img src="<?= htmlspecialchars($proj['image'] ?? 'assets/img/hero_img.webp') ?>" alt="<?= htmlspecialchars($proj['title'] ?? 'Case Study') ?>" width="550" height="400" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
               <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2) 50%, transparent);pointer-events:none;"></div>
               
@@ -326,7 +657,7 @@ include __DIR__ . '/includes/header.php';
   </div>
 
   <!-- 5. CLIENT ENGAGEMENT CTA BANNER -->
-  <section style="width:100%;background:#0B1120;padding:5rem 0;color:#fff;text-align:center;position:relative;overflow:hidden;border-top:1px solid #1F2937;">
+  <section style="width:100%;background:#0B1120;padding:2.5rem 0;color:#fff;text-align:center;position:relative;overflow:hidden;border-top:1px solid #1F2937;">
     <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.22) 0%, transparent 65%);"></div>
     <div style="max-width:48rem;margin:0 auto;padding:0 2rem;position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:1rem;">
       <span style="font-size:11px;font-weight:700;color:#FF6B00;text-transform:uppercase;letter-spacing:0.05em;">HAVE AN AMBITIOUS ENGINEERING INITIATIVE?</span>

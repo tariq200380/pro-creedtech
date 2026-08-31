@@ -332,10 +332,10 @@ if (!isset($og_image) || empty($og_image)) {
         <div class="relative overflow-hidden h-6 flex items-center flex-1 min-w-0 max-w-lg sm:max-w-xl md:max-w-2xl">
           <div id="animatedNewsBox" class="news-text-active flex items-center gap-2 truncate w-full text-left">
             <span id="animatedNewsText" class="text-gray-300 font-normal truncate text-[11px] sm:text-xs">
-              Creed Tech recognized as Leading Enterprise Systems & Cloud Modernization Provider.
+              Building practical digital solutions for modern business needs.
             </span>
-            <a id="animatedNewsLink" href="knowledge-center" class="text-[#38BDF8] hover:text-white font-medium transition-colors inline-flex items-center gap-1 text-[11px] sm:text-xs shrink-0 ml-1">
-              <span>Explore</span> <span class="text-[#FF6B00]">&rarr;</span>
+            <a id="animatedNewsLink" href="services" class="text-[#38BDF8] hover:text-white font-medium transition-colors inline-flex items-center gap-1 text-[11px] sm:text-xs shrink-0 ml-1">
+              <span>Explore Services</span> <span class="text-[#FF6B00]">&rarr;</span>
             </a>
           </div>
         </div>
@@ -552,67 +552,8 @@ if (!isset($og_image) || empty($og_image)) {
     });
   </script>
 
-  <!-- News Ticker JavaScript -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const newsLines = [
-        {
-          text: "Creed Tech recognized as Leading Enterprise Systems & Cloud Modernization Provider.",
-          linkText: "Explore",
-          linkUrl: "knowledge-center"
-        },
-        {
-          text: "High-Throughput Global Settlement Engine achieves 120,000 TPS with sub-10ms latency.",
-          linkText: "Case Study",
-          linkUrl: "portfolio"
-        },
-        {
-          text: "SOC 2 Type II and ISO 27001 Aligned Dedicated Engineering Pods Available.",
-          linkText: "Security Center",
-          linkUrl: "security"
-        },
-        {
-          text: "Private On-Premise Vector RAG pipelines deployed for Fortune 500 Healthcare.",
-          linkText: "AI Solutions",
-          linkUrl: "services"
-        }
-      ];
-
-      let currentIndex = 0;
-      const newsBox = document.getElementById("animatedNewsBox");
-      const newsText = document.getElementById("animatedNewsText");
-      const newsLink = document.getElementById("animatedNewsLink");
-
-      function slideNextNews() {
-        if (!newsBox || !newsText || !newsLink) return;
-
-        // 1. Fast Slide Out to Left
-        newsBox.className = "news-text-out flex items-center gap-2 truncate w-full text-left";
-
-        setTimeout(() => {
-          // 2. Next item data
-          currentIndex = (currentIndex + 1) % newsLines.length;
-          const item = newsLines[currentIndex];
-          newsText.textContent = item.text;
-          newsLink.href = item.linkUrl;
-          newsLink.innerHTML = `<span>${item.linkText}</span> <span class="text-[#FF6B00]">&rarr;</span>`;
-
-          // 3. Teleport to Right (no transition)
-          newsBox.className = "news-text-in-prep flex items-center gap-2 truncate w-full text-left";
-
-          // 4. Smooth Double rAF Animation Step (Zero Forced Reflow / No Layout Reads)
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              newsBox.className = "news-text-active flex items-center gap-2 truncate w-full text-left";
-            });
-          });
-        }, 350);
-      }
-
-      // Pause for 4 seconds between news headlines
-      setInterval(slideNextNews, 4400);
-    });
-  </script>
+  <!-- Global News Ticker Module -->
+  <script src="<?= creed_asset_url('assets/js/news-ticker.js') ?>" defer></script>
 
   <!-- ========================================================================= -->
   <!-- UNIVERSAL LUXURY NOTIFICATION MODAL & TOAST DIALOG                        -->

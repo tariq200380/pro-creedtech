@@ -1,5 +1,5 @@
 // Creed Tech High-Speed Client Service Worker Cache
-const CACHE_NAME = 'creed-tech-speed-cache-v1';
+const CACHE_NAME = 'creed-tech-speed-cache-v2';
 const STATIC_ASSETS = [
   '/',
   '/knowledge-center',
