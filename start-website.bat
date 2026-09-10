@@ -8,6 +8,6 @@ cd /d "%~dp0"
 echo Starting backend server and PHP runtime...
 start "" node preview-server.mjs
 timeout /t 2 /nobreak >nul
-start http://localhost:3000
+start http://localhost:3001
 echo Server is running. Close this window to stop.
 pause

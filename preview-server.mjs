@@ -8,8 +8,8 @@ const __dirname = path.dirname(__filename);
 const publicDir = path.join(__dirname, 'public_html');
 
 const PHP_EXE = process.env.PHP_EXE || (process.platform === 'win32' ? 'C:\\php\\php.exe' : 'php');
-const PHP_PORT = 8088;
-const PROXY_PORT = 3000;
+const PHP_PORT = process.env.PHP_PORT ? parseInt(process.env.PHP_PORT, 10) : 8088;
+const PROXY_PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 let phpProcess = null;
 
